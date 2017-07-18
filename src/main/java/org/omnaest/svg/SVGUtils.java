@@ -4,6 +4,7 @@ package org.omnaest.svg;
  * {@link SVGUtils}
  * 
  * @see #getDrawer(int, int)
+ * @see SVGChartUtils
  * @author omnaest
  */
 public class SVGUtils

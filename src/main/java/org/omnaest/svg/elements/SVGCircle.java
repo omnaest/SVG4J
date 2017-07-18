@@ -4,13 +4,14 @@ import org.omnaest.svg.elements.base.SVGElement;
 
 public class SVGCircle implements SVGElement
 {
-	private int x;
-	private int y;
-	private int r;
+	private int	x;
+	private int	y;
+	private int	r;
 
-	private String strokeColor = "red";
-	private String fillColor = "white";
-	private double opacity = 1.0;
+	private String	strokeColor	= "black";
+	private String	fillColor	= "white";
+	private double	opacity		= 1.0;
+	private int		strokeWidth	= 1;
 
 	public SVGCircle(int x, int y, int r)
 	{
@@ -41,14 +42,21 @@ public class SVGCircle implements SVGElement
 	@Override
 	public String render()
 	{
-		return "\n<circle cx=\"" + x + "\" cy=\"" + y + "\" r=\"" + r + "\" stroke=\"" + this.strokeColor + "\" fill=\""
-				+ this.fillColor + "\" opacity=\"" + this.opacity + "\" />";
+		return "\n<circle cx=\"" + x + "\" cy=\"" + y + "\" r=\"" + r + "\" stroke=\"" + this.strokeColor + "\" fill=\"" + this.fillColor + "\" opacity=\""
+				+ this.opacity + "\" style=\"stroke-width:" + this.strokeWidth + "\" />";
 
 	}
 
-	public SVGElement setStrokeAndFillColor(String color)
+	public SVGCircle setStrokeAndFillColor(String color)
 	{
-		return this.setFillColor(color).setStrokeColor(color);
+		return this	.setFillColor(color)
+					.setStrokeColor(color);
+	}
+
+	public SVGCircle setStrokeWidth(int strokeWidth)
+	{
+		this.strokeWidth = strokeWidth;
+		return this;
 	}
 
 }

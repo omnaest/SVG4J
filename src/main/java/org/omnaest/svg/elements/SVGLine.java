@@ -4,10 +4,14 @@ import org.omnaest.svg.elements.base.SVGElement;
 
 public class SVGLine implements SVGElement
 {
-	private int x1;
-	private int y1;
-	private int x2;
-	private int y2;
+	private int	x1;
+	private int	y1;
+	private int	x2;
+	private int	y2;
+
+	private int		strokeWidth	= 1;
+	private String	strokeColor	= "gray";
+	private double	opacity		= 1.0;
 
 	public SVGLine(int x1, int y1, int x2, int y2)
 	{
@@ -16,6 +20,18 @@ public class SVGLine implements SVGElement
 		this.y1 = y1;
 		this.x2 = x2;
 		this.y2 = y2;
+	}
+
+	public SVGLine setStrokeColor(String strokeColor)
+	{
+		this.strokeColor = strokeColor;
+		return this;
+	}
+
+	public SVGLine setStrokeWidth(int strokeWidth)
+	{
+		this.strokeWidth = strokeWidth;
+		return this;
 	}
 
 	public int getX1()
@@ -41,8 +57,14 @@ public class SVGLine implements SVGElement
 	@Override
 	public String render()
 	{
-		return "\n<line x1=\"" + this.x1 + "\" y1=\"" + this.y1 + "\" x2=\"" + this.x2 + "\" y2=\"" + this.y2
-				+ "\" stroke=\"gray\" stroke-width=\"1px\"/>";
+		return "\n<line x1=\"" + this.x1 + "\" y1=\"" + this.y1 + "\" x2=\"" + this.x2 + "\" y2=\"" + this.y2 + "\" stroke=\"" + this.strokeColor
+				+ "\" stroke-width=\"" + this.strokeWidth + "px\" style=\"stroke-opacity:" + this.opacity + "\"/>";
+	}
+
+	public SVGLine setOpacity(double opacity)
+	{
+		this.opacity = opacity;
+		return this;
 	}
 
 }
