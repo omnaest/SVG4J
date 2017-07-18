@@ -14,14 +14,26 @@ public class SVGDrawer implements SVGRenderable
 {
 	private List<SVGElement> elements = new ArrayList<>();
 
-	private int	width;
-	private int	height;
+	private int		width;
+	private int		height;
+	private boolean	embedReloadTimer	= false;
 
 	protected SVGDrawer(int width, int height)
 	{
 		super();
 		this.width = width;
 		this.height = height;
+	}
+
+	public boolean isEmbedReloadTimer()
+	{
+		return embedReloadTimer;
+	}
+
+	public SVGDrawer setEmbedReloadTimer(boolean embedReloadTimer)
+	{
+		this.embedReloadTimer = embedReloadTimer;
+		return this;
 	}
 
 	/**
@@ -40,12 +52,15 @@ public class SVGDrawer implements SVGRenderable
 			sb.append(element.render());
 		}
 
-		sb.append("\n<script type=\"text/javascript\">");
-		sb.append("<![CDATA[");
-		int reloadInterval = 1000;
-		sb.append("    setTimeout(function(){ location.reload();  }, " + reloadInterval + ");");
-		sb.append("]]>");
-		sb.append("</script>");
+		if (this.embedReloadTimer)
+		{
+			sb.append("\n<script type=\"text/javascript\">");
+			sb.append("<![CDATA[");
+			int reloadInterval = 1000;
+			sb.append("    setTimeout(function(){ location.reload();  }, " + reloadInterval + ");");
+			sb.append("]]>");
+			sb.append("</script>");
+		}
 
 		sb.append("\n</svg>");
 		return sb.toString();

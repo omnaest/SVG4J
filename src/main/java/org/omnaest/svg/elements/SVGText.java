@@ -11,6 +11,7 @@ public class SVGText implements SVGElement
 	private String	text;
 	private int		fontSize	= DEFAULT_FONTSIZE;
 	private String	color		= "black";
+	private int		rotation	= 0;
 
 	public SVGText(int x, int y, String text)
 	{
@@ -60,7 +61,14 @@ public class SVGText implements SVGElement
 	@Override
 	public String render()
 	{
-		return "<text x=\"" + this.x + "\" y=\"" + this.y + "\" fill=\"" + color + "\" style=\"font-size:" + fontSize + "px\" >" + this.text + "</text>";
+		return "<text x=\"" + this.x + "\" y=\"" + this.y + "\" fill=\"" + color + "\" style=\"font-size:" + this.fontSize + "px\" transform=\"rotate("
+				+ this.rotation + "," + (this.x + this.fontSize / 2) + "," + (this.y + this.fontSize / 2) + ")\" >" + this.text + "</text>";
+	}
+
+	public SVGText setRotation(int rotation)
+	{
+		this.rotation = rotation;
+		return this;
 	}
 
 }

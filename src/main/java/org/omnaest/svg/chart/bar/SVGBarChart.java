@@ -76,10 +76,36 @@ public class SVGBarChart
 
 	private int calculatePadding()
 	{
-		return Math.max(this.width, this.height) / 10;
+		return this.pixelFactor * 10;
+	}
+
+	public static class AxisOptions
+	{
+		private int rotation = 0;
+
+		public AxisOptions()
+		{
+			super();
+		}
+
+		public int getRotation()
+		{
+			return rotation;
+		}
+
+		public AxisOptions setRotation(int rotation)
+		{
+			this.rotation = rotation; return this;
+		}
+
 	}
 
 	public SVGBarChart addHorizontalAxis(List<IdAndLabel> values)
+	{
+		return this.addHorizontalAxis(values, new AxisOptions());
+	}
+
+	public SVGBarChart addHorizontalAxis(List<IdAndLabel> values, AxisOptions options)
 	{
 		//
 		this.horizontalAxisValues = values;
@@ -104,7 +130,7 @@ public class SVGBarChart
 			String label = idAndLabel.getLabel();
 			int fontSize = SVGText.DEFAULT_FONTSIZE * pixelFactor / 2;
 			this.drawer.add(new SVGText(x - fontSize / 3, this.height, label)	.setColor("black")
-																				.setFontSize(fontSize));
+																				.setFontSize(fontSize).setRotation(options.getRotation()));
 		}
 
 		//
