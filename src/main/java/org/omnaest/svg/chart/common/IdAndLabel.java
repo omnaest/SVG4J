@@ -1,4 +1,4 @@
-package org.omnaest.svg.chart.bar;
+package org.omnaest.svg.chart.common;
 
 public class IdAndLabel
 {

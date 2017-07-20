@@ -76,4 +76,16 @@ public class SVGDrawer implements SVGRenderable
 		this.elements.add(element);
 		return this;
 	}
+
+	public SVGDrawer addAll(Iterable<SVGElement> elements)
+	{
+		if (elements != null)
+		{
+			for (SVGElement element : elements)
+			{
+				this.add(element);
+			}
+		}
+		return this;
+	}
 }

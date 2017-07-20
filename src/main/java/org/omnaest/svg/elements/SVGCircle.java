@@ -8,10 +8,11 @@ public class SVGCircle implements SVGElement
 	private int	y;
 	private int	r;
 
-	private String	strokeColor	= "black";
-	private String	fillColor	= "white";
-	private double	opacity		= 1.0;
-	private int		strokeWidth	= 1;
+	private String	strokeColor		= "black";
+	private String	fillColor		= "white";
+	private double	fillOpacity		= 1.0;
+	private double	strokeOpacity	= 1.0;
+	private int		strokeWidth		= 1;
 
 	public SVGCircle(int x, int y, int r)
 	{
@@ -35,15 +36,28 @@ public class SVGCircle implements SVGElement
 
 	public SVGCircle setOpacity(double opacity)
 	{
-		this.opacity = opacity;
+		this.fillOpacity = opacity;
+		this.strokeOpacity = opacity;
+		return this;
+	}
+
+	public SVGCircle setFillOpacity(double fillOpacity)
+	{
+		this.fillOpacity = fillOpacity;
+		return this;
+	}
+
+	public SVGCircle setStrokeOpacity(double strokeOpacity)
+	{
+		this.strokeOpacity = strokeOpacity;
 		return this;
 	}
 
 	@Override
 	public String render()
 	{
-		return "\n<circle cx=\"" + x + "\" cy=\"" + y + "\" r=\"" + r + "\" stroke=\"" + this.strokeColor + "\" fill=\"" + this.fillColor + "\" opacity=\""
-				+ this.opacity + "\" style=\"stroke-width:" + this.strokeWidth + "\" />";
+		return "\n<circle cx=\"" + x + "\" cy=\"" + y + "\" r=\"" + r + "\" stroke=\"" + this.strokeColor + "\" fill=\"" + this.fillColor + "\" fill-opacity=\""
+				+ this.fillOpacity + "\" stroke-opacity=\"" + this.strokeOpacity + "\" style=\"stroke-width:" + this.strokeWidth + "\" />";
 
 	}
 

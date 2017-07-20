@@ -1,6 +1,9 @@
 package org.omnaest.svg;
 
+import org.omnaest.svg.chart.CoordinateChart;
 import org.omnaest.svg.chart.bar.SVGBarChart;
+import org.omnaest.svg.chart.clock.SVGClockChart;
+import org.omnaest.svg.chart.line.SVGLineChart;
 
 /**
  * SVG Utils to create simple charts
@@ -10,8 +13,18 @@ import org.omnaest.svg.chart.bar.SVGBarChart;
  */
 public class SVGChartUtils
 {
-	public static SVGBarChart newBarChart(int width, int height)
+	public static CoordinateChart newLineChart(int width, int height)
+	{
+		return new SVGLineChart(width, height);
+	}
+
+	public static CoordinateChart newBarChart(int width, int height)
 	{
 		return new SVGBarChart(width, height);
+	}
+
+	public static CoordinateChart newClockChart(int width, int height)
+	{
+		return new SVGClockChart(width, height);
 	}
 }

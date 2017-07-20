@@ -11,28 +11,28 @@ import java.util.stream.Stream;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.Test;
-import org.omnaest.svg.chart.bar.IdAndLabel;
-import org.omnaest.svg.chart.bar.SVGBarChart;
-import org.omnaest.svg.chart.bar.SVGBarChart.AxisOptions;
-import org.omnaest.svg.chart.bar.SVGBarChart.DataPoint;
+import org.omnaest.svg.chart.CoordinateChart;
+import org.omnaest.svg.chart.common.AxisOptions;
+import org.omnaest.svg.chart.common.DataPoint;
+import org.omnaest.svg.chart.common.IdAndLabel;
 
 public class SVGChartUtilsTest
 {
 
 	@Test
-	public void testNewBarChart() throws Exception
+	public void testNewLineChart() throws Exception
 	{
-		SVGBarChart barChart = SVGChartUtils.newBarChart(6000, 1000);
+		CoordinateChart chart = SVGChartUtils.newClockChart(5000, 5000);
 
-		List<String> verticalLabels = Arrays.asList("A", "B", "C");
-		List<String> horizontalLabels = IntStream	.range(0, 101)
+		List<String> verticalLabels = Arrays.asList("20%", "40%", "60%", "80%", "100%");
+		List<String> horizontalLabels = IntStream	.range(0, 37)
 													.mapToObj(i -> "" + i)
 													.collect(Collectors.toList());
 
 		Stream<Stream<DataPoint>> data = Arrays	.asList(this.generateDataPoints(horizontalLabels, verticalLabels),
 														this.generateDataPoints(horizontalLabels, verticalLabels))
 												.stream();
-		barChart.addVerticalAxis(verticalLabels	.stream()
+		chart	.addVerticalAxis(verticalLabels	.stream()
 												.map(label -> new IdAndLabel(label, label))
 												.collect(Collectors.toList()))
 				.addHorizontalAxis(	horizontalLabels.stream()
@@ -41,7 +41,7 @@ public class SVGChartUtilsTest
 									new AxisOptions().setRotation(-45))
 				.addData(data);
 
-		String svg = barChart.render();
+		String svg = chart.render();
 		FileUtils.writeStringToFile(new File("C:/Temp/test.svg"), svg, "utf-8");
 	}
 
