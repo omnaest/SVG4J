@@ -22,27 +22,34 @@ public class SVGChartUtilsTest
 	@Test
 	public void testNewLineChart() throws Exception
 	{
-		CoordinateChart chart = SVGChartUtils.newClockChart(5000, 5000);
+		List<CoordinateChart> charts = Arrays.asList(	SVGChartUtils.newLineChart(5000, 1000), SVGChartUtils.newBarChart(5000, 1000),
+														SVGChartUtils.newClockChart(1000, 1000));
 
-		List<String> verticalLabels = Arrays.asList("20%", "40%", "60%", "80%", "100%");
-		List<String> horizontalLabels = IntStream	.range(0, 37)
-													.mapToObj(i -> "" + i)
-													.collect(Collectors.toList());
+		for (CoordinateChart chart : charts)
+		{
 
-		Stream<Stream<DataPoint>> data = Arrays	.asList(this.generateDataPoints(horizontalLabels, verticalLabels),
-														this.generateDataPoints(horizontalLabels, verticalLabels))
-												.stream();
-		chart	.addVerticalAxis(verticalLabels	.stream()
-												.map(label -> new IdAndLabel(label, label))
-												.collect(Collectors.toList()))
-				.addHorizontalAxis(	horizontalLabels.stream()
+			List<String> verticalLabels = Arrays.asList("20%", "40%", "60%", "80%", "100%");
+			List<String> horizontalLabels = IntStream	.range(0, 37)
+														.mapToObj(i -> "" + i)
+														.collect(Collectors.toList());
+
+			Stream<Stream<DataPoint>> data = Arrays	.asList(this.generateDataPoints(horizontalLabels, verticalLabels),
+															this.generateDataPoints(horizontalLabels, verticalLabels))
+													.stream();
+			chart	.addVerticalAxis(verticalLabels	.stream()
 													.map(label -> new IdAndLabel(label, label))
-													.collect(Collectors.toList()),
-									new AxisOptions().setRotation(-45))
-				.addData(data);
+													.collect(Collectors.toList()))
+					.addHorizontalAxis(	horizontalLabels.stream()
+														.map(label -> new IdAndLabel(label, label))
+														.collect(Collectors.toList()),
+										new AxisOptions().setRotation(-45))
+					.addData(data);
 
-		String svg = chart.render();
-		FileUtils.writeStringToFile(new File("C:/Temp/test.svg"), svg, "utf-8");
+			String svg = chart.render();
+			FileUtils.writeStringToFile(new File("C:/Temp/" + chart	.getClass()
+																	.getSimpleName()
+					+ ".svg"), svg, "utf-8");
+		}
 	}
 
 	private Stream<DataPoint> generateDataPoints(List<String> xLabels, List<String> yLabels)
