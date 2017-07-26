@@ -38,9 +38,10 @@ public class RawSVGImageElement extends RawSVGElement
 		return transform;
 	}
 
-	public void setTransform(String transform)
+	public RawSVGImageElement setTransform(String transform)
 	{
-		this.transform = transform;
+		super.setTransform(transform);
+		return this;
 	}
 
 	public String getStyle()
@@ -48,9 +49,10 @@ public class RawSVGImageElement extends RawSVGElement
 		return style;
 	}
 
-	public void setStyle(String style)
+	public RawSVGImageElement setStyle(String style)
 	{
-		this.style = style;
+		super.setStyle(style);
+		return this;
 	}
 
 	public String getHref()

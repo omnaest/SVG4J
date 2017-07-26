@@ -33,9 +33,10 @@ public class RawSVGPath extends RawSVGElement
 		return style;
 	}
 
-	public void setStyle(String style)
+	public RawSVGPath setStyle(String style)
 	{
-		this.style = style;
+		super.setStyle(style);
+		return this;
 	}
 
 	public String getD()

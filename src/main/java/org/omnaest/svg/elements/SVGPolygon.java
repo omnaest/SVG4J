@@ -5,10 +5,12 @@ import java.util.List;
 
 import org.omnaest.svg.elements.base.SVGElement;
 import org.omnaest.svg.elements.base.SVGVector;
+import org.omnaest.svg.model.RawSVGPolygon;
 
 public class SVGPolygon implements SVGElement
 {
-	private List<SVGVector> locations = new ArrayList<>();
+	private List<SVGVector>	locations	= new ArrayList<>();
+	private String			strokeColor	= "red";
 
 	public SVGPolygon(List<SVGVector> locations)
 	{
@@ -16,8 +18,19 @@ public class SVGPolygon implements SVGElement
 		this.locations.addAll(locations);
 	}
 
+	public String getStrokeColor()
+	{
+		return strokeColor;
+	}
+
+	public SVGPolygon setStrokeColor(String strokeColor)
+	{
+		this.strokeColor = strokeColor;
+		return this;
+	}
+
 	@Override
-	public String render()
+	public RawSVGPolygon render()
 	{
 		StringBuilder sb = new StringBuilder();
 		for (SVGVector vector : this.locations)
@@ -27,7 +40,9 @@ public class SVGPolygon implements SVGElement
 			sb.append(" " + x + " " + y);
 		}
 
-		return "\n<polygon points=\"" + sb.toString() + "\" stroke=\"red\" />";
+		return new RawSVGPolygon()	.setPoints(sb.toString())
+									.setStroke(this.strokeColor);
+		//	return "\n<polygon points=\"" + sb.toString() + "\" stroke=\"red\" />";
 	}
 
 }

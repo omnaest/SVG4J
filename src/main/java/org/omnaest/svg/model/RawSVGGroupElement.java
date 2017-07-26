@@ -41,14 +41,10 @@ public class RawSVGGroupElement extends RawSVGElement
 		this.id = id;
 	}
 
-	public String getTransform()
+	public RawSVGGroupElement setTransform(String transform)
 	{
-		return transform;
-	}
-
-	public void setTransform(String transform)
-	{
-		this.transform = transform;
+		super.setTransform(transform);
+		return this;
 	}
 
 	@Override

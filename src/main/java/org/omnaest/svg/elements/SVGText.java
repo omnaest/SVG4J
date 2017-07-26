@@ -1,6 +1,7 @@
 package org.omnaest.svg.elements;
 
 import org.omnaest.svg.elements.base.SVGElement;
+import org.omnaest.svg.model.RawSVGText;
 
 public class SVGText implements SVGElement
 {
@@ -59,10 +60,16 @@ public class SVGText implements SVGElement
 	}
 
 	@Override
-	public String render()
+	public RawSVGText render()
 	{
-		return "<text x=\"" + this.x + "\" y=\"" + this.y + "\" fill=\"" + color + "\" style=\"font-size:" + this.fontSize + "px\" transform=\"rotate("
-				+ this.rotation + "," + (this.x + this.fontSize / 2) + "," + (this.y + this.fontSize / 2) + ")\" >" + this.text + "</text>";
+		return new RawSVGText()	.setX("" + this.x)
+								.setY("" + this.y)
+								.setFill(this.color)
+								.setStyle("font-size:" + this.fontSize + "px")
+								.setTransform("rotate(" + this.rotation + "," + (this.x + this.fontSize / 2) + "," + (this.y + this.fontSize / 2) + ")")
+								.setText(text);
+		//		return "<text x=\"" + this.x + "\" y=\"" + this.y + "\" fill=\"" + color + "\" style=\"font-size:" + this.fontSize + "px\" transform=\"rotate("
+		//				+ this.rotation + "," + (this.x + this.fontSize / 2) + "," + (this.y + this.fontSize / 2) + ")\" >" + this.text + "</text>";
 	}
 
 	public SVGText setRotation(int rotation)

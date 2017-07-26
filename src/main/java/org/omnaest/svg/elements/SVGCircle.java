@@ -1,6 +1,8 @@
 package org.omnaest.svg.elements;
 
 import org.omnaest.svg.elements.base.SVGElement;
+import org.omnaest.svg.model.RawSVGCircle;
+import org.omnaest.svg.model.RawSVGElement;
 
 public class SVGCircle implements SVGElement
 {
@@ -54,10 +56,19 @@ public class SVGCircle implements SVGElement
 	}
 
 	@Override
-	public String render()
+	public RawSVGElement render()
 	{
-		return "\n<circle cx=\"" + x + "\" cy=\"" + y + "\" r=\"" + r + "\" stroke=\"" + this.strokeColor + "\" fill=\"" + this.fillColor + "\" fill-opacity=\""
-				+ this.fillOpacity + "\" stroke-opacity=\"" + this.strokeOpacity + "\" style=\"stroke-width:" + this.strokeWidth + "\" />";
+		return new RawSVGCircle()	.setCx("" + this.x)
+									.setCy("" + this.y)
+									.setR("" + this.r)
+									.setStroke(strokeColor)
+									.setFill(this.fillColor)
+									.setFillOpacity("" + this.fillOpacity)
+									.setStrokeOpacity("" + this.strokeOpacity)
+									.setStyle("stroke-width:" + this.strokeWidth);
+
+		//		return "\n<circle cx=\"" + x + "\" cy=\"" + y + "\" r=\"" + r + "\" stroke=\"" + this.strokeColor + "\" fill=\"" + this.fillColor + "\" fill-opacity=\""
+		//				+ this.fillOpacity + "\" stroke-opacity=\"" + this.strokeOpacity + "\" style=\"stroke-width:" + this.strokeWidth + "\" />";
 
 	}
 

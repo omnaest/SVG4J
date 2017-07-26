@@ -27,12 +27,22 @@ public class SVGUtils
 		return new SVGDrawer(width, height);
 	}
 
-	public static RawSVGRoot parse(File file) throws IOException
+	public static SVGDrawer getDrawer(File svgFile) throws IOException
+	{
+		return new SVGDrawer(parse(svgFile));
+	}
+
+	public static SVGDrawer getDrawer(String svg)
+	{
+		return new SVGDrawer(parse(svg));
+	}
+
+	protected static RawSVGRoot parse(File file) throws IOException
 	{
 		return parse(FileUtils.readFileToString(file, "utf-8"));
 	}
 
-	public static RawSVGRoot parse(String svg)
+	protected static RawSVGRoot parse(String svg)
 	{
 		return XMLHelper.parse(svg, RawSVGRoot.class);
 	}

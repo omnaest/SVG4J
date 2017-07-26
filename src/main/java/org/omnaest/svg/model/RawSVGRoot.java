@@ -9,7 +9,15 @@ import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 
-@XmlSeeAlso({ RawSVGImageElement.class, RawSVGGroupElement.class })
+@XmlSeeAlso({	RawSVGImageElement.class,
+				RawSVGGroupElement.class,
+				RawSVGLine.class,
+				RawSVGCircle.class,
+				RawSVGPath.class,
+				RawSVGPolygon.class,
+				RawSVGPolyline.class,
+				RawSVGRectangle.class,
+				RawSVGText.class })
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlRootElement(name = "svg")
 public class RawSVGRoot
@@ -28,6 +36,12 @@ public class RawSVGRoot
 
 	@XmlElementRef
 	private List<RawSVGElement> elements;
+
+	@XmlAttribute
+	private String baseProfile;
+
+	@XmlAttribute
+	private String viewBox;
 
 	public String getId()
 	{
@@ -82,7 +96,30 @@ public class RawSVGRoot
 	@Override
 	public String toString()
 	{
-		return "RawSVGRoot [id=" + id + ", width=" + width + ", height=" + height + ", version=" + version + ", elements=" + elements + "]";
+		return "RawSVGRoot [id=" + id + ", width=" + width + ", height=" + height + ", version=" + version + ", elements=" + elements + ", baseProfile="
+				+ baseProfile + ", viewBox=" + viewBox + "]";
+	}
+
+	public void setBaseProfile(String baseProfile)
+	{
+		this.baseProfile = baseProfile;
+
+	}
+
+	public String getBaseProfile()
+	{
+		return baseProfile;
+	}
+
+	public void setViewBox(String viewBox)
+	{
+		this.viewBox = viewBox;
+
+	}
+
+	public String getViewBox()
+	{
+		return viewBox;
 	}
 
 }

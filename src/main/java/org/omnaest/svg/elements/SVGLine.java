@@ -1,6 +1,8 @@
 package org.omnaest.svg.elements;
 
 import org.omnaest.svg.elements.base.SVGElement;
+import org.omnaest.svg.model.RawSVGElement;
+import org.omnaest.svg.model.RawSVGLine;
 
 public class SVGLine implements SVGElement
 {
@@ -55,10 +57,17 @@ public class SVGLine implements SVGElement
 	}
 
 	@Override
-	public String render()
+	public RawSVGElement render()
 	{
-		return "\n<line x1=\"" + this.x1 + "\" y1=\"" + this.y1 + "\" x2=\"" + this.x2 + "\" y2=\"" + this.y2 + "\" stroke=\"" + this.strokeColor
-				+ "\" stroke-width=\"" + this.strokeWidth + "px\" style=\"stroke-opacity:" + this.opacity + "\"/>";
+		return new RawSVGLine()	.setX1("" + this.x1)
+								.setX2("" + this.x2)
+								.setY1("" + this.y1)
+								.setY2("" + this.y2)
+								.setStroke(this.strokeColor)
+								.setStrokeWidth("" + this.strokeWidth + "px")
+								.setStyle("stroke-opacity:" + this.opacity);
+		//		return "\n<line x1=\"" + this.x1 + "\" y1=\"" + this.y1 + "\" x2=\"" + this.x2 + "\" y2=\"" + this.y2 + "\" stroke=\"" + this.strokeColor
+		//				+ "\" stroke-width=\"" + this.strokeWidth + "px\" style=\"stroke-opacity:" + this.opacity + "\"/>";
 	}
 
 	public SVGLine setOpacity(double opacity)
