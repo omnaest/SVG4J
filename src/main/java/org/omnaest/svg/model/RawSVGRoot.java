@@ -1,5 +1,6 @@
 package org.omnaest.svg.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -17,7 +18,8 @@ import javax.xml.bind.annotation.XmlSeeAlso;
 				RawSVGPolygon.class,
 				RawSVGPolyline.class,
 				RawSVGRectangle.class,
-				RawSVGText.class })
+				RawSVGText.class,
+				RawSVGDefinition.class })
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlRootElement(name = "svg")
 public class RawSVGRoot
@@ -33,6 +35,9 @@ public class RawSVGRoot
 
 	@XmlAttribute
 	private String version;
+
+	@XmlElementRef
+	private List<RawSVGScript> scripts;
 
 	@XmlElementRef
 	private List<RawSVGElement> elements;
@@ -120,6 +125,27 @@ public class RawSVGRoot
 	public String getViewBox()
 	{
 		return viewBox;
+	}
+
+	public void addScript(String script)
+	{
+		if (this.scripts == null)
+		{
+			this.scripts = new ArrayList<>();
+		}
+
+		this.scripts.add(new RawSVGScript().setContent(script));
+
+	}
+
+	public List<RawSVGScript> getScripts()
+	{
+		return scripts;
+	}
+
+	public void setScripts(List<RawSVGScript> scripts)
+	{
+		this.scripts = scripts;
 	}
 
 }

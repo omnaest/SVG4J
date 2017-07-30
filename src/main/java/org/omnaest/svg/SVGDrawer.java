@@ -1,12 +1,17 @@
 package org.omnaest.svg;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.apache.commons.io.FileUtils;
 import org.omnaest.svg.elements.base.SVGElement;
 import org.omnaest.svg.model.RawSVGElement;
 import org.omnaest.svg.model.RawSVGRoot;
@@ -20,7 +25,7 @@ public class SVGDrawer
 {
 	private RawSVGRoot			rawSVGRoot;
 	private List<SVGElement>	elements			= new ArrayList<>();
-	private boolean				embedReloadTimer	= false;
+	private AtomicInteger		embedReloadTimer	= new AtomicInteger(0);
 
 	public static class SVGRenderResult
 	{
@@ -48,6 +53,11 @@ public class SVGDrawer
 			return XMLHelper.serialize(this.rawSVGRoot);
 		}
 
+		public void writeToFile(File file) throws IOException
+		{
+			FileUtils.writeStringToFile(file, getAsSVG(), "utf-8");
+		}
+
 	}
 
 	protected SVGDrawer(int width, int height)
@@ -66,12 +76,20 @@ public class SVGDrawer
 
 	public boolean isEmbedReloadTimer()
 	{
-		return embedReloadTimer;
+		return embedReloadTimer.get() > 0;
 	}
 
 	public SVGDrawer setEmbedReloadTimer(boolean embedReloadTimer)
 	{
-		this.embedReloadTimer = embedReloadTimer;
+		this.embedReloadTimer.set(1000);
+		;
+		return this;
+	}
+
+	public SVGDrawer setEmbedReloadTimer(int time, TimeUnit timeUnit)
+	{
+		this.embedReloadTimer.set((int) timeUnit.toMillis(time));
+		;
 		return this;
 	}
 
@@ -91,12 +109,6 @@ public class SVGDrawer
 	{
 		RawSVGRoot svgRoot = this.rawSVGRoot;
 
-		//		StringBuilder sb = new StringBuilder();
-		//		sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-		//		sb.append("\n<svg xmlns=\"http://www.w3.org/2000/svg\"");
-		//		sb.append(" version=\"1.1\" baseProfile=\"full\"");
-		//		sb.append(" width=\"1000px\" height=\"600px\" viewBox=\"0 0 " + this.width + " " + this.height + "\">");
-
 		List<RawSVGElement> svgElements = new ArrayList<>();
 		if (svgRoot.getElements() != null)
 		{
@@ -105,23 +117,23 @@ public class SVGDrawer
 		svgRoot.setElements(svgElements);
 		for (SVGElement element : this.elements)
 		{
-			//sb.append(element.render());
 			svgElements.add(element.render());
 		}
-		//
-		//		if (this.embedReloadTimer)
-		//		{
-		//			sb.append("\n<script type=\"text/javascript\">");
-		//			sb.append("<![CDATA[");
-		//			int reloadInterval = 1000;
-		//			sb.append("    setTimeout(function(){ location.reload();  }, " + reloadInterval + ");");
-		//			sb.append("]]>");
-		//			sb.append("</script>");
-		//		}
 
-		//		sb.append("\n</svg>");
+		if (this.isEmbedReloadTimer())
+		{
+			StringBuilder sb = new StringBuilder();
+
+			//sb.append("<![CDATA[");
+			int reloadInterval = this.embedReloadTimer.get();
+			sb.append("    setTimeout(function(){ location.reload();  }, " + reloadInterval + ");");
+			//sb.append("]]>");
+
+			this.rawSVGRoot.addScript(sb.toString());
+		}
+
 		return new SVGRenderResult(svgRoot);
-		//				sb.toString();
+
 	}
 
 	private RawSVGRoot createRawSVGRoot(int width, int height)
@@ -130,8 +142,8 @@ public class SVGDrawer
 		svgRoot = new RawSVGRoot();
 		svgRoot.setVersion("1.1");
 		svgRoot.setBaseProfile("full");
-		svgRoot.setWidth("1000px");
-		svgRoot.setHeight("600px");
+		svgRoot.setWidth("1200px");
+		svgRoot.setHeight("700px");
 		svgRoot.setViewBox("0 0 " + width + " " + height);
 		return svgRoot;
 	}

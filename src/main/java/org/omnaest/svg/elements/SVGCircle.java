@@ -67,9 +67,6 @@ public class SVGCircle implements SVGElement
 									.setStrokeOpacity("" + this.strokeOpacity)
 									.setStyle("stroke-width:" + this.strokeWidth);
 
-		//		return "\n<circle cx=\"" + x + "\" cy=\"" + y + "\" r=\"" + r + "\" stroke=\"" + this.strokeColor + "\" fill=\"" + this.fillColor + "\" fill-opacity=\""
-		//				+ this.fillOpacity + "\" stroke-opacity=\"" + this.strokeOpacity + "\" style=\"stroke-width:" + this.strokeWidth + "\" />";
-
 	}
 
 	public SVGCircle setStrokeAndFillColor(String color)
