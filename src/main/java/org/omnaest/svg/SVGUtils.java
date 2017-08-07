@@ -46,6 +46,11 @@ public class SVGUtils
 		return new SVGDrawer(width, height);
 	}
 
+	public static SVGDrawer getDrawer(int originX, int originY, int width, int height)
+	{
+		return new SVGDrawer(originX, originY, width, height);
+	}
+
 	public static SVGDrawer getDrawer(File svgFile) throws IOException
 	{
 		return new SVGDrawer(parse(svgFile));
