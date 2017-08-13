@@ -38,19 +38,26 @@ public abstract class AbstractCartesianCoordinateChart extends AbstractChart
 
 		//
 		int size = this.verticalAxisValues.size();
+
+		int maxNumberOfVerticalAxisLabels = 20;
+		int modFactor = (size / maxNumberOfVerticalAxisLabels) + 1;
+
 		for (int ii = 0; ii < size; ii++)
 		{
-			//stroke
-			int y = this.calculateVerticalPosition(ii);
-			this.drawer.add(new SVGLine(padding - 2 * this.pixelFactor, y, padding + 2 * this.pixelFactor, y)	.setStrokeWidth(this.pixelFactor)
-																												.setStrokeColor("black"));
+			if (ii % modFactor == 0 || ii == size - 1)
+			{
+				//stroke
+				int y = this.calculateVerticalPosition(ii);
+				this.drawer.add(new SVGLine(padding - 2 * this.pixelFactor, y, padding + 2 * this.pixelFactor, y)	.setStrokeWidth(this.pixelFactor / 2)
+																													.setStrokeColor("black"));
 
-			//text
-			IdAndLabel idAndLabel = this.verticalAxisValues.get(ii);
-			String label = idAndLabel.getLabel();
-			int fontSize = SVGText.DEFAULT_FONTSIZE * this.pixelFactor / 2;
-			this.drawer.add(new SVGText(0, y + fontSize / 3, label)	.setColor("black")
-																	.setFontSize(fontSize));
+				//text
+				IdAndLabel idAndLabel = this.verticalAxisValues.get(ii);
+				String label = idAndLabel.getLabel();
+				int fontSize = SVGText.DEFAULT_FONTSIZE * 4 * this.pixelFactor / Math.max(3, Math.min(maxNumberOfVerticalAxisLabels, size));
+				this.drawer.add(new SVGText(0, y + fontSize / 3, label)	.setColor("black")
+																		.setFontSize(fontSize));
+			}
 		}
 	}
 
@@ -59,7 +66,7 @@ public abstract class AbstractCartesianCoordinateChart extends AbstractChart
 		int padding = this.calculatePadding();
 		int verticalAxisSize = this.verticalAxisValues.size();
 		int chartAreaHeight = this.height - 2 * padding;
-		int spanHeight = verticalAxisSize > 0 ? chartAreaHeight / (verticalAxisSize - 1) : chartAreaHeight;
+		int spanHeight = verticalAxisSize > 1 ? chartAreaHeight / (verticalAxisSize - 1) : chartAreaHeight / 2;
 		int y = this.height - padding - ii * spanHeight;
 		return y;
 	}
@@ -84,13 +91,13 @@ public abstract class AbstractCartesianCoordinateChart extends AbstractChart
 			//stroke
 			int x = this.calculateHorizontalPosition(ii);
 			this.drawer.add(new SVGLine(x, this.height - padding + 2 * this.pixelFactor, x,
-										this.height - padding - 2 * this.pixelFactor)	.setStrokeWidth(this.pixelFactor)
+										this.height - padding - 2 * this.pixelFactor)	.setStrokeWidth(this.pixelFactor / 2)
 																						.setStrokeColor("black"));
 
 			//text
 			IdAndLabel idAndLabel = this.horizontalAxisValues.get(ii);
 			String label = idAndLabel.getLabel();
-			int fontSize = SVGText.DEFAULT_FONTSIZE * this.pixelFactor / 2;
+			int fontSize = SVGText.DEFAULT_FONTSIZE * 20 * this.pixelFactor / Math.max(2, size);
 			this.drawer.add(new SVGText(x - fontSize / 3, this.height, label)	.setColor("black")
 																				.setFontSize(fontSize)
 																				.setRotation(this.horizontalAxisOptions.getRotation()));

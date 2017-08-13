@@ -1,3 +1,21 @@
+/*
+
+	Copyright 2017 Danny Kunz
+
+	Licensed under the Apache License, Version 2.0 (the "License");
+	you may not use this file except in compliance with the License.
+	You may obtain a copy of the License at
+
+		http://www.apache.org/licenses/LICENSE-2.0
+
+	Unless required by applicable law or agreed to in writing, software
+	distributed under the License is distributed on an "AS IS" BASIS,
+	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	See the License for the specific language governing permissions and
+	limitations under the License.
+
+
+*/
 package org.omnaest.svg;
 
 import java.io.File;
@@ -45,7 +63,7 @@ public class SVGDrawer
 
 		public RawSVGRoot getRawSVGRoot()
 		{
-			return rawSVGRoot;
+			return this.rawSVGRoot;
 		}
 
 		public String getAsSVG()
@@ -55,7 +73,7 @@ public class SVGDrawer
 
 		public void writeToFile(File file) throws IOException
 		{
-			FileUtils.writeStringToFile(file, getAsSVG(), "utf-8");
+			FileUtils.writeStringToFile(file, this.getAsSVG(), "utf-8");
 		}
 
 	}
@@ -64,7 +82,14 @@ public class SVGDrawer
 	{
 		super();
 
-		this.rawSVGRoot = createRawSVGRoot(width, height);
+		this.rawSVGRoot = this.createRawSVGRoot(width, height);
+	}
+
+	protected SVGDrawer(int originX, int originY, int width, int height)
+	{
+		super();
+
+		this.rawSVGRoot = this.createRawSVGRoot(originX, originY, width, height);
 	}
 
 	protected SVGDrawer(RawSVGRoot rawSVGRoot)
@@ -76,7 +101,7 @@ public class SVGDrawer
 
 	public boolean isEmbedReloadTimer()
 	{
-		return embedReloadTimer.get() > 0;
+		return this.embedReloadTimer.get() > 0;
 	}
 
 	public SVGDrawer setEmbedReloadTimer(boolean embedReloadTimer)
@@ -138,19 +163,24 @@ public class SVGDrawer
 
 	private RawSVGRoot createRawSVGRoot(int width, int height)
 	{
+		return this.createRawSVGRoot(0, 0, width, height);
+	}
+
+	private RawSVGRoot createRawSVGRoot(int originX, int originY, int width, int height)
+	{
 		RawSVGRoot svgRoot;
 		svgRoot = new RawSVGRoot();
 		svgRoot.setVersion("1.1");
 		svgRoot.setBaseProfile("full");
 		svgRoot.setWidth("1200px");
 		svgRoot.setHeight("700px");
-		svgRoot.setViewBox("0 0 " + width + " " + height);
+		svgRoot.setViewBox("" + originX + " " + originY + " " + width + " " + height);
 		return svgRoot;
 	}
 
 	public RawSVGRoot getRawSVGRoot()
 	{
-		return rawSVGRoot;
+		return this.rawSVGRoot;
 	}
 
 	/**
