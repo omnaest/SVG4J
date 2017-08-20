@@ -143,14 +143,14 @@ public abstract class AbstractChart implements CoordinateChart
 	@Override
 	public CoordinateChart addHorizontalAxis(List<IdAndLabel> values)
 	{
-		return this.addHorizontalAxis(values, new AxisOptions());
+		return this.addHorizontalAxis(values, null);
 	}
 
 	@Override
 	public CoordinateChart addHorizontalAxis(List<IdAndLabel> values, AxisOptions options)
 	{
 		this.horizontalAxisValues = values;
-		this.horizontalAxisOptions = options;
+		this.horizontalAxisOptions = options != null ? options : this.horizontalAxisOptions;
 		return this;
 	}
 
@@ -311,6 +311,20 @@ public abstract class AbstractChart implements CoordinateChart
 										.mapToDouble(value -> value.getId())
 										.max()
 										.orElseGet(() -> 1.0);
+	}
+
+	@Override
+	public CoordinateChart setHorizontalAxisOptions(AxisOptions options)
+	{
+		this.horizontalAxisOptions = options;
+		return this;
+	}
+
+	@Override
+	public CoordinateChart setVerticalAxisOptions(AxisOptions options)
+	{
+		this.verticalAxisOptions = options;
+		return this;
 	}
 
 }

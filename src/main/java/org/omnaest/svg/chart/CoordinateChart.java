@@ -43,4 +43,7 @@ public interface CoordinateChart
 
 	CoordinateChart addData(Stream<? extends Stream<? extends Point<?, ?>>> data);
 
+	CoordinateChart setHorizontalAxisOptions(AxisOptions options);
+
+	CoordinateChart setVerticalAxisOptions(AxisOptions options);
 }

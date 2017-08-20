@@ -57,10 +57,10 @@ public class SVGChartUtilsTest
 			chart	.addVerticalAxis(verticalLabels	.stream()
 													.map(label -> new IdAndLabel(label, label))
 													.collect(Collectors.toList()))
-					.addHorizontalAxis(	horizontalLabels.stream()
+					.addHorizontalAxis(horizontalLabels	.stream()
 														.map(label -> new IdAndLabel(label, label))
-														.collect(Collectors.toList()),
-										new AxisOptions().setRotation(-45))
+														.collect(Collectors.toList()))
+					.setHorizontalAxisOptions(new AxisOptions().setRotation(-45))
 					.addData(data);
 
 			String svg = chart.render();
