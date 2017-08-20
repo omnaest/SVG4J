@@ -54,10 +54,9 @@ public class SVGChartUtilsTest
 			Stream<Stream<DataPoint>> data = Arrays	.asList(this.generateDataPoints(horizontalLabels, verticalLabels),
 															this.generateDataPoints(horizontalLabels, verticalLabels))
 													.stream();
-			chart	.addVerticalAxis(	verticalLabels	.stream()
-														.map(label -> new IdAndLabel(label, label))
-														.collect(Collectors.toList()),
-										new AxisOptions())
+			chart	.addVerticalAxis(verticalLabels	.stream()
+													.map(label -> new IdAndLabel(label, label))
+													.collect(Collectors.toList()))
 					.addHorizontalAxis(	horizontalLabels.stream()
 														.map(label -> new IdAndLabel(label, label))
 														.collect(Collectors.toList()),

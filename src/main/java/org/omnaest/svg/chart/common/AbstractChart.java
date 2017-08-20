@@ -44,7 +44,7 @@ public abstract class AbstractChart implements CoordinateChart
 	protected List<IdAndLabel>				horizontalAxisValues;
 	protected AxisOptions					horizontalAxisOptions	= new AxisOptions().setRotation(-45);
 	protected List<? extends AxisPoint<?>>	verticalAxisValues;
-	protected AxisOptions					verticalAxisOptions		= new AxisOptions().setSortDirection(SortDirection.ASCENDING);
+	protected AxisOptions					verticalAxisOptions;
 
 	protected List<String> colors = Arrays.asList("red", "blue", "green", "yellow", "brown", "purple");
 
@@ -163,6 +163,9 @@ public abstract class AbstractChart implements CoordinateChart
 		List<List<? extends Point<?, ?>>> dataPoints = this.collectData(data);
 
 		//
+		this.ensureVerticalAxisOptions(dataPoints);
+
+		//
 		this.ensureHorziontalAxis(dataPoints);
 		this.ensureVerticalAxis(dataPoints);
 
@@ -199,6 +202,23 @@ public abstract class AbstractChart implements CoordinateChart
 
 		//
 		return this;
+	}
+
+	private void ensureVerticalAxisOptions(List<List<? extends Point<?, ?>>> dataPoints)
+	{
+		if (this.verticalAxisOptions == null)
+		{
+			this.verticalAxisOptions = new AxisOptions();
+
+			boolean hasNumberPoints = dataPoints.stream()
+												.flatMap(points -> points.stream())
+												.anyMatch(point -> point instanceof NumberPoint);
+			if (hasNumberPoints)
+			{
+				this.verticalAxisOptions.setSortDirection(SortDirection.ASCENDING);
+			}
+		}
+
 	}
 
 	private void ensureHorziontalAxis(List<List<? extends Point<?, ?>>> dataPoints)
