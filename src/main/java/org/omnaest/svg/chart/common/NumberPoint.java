@@ -18,41 +18,34 @@
 */
 package org.omnaest.svg.chart.common;
 
-public class AxisOptions
+public class NumberPoint implements Point<String, Double>
 {
-	private int				rotation		= 0;
-	private SortDirection	sortDirection	= null;
+	private Double	y;
+	private String	x;
 
-	public enum SortDirection
-	{
-		ASCENDING, DESCENDING
-	}
-
-	public AxisOptions()
+	public NumberPoint(String x, Double y)
 	{
 		super();
+		this.y = y;
+		this.x = x;
 	}
 
-	public int getRotation()
+	@Override
+	public Double getY()
 	{
-		return this.rotation;
+		return this.y;
 	}
 
-	public AxisOptions setRotation(int rotation)
+	@Override
+	public String getX()
 	{
-		this.rotation = rotation;
-		return this;
+		return this.x;
 	}
 
-	public SortDirection getSortDirection()
+	@Override
+	public String toString()
 	{
-		return this.sortDirection;
-	}
-
-	public AxisOptions setSortDirection(SortDirection sortDirection)
-	{
-		this.sortDirection = sortDirection;
-		return this;
+		return "NumberPoint [y=" + this.y + ", x=" + this.x + "]";
 	}
 
 }

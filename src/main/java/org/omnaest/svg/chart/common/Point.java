@@ -18,41 +18,14 @@
 */
 package org.omnaest.svg.chart.common;
 
-public class AxisOptions
+/**
+ * @see DataPoint
+ * @see NumberPoint
+ * @author Omnaest
+ */
+public interface Point<X, Y>
 {
-	private int				rotation		= 0;
-	private SortDirection	sortDirection	= null;
+	public X getX();
 
-	public enum SortDirection
-	{
-		ASCENDING, DESCENDING
-	}
-
-	public AxisOptions()
-	{
-		super();
-	}
-
-	public int getRotation()
-	{
-		return this.rotation;
-	}
-
-	public AxisOptions setRotation(int rotation)
-	{
-		this.rotation = rotation;
-		return this;
-	}
-
-	public SortDirection getSortDirection()
-	{
-		return this.sortDirection;
-	}
-
-	public AxisOptions setSortDirection(SortDirection sortDirection)
-	{
-		this.sortDirection = sortDirection;
-		return this;
-	}
-
+	public Y getY();
 }

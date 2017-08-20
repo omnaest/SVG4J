@@ -30,11 +30,9 @@ import java.util.stream.Stream;
 import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 import org.omnaest.svg.chart.CoordinateChart;
-import org.omnaest.svg.chart.common.AxisOptions;
-import org.omnaest.svg.chart.common.DataPoint;
-import org.omnaest.svg.chart.common.IdAndLabel;
+import org.omnaest.svg.chart.common.NumberPoint;
 
-public class SVGChartUtilsTest
+public class SVGChartUtilsTest2
 {
 
 	@Test
@@ -46,23 +44,15 @@ public class SVGChartUtilsTest
 		for (CoordinateChart chart : charts)
 		{
 
-			List<String> verticalLabels = Arrays.asList("0%", "20%", "40%", "60%", "80%", "100%");
+			List<Double> verticalLabels = Arrays.asList(0.0, 0.2, 0.4, 0.6, 0.8, 2.0);
 			List<String> horizontalLabels = IntStream	.range(0, 37)
-														.mapToObj(i -> "Label " + i)
+														.mapToObj(i -> "" + i)
 														.collect(Collectors.toList());
 
-			Stream<Stream<DataPoint>> data = Arrays	.asList(this.generateDataPoints(horizontalLabels, verticalLabels),
-															this.generateDataPoints(horizontalLabels, verticalLabels))
-													.stream();
-			chart	.addVerticalAxis(	verticalLabels	.stream()
-														.map(label -> new IdAndLabel(label, label))
-														.collect(Collectors.toList()),
-										new AxisOptions())
-					.addHorizontalAxis(	horizontalLabels.stream()
-														.map(label -> new IdAndLabel(label, label))
-														.collect(Collectors.toList()),
-										new AxisOptions().setRotation(-45))
-					.addData(data);
+			Stream<Stream<NumberPoint>> data = Arrays	.asList(this.generateDataPoints(horizontalLabels, verticalLabels),
+																this.generateDataPoints(horizontalLabels, verticalLabels))
+														.stream();
+			chart.addData(data);
 
 			String svg = chart.render();
 			FileUtils.writeStringToFile(new File("C:/Temp/" + chart	.getClass()
@@ -71,14 +61,14 @@ public class SVGChartUtilsTest
 		}
 	}
 
-	private Stream<DataPoint> generateDataPoints(List<String> xLabels, List<String> yLabels)
+	private Stream<NumberPoint> generateDataPoints(List<String> xLabels, List<Double> yLabels)
 	{
-		List<String> shuffledYLabels = new ArrayList<>(yLabels);
+		List<Double> shuffledYLabels = new ArrayList<>(yLabels);
 		return xLabels	.stream()
 						.map(x ->
 						{
 							Collections.shuffle(shuffledYLabels);
-							return new DataPoint(x, shuffledYLabels.get(0));
+							return new NumberPoint(x, shuffledYLabels.get(0));
 						});
 	}
 

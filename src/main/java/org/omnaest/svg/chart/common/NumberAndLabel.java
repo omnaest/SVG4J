@@ -18,32 +18,29 @@
 */
 package org.omnaest.svg.chart.common;
 
-public class IdAndLabel implements AxisPoint<String>
+import java.util.Objects;
+
+public class NumberAndLabel implements AxisPoint<Double>
 {
-	private String	id;
+	private double	value;
 	private String	label;
 
-	public IdAndLabel(String id, String label)
+	public NumberAndLabel(double value, String label)
 	{
 		super();
-		this.id = id;
+		this.value = value;
 		this.label = label;
 	}
 
-	/**
-	 * New {@link IdAndLabel} with the given label as id
-	 *
-	 * @param label
-	 */
-	public IdAndLabel(String label)
+	public NumberAndLabel(double label)
 	{
-		this(label, label);
+		this(label, Objects.toString(label));
 	}
 
 	@Override
-	public String getId()
+	public Double getId()
 	{
-		return this.id;
+		return this.value;
 	}
 
 	@Override
@@ -53,17 +50,13 @@ public class IdAndLabel implements AxisPoint<String>
 	}
 
 	@Override
-	public String toString()
-	{
-		return "IdAndLabel [id=" + this.id + ", label=" + this.label + "]";
-	}
-
-	@Override
 	public int hashCode()
 	{
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((this.id == null) ? 0 : this.id.hashCode());
+		long temp;
+		temp = Double.doubleToLongBits(this.value);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
 		return result;
 	}
 
@@ -76,13 +69,8 @@ public class IdAndLabel implements AxisPoint<String>
 			return false;
 		if (this.getClass() != obj.getClass())
 			return false;
-		IdAndLabel other = (IdAndLabel) obj;
-		if (this.id == null)
-		{
-			if (other.id != null)
-				return false;
-		}
-		else if (!this.id.equals(other.id))
+		NumberAndLabel other = (NumberAndLabel) obj;
+		if (Double.doubleToLongBits(this.value) != Double.doubleToLongBits(other.value))
 			return false;
 		return true;
 	}

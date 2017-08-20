@@ -1,16 +1,35 @@
-package org.omnaest.svg.chart.bar;
+/*
+
+	Copyright 2017 Danny Kunz
+
+	Licensed under the Apache License, Version 2.0 (the "License");
+	you may not use this file except in compliance with the License.
+	You may obtain a copy of the License at
+
+		http://www.apache.org/licenses/LICENSE-2.0
+
+	Unless required by applicable law or agreed to in writing, software
+	distributed under the License is distributed on an "AS IS" BASIS,
+	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	See the License for the specific language governing permissions and
+	limitations under the License.
+
+
+*/
+package org.omnaest.svg.chart.types;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.TreeMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.omnaest.svg.chart.common.AbstractCartesianCoordinateChart;
-import org.omnaest.svg.chart.common.DataPoint;
+import org.omnaest.svg.chart.common.Point;
 import org.omnaest.svg.elements.SVGRectangle;
 import org.omnaest.svg.elements.base.SVGElement;
 
@@ -27,9 +46,10 @@ public class SVGBarChart extends AbstractCartesianCoordinateChart
 	}
 
 	@Override
-	protected void renderData(Stream<Stream<DataPoint>> data, Map<String, Integer> horizontalAxis, Map<String, Integer> verticalAxis, Iterator<String> colors)
+	protected void renderData(	Stream<Stream<? extends Point<?, ?>>> data, Map<String, Integer> horizontalAxis, Map<Object, Double> verticalAxis,
+								Iterator<String> colors)
 	{
-		List<Stream<DataPoint>> dataStreams = data.collect(Collectors.toList());
+		List<Stream<? extends Point<?, ?>>> dataStreams = data.collect(Collectors.toList());
 		int numberOfDataLines = dataStreams.size();
 
 		int padding = this.calculatePadding();
@@ -46,10 +66,10 @@ public class SVGBarChart extends AbstractCartesianCoordinateChart
 
 			points	.map(point ->
 			{
-				String horizontalAxisId = point.getX();
-				String verticalAxisId = point.getY();
+				String horizontalAxisId = Objects.toString(point.getX());
+				Object verticalAxisId = point.getY();
 				Integer rasterXPosition = horizontalAxis.get(horizontalAxisId);
-				Integer rasterYPosition = verticalAxis.get(verticalAxisId);
+				Double rasterYPosition = verticalAxis.get(verticalAxisId);
 				if (rasterXPosition != null && rasterYPosition != null)
 				{
 					int x = this.calculateHorizontalPosition(rasterXPosition);
@@ -71,9 +91,10 @@ public class SVGBarChart extends AbstractCartesianCoordinateChart
 						int width = sliceWidth;
 						int height = this.height - padding - y;
 
-						getLayer(1, layers).add(new SVGRectangle(x, y, width, height)	.setFillColor(color)
-																						.setStrokeColor("black")
-																						.setStrokeWidth(this.pixelFactor / 2));
+						this.getLayer(1, layers)
+							.add(new SVGRectangle(x, y, width, height)	.setFillColor(color)
+																		.setStrokeColor("black")
+																		.setStrokeWidth(this.pixelFactor / 2));
 					});
 
 			//

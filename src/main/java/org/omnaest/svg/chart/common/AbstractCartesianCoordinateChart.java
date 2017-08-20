@@ -46,34 +46,47 @@ public abstract class AbstractCartesianCoordinateChart extends AbstractChart
 		{
 			if (ii % modFactor == 0 || ii == size - 1)
 			{
+				//
+				AxisPoint<?> axisPoint = this.verticalAxisValues.get(ii);
+
 				//stroke
 				int y = this.calculateVerticalPosition(ii);
 				this.drawer.add(new SVGLine(padding - 2 * this.pixelFactor, y, padding + 2 * this.pixelFactor, y)	.setStrokeWidth(this.pixelFactor / 2)
 																													.setStrokeColor("black"));
 
 				//text
-				IdAndLabel idAndLabel = this.verticalAxisValues.get(ii);
-				String label = idAndLabel.getLabel();
-				int fontSize = SVGText.DEFAULT_FONTSIZE * 4 * this.pixelFactor / Math.max(3, Math.min(maxNumberOfVerticalAxisLabels, size));
+				String label = axisPoint.getLabel();
+				int fontSize = SVGText.DEFAULT_FONTSIZE * 4 * this.pixelFactor / Math.max(3, Math.min(maxNumberOfVerticalAxisLabels, size + 1));
 				this.drawer.add(new SVGText(0, y + fontSize / 3, label)	.setColor("black")
 																		.setFontSize(fontSize));
 			}
 		}
 	}
 
-	protected int calculateVerticalPosition(int ii)
+	protected int calculateVerticalPosition(int index)
+	{
+		AxisPoint<?> axisPoint = this.verticalAxisValues.get(index);
+		double value = this.extractNormValueFromAxisPoint(index, axisPoint);
+		return this.calculateVerticalPositionByNormValue(value);
+	}
+
+	protected int calculateVerticalPosition(double value)
+	{
+		double normValue = value / this.calculateVerticalAxisMaxValue();
+		return this.calculateVerticalPositionByNormValue(normValue);
+	}
+
+	protected int calculateVerticalPositionByNormValue(double value)
 	{
 		int padding = this.calculatePadding();
-		int verticalAxisSize = this.verticalAxisValues.size();
 		int chartAreaHeight = this.height - 2 * padding;
-		int spanHeight = verticalAxisSize > 1 ? chartAreaHeight / (verticalAxisSize - 1) : chartAreaHeight / 2;
-		int y = this.height - padding - ii * spanHeight;
+		int y = (int) Math.round(this.height - padding - value * chartAreaHeight);
 		return y;
 	}
 
 	protected int calculatePadding()
 	{
-		return this.pixelFactor * 10;
+		return this.pixelFactor * 20;
 	}
 
 	@Override
@@ -109,8 +122,8 @@ public abstract class AbstractCartesianCoordinateChart extends AbstractChart
 		int padding = this.calculatePadding();
 		int size = this.horizontalAxisValues.size();
 		int chartAreaWidth = this.width - 2 * padding;
-		int spanHeight = chartAreaWidth / (size - 1);
-		int x = padding + rasterPosition * spanHeight;
+		int spanWidth = chartAreaWidth / (size - 1);
+		int x = padding + rasterPosition * spanWidth;
 		return x;
 	}
 

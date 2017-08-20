@@ -1,9 +1,9 @@
 package org.omnaest.svg;
 
 import org.omnaest.svg.chart.CoordinateChart;
-import org.omnaest.svg.chart.bar.SVGBarChart;
-import org.omnaest.svg.chart.clock.SVGClockChart;
-import org.omnaest.svg.chart.line.SVGLineChart;
+import org.omnaest.svg.chart.types.SVGBarChart;
+import org.omnaest.svg.chart.types.SVGClockChart;
+import org.omnaest.svg.chart.types.SVGLineChart;
 
 /**
  * SVG Utils to create simple charts
