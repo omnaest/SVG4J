@@ -1,3 +1,21 @@
+/* 
+
+	Copyright 2017 Danny Kunz
+
+	Licensed under the Apache License, Version 2.0 (the "License");
+	you may not use this file except in compliance with the License.
+	You may obtain a copy of the License at
+
+		http://www.apache.org/licenses/LICENSE-2.0
+
+	Unless required by applicable law or agreed to in writing, software
+	distributed under the License is distributed on an "AS IS" BASIS,
+	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	See the License for the specific language governing permissions and
+	limitations under the License.
+	
+
+*/
 package org.omnaest.svg.model;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -24,9 +42,35 @@ public class RawSVGRectangle extends RawSVGElement
 	@XmlAttribute
 	private String style;
 
+	@XmlAttribute
+	private String rx;
+
+	@XmlAttribute
+	private String ry;
+
+	public String getRx()
+	{
+		return this.rx;
+	}
+
+	public void setRx(String rx)
+	{
+		this.rx = rx;
+	}
+
+	public String getRy()
+	{
+		return this.ry;
+	}
+
+	public void setRy(String ry)
+	{
+		this.ry = ry;
+	}
+
 	public String getX()
 	{
-		return x;
+		return this.x;
 	}
 
 	public RawSVGRectangle setX(String x)
@@ -37,7 +81,7 @@ public class RawSVGRectangle extends RawSVGElement
 
 	public String getY()
 	{
-		return y;
+		return this.y;
 	}
 
 	public RawSVGRectangle setY(String y)
@@ -48,7 +92,7 @@ public class RawSVGRectangle extends RawSVGElement
 
 	public String getWidth()
 	{
-		return width;
+		return this.width;
 	}
 
 	public RawSVGRectangle setWidth(String width)
@@ -59,7 +103,7 @@ public class RawSVGRectangle extends RawSVGElement
 
 	public String getHeight()
 	{
-		return height;
+		return this.height;
 	}
 
 	public RawSVGRectangle setHeight(String height)
@@ -68,11 +112,13 @@ public class RawSVGRectangle extends RawSVGElement
 		return this;
 	}
 
+	@Override
 	public String getStyle()
 	{
-		return style;
+		return this.style;
 	}
 
+	@Override
 	public RawSVGRectangle setStyle(String style)
 	{
 		this.style = style;
@@ -82,7 +128,7 @@ public class RawSVGRectangle extends RawSVGElement
 	@Override
 	public String toString()
 	{
-		return "RawSVGRectangle [x=" + x + ", y=" + y + ", width=" + width + ", height=" + height + ", style=" + style + "]";
+		return "RawSVGRectangle [x=" + this.x + ", y=" + this.y + ", width=" + this.width + ", height=" + this.height + ", style=" + this.style + "]";
 	}
 
 }
