@@ -1,3 +1,21 @@
+/*
+
+	Copyright 2017 Danny Kunz
+
+	Licensed under the Apache License, Version 2.0 (the "License");
+	you may not use this file except in compliance with the License.
+	You may obtain a copy of the License at
+
+		http://www.apache.org/licenses/LICENSE-2.0
+
+	Unless required by applicable law or agreed to in writing, software
+	distributed under the License is distributed on an "AS IS" BASIS,
+	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	See the License for the specific language governing permissions and
+	limitations under the License.
+
+
+*/
 package org.omnaest.svg.model;
 
 import java.util.ArrayList;
@@ -19,7 +37,9 @@ import javax.xml.bind.annotation.XmlSeeAlso;
 				RawSVGPolyline.class,
 				RawSVGRectangle.class,
 				RawSVGText.class,
-				RawSVGDefinition.class })
+				RawSVGDefinition.class,
+				RawSVGAnkerElement.class,
+				RawSVGStyle.class })
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlRootElement(name = "svg")
 public class RawSVGRoot
@@ -50,7 +70,7 @@ public class RawSVGRoot
 
 	public String getId()
 	{
-		return id;
+		return this.id;
 	}
 
 	public void setId(String id)
@@ -60,27 +80,29 @@ public class RawSVGRoot
 
 	public String getWidth()
 	{
-		return width;
+		return this.width;
 	}
 
-	public void setWidth(String width)
+	public RawSVGRoot setWidth(String width)
 	{
 		this.width = width;
+		return this;
 	}
 
 	public String getHeight()
 	{
-		return height;
+		return this.height;
 	}
 
-	public void setHeight(String height)
+	public RawSVGRoot setHeight(String height)
 	{
 		this.height = height;
+		return this;
 	}
 
 	public String getVersion()
 	{
-		return version;
+		return this.version;
 	}
 
 	public void setVersion(String version)
@@ -90,7 +112,7 @@ public class RawSVGRoot
 
 	public List<RawSVGElement> getElements()
 	{
-		return elements;
+		return this.elements;
 	}
 
 	public void setElements(List<RawSVGElement> elements)
@@ -101,8 +123,8 @@ public class RawSVGRoot
 	@Override
 	public String toString()
 	{
-		return "RawSVGRoot [id=" + id + ", width=" + width + ", height=" + height + ", version=" + version + ", elements=" + elements + ", baseProfile="
-				+ baseProfile + ", viewBox=" + viewBox + "]";
+		return "RawSVGRoot [id=" + this.id + ", width=" + this.width + ", height=" + this.height + ", version=" + this.version + ", elements=" + this.elements
+				+ ", baseProfile=" + this.baseProfile + ", viewBox=" + this.viewBox + "]";
 	}
 
 	public void setBaseProfile(String baseProfile)
@@ -113,7 +135,7 @@ public class RawSVGRoot
 
 	public String getBaseProfile()
 	{
-		return baseProfile;
+		return this.baseProfile;
 	}
 
 	public void setViewBox(String viewBox)
@@ -124,7 +146,7 @@ public class RawSVGRoot
 
 	public String getViewBox()
 	{
-		return viewBox;
+		return this.viewBox;
 	}
 
 	public void addScript(String script)
@@ -140,7 +162,7 @@ public class RawSVGRoot
 
 	public List<RawSVGScript> getScripts()
 	{
-		return scripts;
+		return this.scripts;
 	}
 
 	public void setScripts(List<RawSVGScript> scripts)

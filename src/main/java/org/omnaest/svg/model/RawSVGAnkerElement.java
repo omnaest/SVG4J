@@ -18,55 +18,55 @@
 */
 package org.omnaest.svg.model;
 
+import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlValue;
+import javax.xml.bind.annotation.XmlElementRef;
+import javax.xml.bind.annotation.XmlRootElement;
 
-/**
- * Please register any subclass at {@link RawSVGRoot}
- * 
- * @see RawSVGRoot
- * @author omnaest
- */
+@XmlRootElement(name = "a")
 @XmlAccessorType(XmlAccessType.NONE)
-public abstract class RawSVGElement
+public class RawSVGAnkerElement extends RawSVGElement
 {
-	@XmlAttribute
-	protected String style;
+	@XmlAttribute(namespace = "http://www.w3.org/1999/xlink")
+	private String href;
 
-	@XmlAttribute
-	protected String transform;
+	@XmlElementRef
+	private List<RawSVGElement> elements;
 
-	@XmlValue
-	protected String content;
-
-	public String getStyle()
+	public RawSVGAnkerElement()
 	{
-		return this.style;
+		super();
 	}
 
-	public RawSVGElement setStyle(String style)
+	public List<RawSVGElement> getElements()
 	{
-		this.style = style;
+		return this.elements;
+	}
+
+	public RawSVGAnkerElement setElements(List<RawSVGElement> elements)
+	{
+		this.elements = elements;
 		return this;
 	}
 
-	public String getTransform()
+	public String getHref()
 	{
-		return this.transform;
+		return this.href;
 	}
 
-	public RawSVGElement setTransform(String transform)
+	public RawSVGAnkerElement setHref(String href)
 	{
-		this.transform = transform;
+		this.href = href;
 		return this;
-
 	}
 
-	public String getContent()
+	@Override
+	public String toString()
 	{
-		return this.content;
+		return "RawSVGAnkerElement [href=" + this.href + ", elements=" + this.elements + "]";
 	}
 
 }

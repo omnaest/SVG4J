@@ -1,5 +1,24 @@
+/*
+
+	Copyright 2017 Danny Kunz
+
+	Licensed under the Apache License, Version 2.0 (the "License");
+	you may not use this file except in compliance with the License.
+	You may obtain a copy of the License at
+
+		http://www.apache.org/licenses/LICENSE-2.0
+
+	Unless required by applicable law or agreed to in writing, software
+	distributed under the License is distributed on an "AS IS" BASIS,
+	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	See the License for the specific language governing permissions and
+	limitations under the License.
+
+
+*/
 package org.omnaest.svg.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -7,30 +26,33 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSeeAlso;
 
 @XmlRootElement(name = "defs")
 @XmlAccessorType(XmlAccessType.NONE)
+@XmlSeeAlso({ RawSVGLinearGradient.class, RawSVGStyle.class })
 public class RawSVGDefinition extends RawSVGElement
 {
 	@XmlAttribute
 	private String id;
 
 	@XmlElementRef
-	private List<RawSVGLinearGradient> elements;
+	private List<RawSVGDefinitionElement> elements = new ArrayList<>();
 
-	public List<RawSVGLinearGradient> getElements()
+	public List<RawSVGDefinitionElement> getElements()
 	{
-		return elements;
+		return this.elements;
 	}
 
-	public void setElements(List<RawSVGLinearGradient> elements)
+	@SuppressWarnings("unchecked")
+	public void setElements(List<? extends RawSVGDefinitionElement> elements)
 	{
-		this.elements = elements;
+		this.elements = (List<RawSVGDefinitionElement>) elements;
 	}
 
 	public String getId()
 	{
-		return id;
+		return this.id;
 	}
 
 	public void setId(String id)
@@ -41,7 +63,16 @@ public class RawSVGDefinition extends RawSVGElement
 	@Override
 	public String toString()
 	{
-		return "RawSVGDefinitionElement [id=" + id + ", elements=" + elements + "]";
+		return "RawSVGDefinitionElement [id=" + this.id + ", elements=" + this.elements + "]";
+	}
+
+	public RawSVGDefinition addElement(RawSVGStyle element)
+	{
+		if (element != null)
+		{
+			this.elements.add(element);
+		}
+		return this;
 	}
 
 }

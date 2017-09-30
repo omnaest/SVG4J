@@ -22,8 +22,11 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
@@ -31,8 +34,11 @@ import java.util.stream.Stream;
 
 import org.apache.commons.io.FileUtils;
 import org.omnaest.svg.elements.base.SVGElement;
+import org.omnaest.svg.model.RawSVGAnkerElement;
+import org.omnaest.svg.model.RawSVGDefinition;
 import org.omnaest.svg.model.RawSVGElement;
 import org.omnaest.svg.model.RawSVGRoot;
+import org.omnaest.svg.model.RawSVGStyle;
 import org.omnaest.svg.utils.XMLHelper;
 
 /**
@@ -42,8 +48,9 @@ import org.omnaest.svg.utils.XMLHelper;
 public class SVGDrawer
 {
 	private RawSVGRoot			rawSVGRoot;
-	private List<SVGElement>	elements			= new ArrayList<>();
-	private AtomicInteger		embedReloadTimer	= new AtomicInteger(0);
+	private List<SVGElement>	elements				= new ArrayList<>();
+	private AtomicInteger		embedReloadTimer		= new AtomicInteger(0);
+	private AtomicBoolean		enableCSSForAnkerLinks	= new AtomicBoolean(false);
 
 	public static class SVGRenderResult
 	{
@@ -107,14 +114,12 @@ public class SVGDrawer
 	public SVGDrawer setEmbedReloadTimer(boolean embedReloadTimer)
 	{
 		this.embedReloadTimer.set(1000);
-		;
 		return this;
 	}
 
 	public SVGDrawer setEmbedReloadTimer(int time, TimeUnit timeUnit)
 	{
 		this.embedReloadTimer.set((int) timeUnit.toMillis(time));
-		;
 		return this;
 	}
 
@@ -134,6 +139,8 @@ public class SVGDrawer
 	{
 		RawSVGRoot svgRoot = this.rawSVGRoot;
 
+		Map<String, Object> context = new HashMap<>();
+
 		List<RawSVGElement> svgElements = new ArrayList<>();
 		if (svgRoot.getElements() != null)
 		{
@@ -142,7 +149,9 @@ public class SVGDrawer
 		svgRoot.setElements(svgElements);
 		for (SVGElement element : this.elements)
 		{
-			svgElements.add(element.render());
+			RawSVGElement rawSVGElement = element.render();
+			this.visitRenderElement(rawSVGElement, svgElements, context);
+			svgElements.add(rawSVGElement);
 		}
 
 		if (this.isEmbedReloadTimer())
@@ -158,6 +167,18 @@ public class SVGDrawer
 		}
 
 		return new SVGRenderResult(svgRoot);
+
+	}
+
+	private void visitRenderElement(RawSVGElement rawSVGElement, List<RawSVGElement> svgElements, Map<String, Object> context)
+	{
+		if (rawSVGElement instanceof RawSVGAnkerElement)
+		{
+			if (this.enableCSSForAnkerLinks.get())
+			{
+				this.addCSSForAnkerLinks(svgElements, context);
+			}
+		}
 
 	}
 
@@ -235,6 +256,34 @@ public class SVGDrawer
 		this.addRawElements(svgDrawer	.renderAsResult()
 										.getRawSVGRoot()
 										.getElements());
+		return this;
+	}
+
+	public SVGDrawer enableCSSForAnkerLinks()
+	{
+		this.enableCSSForAnkerLinks.set(true);
+		return this;
+	}
+
+	public void addCSSForAnkerLinks(List<RawSVGElement> svgElements, Map<String, Object> context)
+	{
+		String contextAlreadyAddedMarkerKey = "cssForAnkerAdded";
+		if (!context.containsKey(contextAlreadyAddedMarkerKey))
+		{
+			StringBuilder sb = new StringBuilder();
+			sb.append("a use {fill: #09c; stroke: #09c;}\n");
+			sb.append("a:hover use {fill: skyblue; stroke: skyblue;}\n");
+			sb.append("a text {fill: #09c; text-decoration: underline;}\n");
+			sb.append("a:hover text {fill: skyblue; }\n");
+			svgElements.add(new RawSVGDefinition().addElement(new RawSVGStyle().setContent(sb.toString())));
+			context.put(contextAlreadyAddedMarkerKey, true);
+		}
+	}
+
+	public SVGDrawer setScreenDimensions(int width, int height)
+	{
+		this.rawSVGRoot	.setWidth(width + "px")
+						.setHeight(height + "px");
 		return this;
 	}
 }

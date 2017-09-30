@@ -1,3 +1,21 @@
+/*
+
+	Copyright 2017 Danny Kunz
+
+	Licensed under the Apache License, Version 2.0 (the "License");
+	you may not use this file except in compliance with the License.
+	You may obtain a copy of the License at
+
+		http://www.apache.org/licenses/LICENSE-2.0
+
+	Unless required by applicable law or agreed to in writing, software
+	distributed under the License is distributed on an "AS IS" BASIS,
+	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	See the License for the specific language governing permissions and
+	limitations under the License.
+
+
+*/
 package org.omnaest.svg.model;
 
 import java.util.List;
@@ -10,7 +28,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "linearGradient")
 @XmlAccessorType(XmlAccessType.NONE)
-public class RawSVGLinearGradient extends RawSVGElement
+public class RawSVGLinearGradient extends RawSVGDefinitionElement
 {
 	@XmlAttribute
 	private String id;
@@ -41,7 +59,7 @@ public class RawSVGLinearGradient extends RawSVGElement
 
 	public String getHref()
 	{
-		return href;
+		return this.href;
 	}
 
 	public void setHref(String href)
@@ -51,7 +69,7 @@ public class RawSVGLinearGradient extends RawSVGElement
 
 	public String getId()
 	{
-		return id;
+		return this.id;
 	}
 
 	public void setId(String id)
@@ -61,7 +79,7 @@ public class RawSVGLinearGradient extends RawSVGElement
 
 	public String getGradientTransform()
 	{
-		return gradientTransform;
+		return this.gradientTransform;
 	}
 
 	public void setGradientTransform(String gradientTransform)
@@ -71,7 +89,7 @@ public class RawSVGLinearGradient extends RawSVGElement
 
 	public String getGradientUnits()
 	{
-		return gradientUnits;
+		return this.gradientUnits;
 	}
 
 	public void setGradientUnits(String gradientUnits)
@@ -81,7 +99,7 @@ public class RawSVGLinearGradient extends RawSVGElement
 
 	public String getX1()
 	{
-		return x1;
+		return this.x1;
 	}
 
 	public void setX1(String x1)
@@ -91,7 +109,7 @@ public class RawSVGLinearGradient extends RawSVGElement
 
 	public String getY1()
 	{
-		return y1;
+		return this.y1;
 	}
 
 	public void setY1(String y1)
@@ -101,7 +119,7 @@ public class RawSVGLinearGradient extends RawSVGElement
 
 	public String getX2()
 	{
-		return x2;
+		return this.x2;
 	}
 
 	public void setX2(String x2)
@@ -111,7 +129,7 @@ public class RawSVGLinearGradient extends RawSVGElement
 
 	public String getY2()
 	{
-		return y2;
+		return this.y2;
 	}
 
 	public void setY2(String y2)
@@ -121,7 +139,7 @@ public class RawSVGLinearGradient extends RawSVGElement
 
 	public List<RawSVGStopElement> getStops()
 	{
-		return stops;
+		return this.stops;
 	}
 
 	public void setStops(List<RawSVGStopElement> stops)
@@ -132,9 +150,9 @@ public class RawSVGLinearGradient extends RawSVGElement
 	@Override
 	public String toString()
 	{
-		return "RawSVGLinearGradient [id=" + id + ", href=" + href + ", gradientTransform=" + gradientTransform + ", gradientUnits=" + gradientUnits + ", x1="
-				+ x1 + ", y1=" + y1 + ", x2=" + x2 + ", y2=" + y2 + ", stops=" + stops + ", style=" + style + ", transform=" + transform + ", content="
-				+ content + "]";
+		return "RawSVGLinearGradient [id=" + this.id + ", href=" + this.href + ", gradientTransform=" + this.gradientTransform + ", gradientUnits="
+				+ this.gradientUnits + ", x1=" + this.x1 + ", y1=" + this.y1 + ", x2=" + this.x2 + ", y2=" + this.y2 + ", stops=" + this.stops + ", style="
+				+ this.style + ", transform=" + this.transform + ", content=" + this.content + "]";
 	}
 
 }

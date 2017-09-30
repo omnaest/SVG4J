@@ -21,52 +21,35 @@ package org.omnaest.svg.model;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlValue;
+import javax.xml.bind.annotation.XmlRootElement;
 
-/**
- * Please register any subclass at {@link RawSVGRoot}
- * 
- * @see RawSVGRoot
- * @author omnaest
- */
+@XmlRootElement(name = "style")
 @XmlAccessorType(XmlAccessType.NONE)
-public abstract class RawSVGElement
+public class RawSVGStyle extends RawSVGDefinitionElement
 {
 	@XmlAttribute
-	protected String style;
+	private String type = "text/css";
 
-	@XmlAttribute
-	protected String transform;
-
-	@XmlValue
-	protected String content;
-
-	public String getStyle()
-	{
-		return this.style;
-	}
-
-	public RawSVGElement setStyle(String style)
-	{
-		this.style = style;
-		return this;
-	}
-
-	public String getTransform()
-	{
-		return this.transform;
-	}
-
-	public RawSVGElement setTransform(String transform)
-	{
-		this.transform = transform;
-		return this;
-
-	}
-
+	@Override
 	public String getContent()
 	{
 		return this.content;
+	}
+
+	public RawSVGStyle setContent(String content)
+	{
+		this.content = content;
+		return this;
+	}
+
+	public String getType()
+	{
+		return this.type;
+	}
+
+	public void setType(String type)
+	{
+		this.type = type;
 	}
 
 }
