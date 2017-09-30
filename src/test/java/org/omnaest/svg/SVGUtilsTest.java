@@ -51,7 +51,7 @@ public class SVGUtilsTest
 	}
 
 	@Test
-	//@Ignore
+	@Ignore
 	public void testAnker() throws IOException
 	{
 		SVGUtils.getDrawer(100, 100)
