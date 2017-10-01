@@ -80,7 +80,10 @@ public class SVGDrawer
 
 		public void writeToFile(File file) throws IOException
 		{
-			FileUtils.writeStringToFile(file, this.getAsSVG(), "utf-8");
+			if (file != null)
+			{
+				FileUtils.writeStringToFile(file, this.getAsSVG(), "utf-8");
+			}
 		}
 
 	}
