@@ -1,3 +1,21 @@
+/*
+
+	Copyright 2017 Danny Kunz
+
+	Licensed under the Apache License, Version 2.0 (the "License");
+	you may not use this file except in compliance with the License.
+	You may obtain a copy of the License at
+
+		http://www.apache.org/licenses/LICENSE-2.0
+
+	Unless required by applicable law or agreed to in writing, software
+	distributed under the License is distributed on an "AS IS" BASIS,
+	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	See the License for the specific language governing permissions and
+	limitations under the License.
+
+
+*/
 package org.omnaest.svg.elements;
 
 import org.omnaest.svg.elements.base.SVGElement;
@@ -13,6 +31,7 @@ public class SVGText implements SVGElement
 	private int		fontSize	= DEFAULT_FONTSIZE;
 	private String	color		= "black";
 	private int		rotation	= 0;
+	private double	opacity		= 1.0;
 
 	public SVGText(int x, int y, String text)
 	{
@@ -24,7 +43,7 @@ public class SVGText implements SVGElement
 
 	public String getColor()
 	{
-		return color;
+		return this.color;
 	}
 
 	public SVGText setColor(String color)
@@ -35,17 +54,17 @@ public class SVGText implements SVGElement
 
 	public int getX()
 	{
-		return x;
+		return this.x;
 	}
 
 	public int getY()
 	{
-		return y;
+		return this.y;
 	}
 
 	public String getText()
 	{
-		return text;
+		return this.text;
 	}
 
 	public SVGText setFontSize(int fontSize)
@@ -56,7 +75,7 @@ public class SVGText implements SVGElement
 
 	public int getFontSize()
 	{
-		return fontSize;
+		return this.fontSize;
 	}
 
 	@Override
@@ -65,16 +84,21 @@ public class SVGText implements SVGElement
 		return new RawSVGText()	.setX("" + this.x)
 								.setY("" + this.y)
 								.setFill(this.color)
+								.setOpacity(this.opacity)
 								.setStyle("font-size:" + this.fontSize + "px")
 								.setTransform("rotate(" + this.rotation + "," + (this.x + this.fontSize / 2) + "," + (this.y + this.fontSize / 2) + ")")
-								.setText(text);
-		//		return "<text x=\"" + this.x + "\" y=\"" + this.y + "\" fill=\"" + color + "\" style=\"font-size:" + this.fontSize + "px\" transform=\"rotate("
-		//				+ this.rotation + "," + (this.x + this.fontSize / 2) + "," + (this.y + this.fontSize / 2) + ")\" >" + this.text + "</text>";
+								.setText(this.text);
 	}
 
 	public SVGText setRotation(int rotation)
 	{
 		this.rotation = rotation;
+		return this;
+	}
+
+	public SVGElement setOpacity(double opacity)
+	{
+		this.opacity = opacity;
 		return this;
 	}
 
