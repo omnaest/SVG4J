@@ -69,7 +69,7 @@ public class SVGBarChart extends AbstractCartesianCoordinateChart
 				String horizontalAxisId = Objects.toString(point.getX());
 				Object verticalAxisId = point.getY();
 				Integer rasterXPosition = horizontalAxis.get(horizontalAxisId);
-				Double rasterYPosition = verticalAxis.get(verticalAxisId);
+				Double rasterYPosition = verticalAxisId instanceof Double ? (Double) verticalAxisId : verticalAxis.get(verticalAxisId);
 				if (rasterXPosition != null && rasterYPosition != null)
 				{
 					int x = this.calculateHorizontalPosition(rasterXPosition);

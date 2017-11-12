@@ -110,7 +110,7 @@ public abstract class AbstractCartesianCoordinateChart extends AbstractChart
 			//text
 			IdAndLabel idAndLabel = this.horizontalAxisValues.get(ii);
 			String label = idAndLabel.getLabel();
-			int fontSize = SVGText.DEFAULT_FONTSIZE * 20 * this.pixelFactor / Math.max(2, size);
+			int fontSize = SVGText.DEFAULT_FONTSIZE * 10 * this.pixelFactor / Math.max(2, size) / (label.length() / 2);
 			this.drawer.add(new SVGText(x - fontSize / 3, this.height, label)	.setColor("black")
 																				.setFontSize(fontSize)
 																				.setRotation(this.horizontalAxisOptions.getRotation()));
@@ -122,7 +122,7 @@ public abstract class AbstractCartesianCoordinateChart extends AbstractChart
 		int padding = this.calculatePadding();
 		int size = this.horizontalAxisValues.size();
 		int chartAreaWidth = this.width - 2 * padding;
-		int spanWidth = chartAreaWidth / (size - 1);
+		int spanWidth = chartAreaWidth / Math.max(1, size - 1);
 		int x = padding + rasterPosition * spanWidth;
 		return x;
 	}
