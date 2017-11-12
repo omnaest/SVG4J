@@ -62,10 +62,10 @@ public class SVGRedGreenDeviationRangeChart implements RedGreenDeviationRangeCha
 	public RedGreenDeviationRangeChart addGreenRange(double center, double deviation)
 	{
 
-		double min = center - deviation;
-		double max = center + deviation;
-		double minGreen = center - deviation * 1.2;
-		double maxGreen = center + deviation * 1.2;
+		double min = Math.max(center - deviation, this.min);
+		double max = Math.min(center + deviation, this.max);
+		double minGreen = Math.max(center - deviation * 1.2, this.min);
+		double maxGreen = Math.min(center + deviation * 1.2, this.max);
 		double fadeOutOpacity = 0.0;
 		this.rangeChart.addRange(Color.GREEN, minGreen, maxGreen, center, fadeOutOpacity);
 

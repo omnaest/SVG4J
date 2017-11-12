@@ -122,7 +122,8 @@ public class SVGRangeChart implements RangeChart
 	public SVGRangeChart(int width, int height)
 	{
 		super();
-		this.drawer = SVGUtils.getDrawer(width, height);
+		this.drawer = SVGUtils	.getDrawer(width, height)
+								.setScreenDimensions(width, height);
 
 		double bodyRelativeHeight = 0.5;
 		this.labelDrawBox = new DrawBox(this.drawer, 0, 0, (int) (0.2 * width), (int) (height * bodyRelativeHeight));
@@ -196,7 +197,7 @@ public class SVGRangeChart implements RangeChart
 	{
 		this.labelDrawBox	.addText(5, this.labelDrawBox.getHeight() / 2, label)
 							.setColor(Color.BLACK.name())
-							.setFontSize((int) (this.labelDrawBox.getHeight() * 0.5));
+							.setFontSize((int) (this.labelDrawBox.getHeight() * 0.3));
 		return this;
 	}
 
@@ -218,11 +219,11 @@ public class SVGRangeChart implements RangeChart
 	{
 		double relativeX = this.calculateHorizontalRelativePosition(value);
 		int someLeft = (int) (relativeX * this.scaleDrawBox.getWidth());
-		int y = (int) (this.scaleDrawBox.getHeight() * 0.5);
+		int y = (int) (this.scaleDrawBox.getHeight() * 0.3);
 		this.scaleDrawBox	.addLine(someLeft, 0, someLeft, (int) (y * 0.75))
 							.setStrokeWidth(10);
 
-		int fontSize = (int) (this.scaleDrawBox.getHeight() * 0.5);
+		int fontSize = (int) (this.scaleDrawBox.getHeight() * 0.3);
 		String text = String.format(Locale.US, "%3.2f", value);
 
 		if (ScalePosition.LOW.equals(position))
