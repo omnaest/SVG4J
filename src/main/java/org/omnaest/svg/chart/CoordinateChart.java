@@ -26,7 +26,7 @@ import org.omnaest.svg.chart.common.AxisPoint;
 import org.omnaest.svg.chart.common.IdAndLabel;
 import org.omnaest.svg.chart.common.Point;
 
-public interface CoordinateChart
+public interface CoordinateChart extends Chart
 {
 
 	CoordinateChart addVerticalAxis(List<? extends AxisPoint<?>> values);
@@ -38,8 +38,6 @@ public interface CoordinateChart
 	CoordinateChart addHorizontalAxis(List<IdAndLabel> values, AxisOptions options);
 
 	CoordinateChart setColors(List<String> colors);
-
-	String render();
 
 	CoordinateChart addData(Stream<? extends Stream<? extends Point<?, ?>>> data);
 
