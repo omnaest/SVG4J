@@ -21,7 +21,6 @@ package org.omnaest.svg;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,6 +32,10 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.commons.io.FileUtils;
+import org.omnaest.svg.component.AbstractSVGElementConsumer;
+import org.omnaest.svg.component.BoundedAreaImpl;
+import org.omnaest.svg.component.SVGElementAndRawElementConsumer;
+import org.omnaest.svg.component.TranslationAreaImpl;
 import org.omnaest.svg.elements.base.SVGElement;
 import org.omnaest.svg.model.RawSVGAnkerElement;
 import org.omnaest.svg.model.RawSVGDefinition;
@@ -45,12 +48,54 @@ import org.omnaest.svg.utils.XMLHelper;
  * @see SVGUtils
  * @author omnaest
  */
-public class SVGDrawer
+public class SVGDrawer extends AbstractSVGElementConsumer<SVGDrawer>
 {
 	private RawSVGRoot			rawSVGRoot;
 	private List<SVGElement>	elements				= new ArrayList<>();
 	private AtomicInteger		embedReloadTimer		= new AtomicInteger(0);
 	private AtomicBoolean		enableCSSForAnkerLinks	= new AtomicBoolean(false);
+
+	public static interface GenericTranslationArea<TA extends GenericTranslationArea<TA>> extends SVGElementAndRawElementConsumer<TA>
+	{
+		TA withTranslationY(double y);
+
+		TA withTranslationX(double x);
+
+		TA withRelativeTranslationX(double x);
+
+		TA withRelativeTranslationY(double y);
+	}
+
+	public static interface TranslationArea extends GenericTranslationArea<TranslationArea>
+	{
+	}
+
+	public static interface BoundedArea extends GenericTranslationArea<BoundedArea>
+	{
+		BoundedArea withHeight(double height);
+
+		BoundedArea withWidth(double width);
+
+		BoundedArea withRelativeHeight(double relativeHeight);
+
+		BoundedArea withRelativeWidth(double relativeWidth);
+
+		double getRawWidth();
+
+		double getRawHeight();
+
+		BoundedArea withScalingWidth(double scalingWidth);
+
+		BoundedArea withScalingHeight(double scalingHeight);
+
+		double getWidth();
+
+		double getHeight();
+
+		BoundedArea newSubArea();
+
+		BoundedArea withRelativeSizedBorder(double relativeBorderSize);
+	}
 
 	public static class SVGRenderResult
 	{
@@ -196,8 +241,8 @@ public class SVGDrawer
 		svgRoot = new RawSVGRoot();
 		svgRoot.setVersion("1.1");
 		svgRoot.setBaseProfile("full");
-		svgRoot.setWidth("1200px");
-		svgRoot.setHeight("700px");
+		svgRoot.setWidth(width + "px");
+		svgRoot.setHeight(width + "px");
 		svgRoot.setViewBox("" + originX + " " + originY + " " + width + " " + height);
 		return svgRoot;
 	}
@@ -212,21 +257,10 @@ public class SVGDrawer
 	 * @param element
 	 * @return
 	 */
+	@Override
 	public SVGDrawer add(SVGElement element)
 	{
 		this.elements.add(element);
-		return this;
-	}
-
-	public SVGDrawer addAll(Iterable<SVGElement> elements)
-	{
-		if (elements != null)
-		{
-			for (SVGElement element : elements)
-			{
-				this.add(element);
-			}
-		}
 		return this;
 	}
 
@@ -239,26 +273,19 @@ public class SVGDrawer
 		return this;
 	}
 
-	public SVGDrawer addRawElements(Collection<RawSVGElement> rawElements)
+	@Override
+	public SVGDrawer addRawElement(RawSVGElement rawElement)
 	{
 		List<RawSVGElement> elements = new ArrayList<>();
 		if (this.rawSVGRoot.getElements() != null)
 		{
 			elements.addAll(this.rawSVGRoot.getElements());
 		}
-		if (rawElements != null)
+		if (rawElement != null)
 		{
-			elements.addAll(rawElements);
+			elements.add(rawElement);
 		}
 		this.rawSVGRoot.setElements(elements);
-		return this;
-	}
-
-	public SVGDrawer addRawElements(SVGDrawer svgDrawer)
-	{
-		this.addRawElements(svgDrawer	.renderAsResult()
-										.getRawSVGRoot()
-										.getElements());
 		return this;
 	}
 
@@ -283,10 +310,44 @@ public class SVGDrawer
 		}
 	}
 
-	public SVGDrawer setScreenDimensions(int width, int height)
+	public static interface ResolutionProvider
+	{
+		public int getWidth();
+
+		public int getHeight();
+	}
+
+	public SVGDrawer withScreenDimensions(ResolutionProvider displayResolution)
+	{
+		return this.withScreenDimensions(displayResolution.getWidth(), displayResolution.getHeight());
+	}
+
+	public SVGDrawer withScreenDimensions(int width, int height)
 	{
 		this.rawSVGRoot	.setWidth(width + "px")
 						.setHeight(height + "px");
 		return this;
+	}
+
+	public TranslationArea newTranslationArea()
+	{
+		return new TranslationAreaImpl(this, () -> this.getWidth(), () -> this.getHeight());
+	}
+
+	public BoundedArea newBoundedArea()
+	{
+		return new BoundedAreaImpl(this, () -> this.getWidth(), () -> this.getHeight());
+	}
+
+	public double getWidth()
+	{
+		return this.rawSVGRoot	.getParsedViewBox()
+								.getWidth();
+	}
+
+	public double getHeight()
+	{
+		return this.rawSVGRoot	.getParsedViewBox()
+								.getHeight();
 	}
 }

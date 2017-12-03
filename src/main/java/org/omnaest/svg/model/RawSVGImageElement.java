@@ -1,3 +1,21 @@
+/*
+
+	Copyright 2017 Danny Kunz
+
+	Licensed under the Apache License, Version 2.0 (the "License");
+	you may not use this file except in compliance with the License.
+	You may obtain a copy of the License at
+
+		http://www.apache.org/licenses/LICENSE-2.0
+
+	Unless required by applicable law or agreed to in writing, software
+	distributed under the License is distributed on an "AS IS" BASIS,
+	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	See the License for the specific language governing permissions and
+	limitations under the License.
+
+
+*/
 package org.omnaest.svg.model;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -7,22 +25,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "image")
 @XmlAccessorType(XmlAccessType.NONE)
-public class RawSVGImageElement extends RawSVGElement
+public class RawSVGImageElement extends RawSVGXYLocatedWithWidthAndHeightElement
 {
 	@XmlAttribute
 	private String id;
-
-	@XmlAttribute
-	private String width;
-
-	@XmlAttribute
-	private String height;
-
-	@XmlAttribute
-	private String x;
-
-	@XmlAttribute
-	private String y;
 
 	@XmlAttribute
 	private String style;
@@ -33,22 +39,26 @@ public class RawSVGImageElement extends RawSVGElement
 	@XmlAttribute(namespace = "http://www.w3.org/1999/xlink")
 	private String href;
 
+	@Override
 	public String getTransform()
 	{
-		return transform;
+		return this.transform;
 	}
 
+	@Override
 	public RawSVGImageElement setTransform(String transform)
 	{
 		super.setTransform(transform);
 		return this;
 	}
 
+	@Override
 	public String getStyle()
 	{
-		return style;
+		return this.style;
 	}
 
+	@Override
 	public RawSVGImageElement setStyle(String style)
 	{
 		super.setStyle(style);
@@ -57,7 +67,7 @@ public class RawSVGImageElement extends RawSVGElement
 
 	public String getHref()
 	{
-		return href;
+		return this.href;
 	}
 
 	public void setHref(String href)
@@ -67,7 +77,7 @@ public class RawSVGImageElement extends RawSVGElement
 
 	public String getId()
 	{
-		return id;
+		return this.id;
 	}
 
 	public void setId(String id)
@@ -75,51 +85,45 @@ public class RawSVGImageElement extends RawSVGElement
 		this.id = id;
 	}
 
-	public String getWidth()
+	@Override
+	public RawSVGImageElement setWidth(String width)
 	{
-		return width;
+		super.setWidth(width);
+		return this;
 	}
 
-	public void setWidth(String width)
+	@Override
+	public RawSVGImageElement setHeight(String height)
 	{
-		this.width = width;
+		super.setHeight(height);
+		return this;
 	}
 
-	public String getHeight()
-	{
-		return height;
-	}
-
-	public void setHeight(String height)
-	{
-		this.height = height;
-	}
-
+	@Override
 	public String getX()
 	{
-		return x;
+		return this.x;
 	}
 
-	public void setX(String x)
+	@Override
+	public RawSVGImageElement setX(String x)
 	{
-		this.x = x;
+		super.setX(x);
+		return this;
 	}
 
-	public String getY()
+	@Override
+	public RawSVGImageElement setY(String y)
 	{
-		return y;
-	}
-
-	public void setY(String y)
-	{
-		this.y = y;
+		super.setY(y);
+		return this;
 	}
 
 	@Override
 	public String toString()
 	{
-		return "RawSVGImageElement [id=" + id + ", width=" + width + ", height=" + height + ", x=" + x + ", y=" + y + ", style=" + style + ", transform="
-				+ transform + ", href=" + href + "]";
+		return "RawSVGImageElement [id=" + this.id + ", width=" + this.getWidth() + ", height=" + this.getHeight() + ", x=" + this.x + ", y=" + this.y
+				+ ", style=" + this.style + ", transform=" + this.transform + ", href=" + this.href + "]";
 	}
 
 }

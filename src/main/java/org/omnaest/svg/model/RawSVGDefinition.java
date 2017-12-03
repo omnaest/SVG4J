@@ -75,4 +75,9 @@ public class RawSVGDefinition extends RawSVGElement
 		return this;
 	}
 
+	@Override
+	public RawSVGTransformer transformer()
+	{
+		return new IgnoringRawSVGTransformer(this);
+	}
 }

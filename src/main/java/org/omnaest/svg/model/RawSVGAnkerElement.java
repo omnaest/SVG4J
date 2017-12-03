@@ -69,4 +69,10 @@ public class RawSVGAnkerElement extends RawSVGElement
 		return "RawSVGAnkerElement [href=" + this.href + ", elements=" + this.elements + "]";
 	}
 
+	@Override
+	public RawSVGTransformer transformer()
+	{
+		return new IgnoringRawSVGTransformer(this);
+	}
+
 }

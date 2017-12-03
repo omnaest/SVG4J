@@ -52,4 +52,10 @@ public class RawSVGStyle extends RawSVGDefinitionElement
 		this.type = type;
 	}
 
+	@Override
+	public RawSVGTransformer transformer()
+	{
+		return new IgnoringRawSVGTransformer(this);
+	}
+
 }

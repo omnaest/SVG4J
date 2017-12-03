@@ -27,6 +27,10 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
+import javax.xml.bind.annotation.XmlTransient;
+
+import org.apache.commons.lang.StringUtils;
+import org.omnaest.utils.NumberUtils;
 
 @XmlSeeAlso({	RawSVGImageElement.class,
 				RawSVGGroupElement.class,
@@ -170,4 +174,49 @@ public class RawSVGRoot
 		this.scripts = scripts;
 	}
 
+	public static class ViewBox
+	{
+		private double	x;
+		private double	y;
+		private double	width;
+		private double	height;
+
+		public ViewBox(String viewBox)
+		{
+			super();
+
+			String[] tokens = StringUtils.splitPreserveAllTokens(viewBox, " ");
+			this.x = NumberUtils.toDouble(tokens[0]);
+			this.y = NumberUtils.toDouble(tokens[1]);
+			this.width = NumberUtils.toDouble(tokens[2]);
+			this.height = NumberUtils.toDouble(tokens[3]);
+		}
+
+		public double getX()
+		{
+			return this.x;
+		}
+
+		public double getY()
+		{
+			return this.y;
+		}
+
+		public double getWidth()
+		{
+			return this.width;
+		}
+
+		public double getHeight()
+		{
+			return this.height;
+		}
+
+	}
+
+	@XmlTransient
+	public ViewBox getParsedViewBox()
+	{
+		return new ViewBox(this.viewBox);
+	}
 }

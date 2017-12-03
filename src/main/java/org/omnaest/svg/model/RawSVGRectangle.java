@@ -25,19 +25,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "rect")
 @XmlAccessorType(XmlAccessType.NONE)
-public class RawSVGRectangle extends RawSVGElement
+public class RawSVGRectangle extends RawSVGXYLocatedWithWidthAndHeightElement
 {
-	@XmlAttribute
-	private String x;
-
-	@XmlAttribute
-	private String y;
-
-	@XmlAttribute
-	private String width;
-
-	@XmlAttribute
-	private String height;
 
 	@XmlAttribute
 	private String style;
@@ -68,47 +57,31 @@ public class RawSVGRectangle extends RawSVGElement
 		this.ry = ry;
 	}
 
-	public String getX()
-	{
-		return this.x;
-	}
-
+	@Override
 	public RawSVGRectangle setX(String x)
 	{
-		this.x = x;
+		super.setX(x);
 		return this;
 	}
 
-	public String getY()
-	{
-		return this.y;
-	}
-
+	@Override
 	public RawSVGRectangle setY(String y)
 	{
-		this.y = y;
+		super.setY(y);
 		return this;
 	}
 
-	public String getWidth()
-	{
-		return this.width;
-	}
-
+	@Override
 	public RawSVGRectangle setWidth(String width)
 	{
-		this.width = width;
+		super.setWidth(width);
 		return this;
 	}
 
-	public String getHeight()
-	{
-		return this.height;
-	}
-
+	@Override
 	public RawSVGRectangle setHeight(String height)
 	{
-		this.height = height;
+		super.setHeight(height);
 		return this;
 	}
 
@@ -128,7 +101,7 @@ public class RawSVGRectangle extends RawSVGElement
 	@Override
 	public String toString()
 	{
-		return "RawSVGRectangle [x=" + this.x + ", y=" + this.y + ", width=" + this.width + ", height=" + this.height + ", style=" + this.style + "]";
+		return "RawSVGRectangle [x=" + this.x + ", y=" + this.y + ", width=" + this.getWidth() + ", height=" + this.getHeight() + ", style=" + this.style + "]";
 	}
 
 }

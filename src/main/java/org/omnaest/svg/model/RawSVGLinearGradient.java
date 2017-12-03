@@ -18,6 +18,8 @@
 */
 package org.omnaest.svg.model;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -25,6 +27,9 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import org.omnaest.svg.model.DefaultRawSVGTransformer.SupplierConsumer;
+import org.omnaest.utils.NumberUtils;
 
 @XmlRootElement(name = "linearGradient")
 @XmlAccessorType(XmlAccessType.NONE)
@@ -145,6 +150,68 @@ public class RawSVGLinearGradient extends RawSVGDefinitionElement
 	public void setStops(List<RawSVGStopElement> stops)
 	{
 		this.stops = stops;
+	}
+
+	@Override
+	public RawSVGTransformer transformer()
+	{
+		return new DefaultRawSVGTransformer(this, Arrays.asList(new SupplierConsumer()
+		{
+			@Override
+			public void accept(Double value)
+			{
+				RawSVGLinearGradient.this.setX1(NumberUtils	.formatter()
+															.format(value));
+			}
+
+			@Override
+			public Double get()
+			{
+				return NumberUtils.toDouble(RawSVGLinearGradient.this.getX1());
+			}
+		}, new SupplierConsumer()
+		{
+			@Override
+			public void accept(Double value)
+			{
+				RawSVGLinearGradient.this.setX2(NumberUtils	.formatter()
+															.format(value));
+			}
+
+			@Override
+			public Double get()
+			{
+				return NumberUtils.toDouble(RawSVGLinearGradient.this.getX2());
+			}
+		}), Arrays.asList(new SupplierConsumer()
+		{
+			@Override
+			public void accept(Double value)
+			{
+				RawSVGLinearGradient.this.setY1(NumberUtils	.formatter()
+															.format(value));
+			}
+
+			@Override
+			public Double get()
+			{
+				return NumberUtils.toDouble(RawSVGLinearGradient.this.getY1());
+			}
+		}, new SupplierConsumer()
+		{
+			@Override
+			public void accept(Double value)
+			{
+				RawSVGLinearGradient.this.setY2(NumberUtils	.formatter()
+															.format(value));
+			}
+
+			@Override
+			public Double get()
+			{
+				return NumberUtils.toDouble(RawSVGLinearGradient.this.getY2());
+			}
+		}), Collections.emptyList(), Collections.emptyList(), Collections.emptyList());
 	}
 
 	@Override

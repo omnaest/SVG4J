@@ -28,80 +28,34 @@ import org.omnaest.utils.NumberUtils;
 
 @XmlRootElement(name = "text")
 @XmlAccessorType(XmlAccessType.NONE)
-public class RawSVGText extends RawSVGXYLocatedElement
+public class RawSVGXYLocatedElement extends RawSVGElement
 {
 	@XmlAttribute
-	private String fill;
+	protected String x;
 
 	@XmlAttribute
-	private double opacity;
+	protected String y;
 
-	@Override
-	public RawSVGText setX(String x)
+	public RawSVGXYLocatedElement setX(String x)
 	{
-		super.setX(x);
+		this.x = x;
 		return this;
 	}
 
-	@Override
-	public RawSVGText setY(String y)
+	public String getX()
 	{
-		super.setY(y);
+		return this.x;
+	}
+
+	public String getY()
+	{
+		return this.y;
+	}
+
+	public RawSVGXYLocatedElement setY(String y)
+	{
+		this.y = y;
 		return this;
-	}
-
-	public String getFill()
-	{
-		return this.fill;
-	}
-
-	public RawSVGText setFill(String fill)
-	{
-		this.fill = fill;
-		return this;
-	}
-
-	@Override
-	public RawSVGText setStyle(String style)
-	{
-		super.setStyle(style);
-		return this;
-	}
-
-	@Override
-	public RawSVGText setTransform(String transform)
-	{
-		super.setTransform(transform);
-		return this;
-	}
-
-	public String getText()
-	{
-		return this.content;
-	}
-
-	public RawSVGText setText(String text)
-	{
-		this.content = text;
-		return this;
-	}
-
-	@Override
-	public String toString()
-	{
-		return "RawSVGText [x=" + this.x + ", y=" + this.y + ", fill=" + this.fill + ", style=" + this.style + ", transform=" + this.transform + ", content="
-				+ this.content + "]";
-	}
-
-	public RawSVGText setOpacity(double opacity)
-	{
-		this.opacity = opacity;
-		return this;
-	}
-
-	public double getOpacity()
-	{
-		return this.opacity;
 	}
 
 	@Override
@@ -112,28 +66,28 @@ public class RawSVGText extends RawSVGXYLocatedElement
 			@Override
 			public void accept(Double value)
 			{
-				RawSVGText.this.x = NumberUtils	.formatter()
-												.format(value);
+				RawSVGXYLocatedElement.this.setX(NumberUtils.formatter()
+															.format(value));
 			}
 
 			@Override
 			public Double get()
 			{
-				return NumberUtils.toDouble(RawSVGText.this.x);
+				return NumberUtils.toDouble(RawSVGXYLocatedElement.this.getX());
 			}
 		}, new SupplierConsumer()
 		{
 			@Override
 			public void accept(Double value)
 			{
-				RawSVGText.this.y = NumberUtils	.formatter()
-												.format(value);
+				RawSVGXYLocatedElement.this.setY(NumberUtils.formatter()
+															.format(value));
 			}
 
 			@Override
 			public Double get()
 			{
-				return NumberUtils.toDouble(RawSVGText.this.y);
+				return NumberUtils.toDouble(RawSVGXYLocatedElement.this.getY());
 			}
 		});
 	}

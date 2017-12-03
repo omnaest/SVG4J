@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlValue;
  * @author omnaest
  */
 @XmlAccessorType(XmlAccessType.NONE)
-public abstract class RawSVGElement
+public abstract class RawSVGElement implements RawSVGTransformer
 {
 	@XmlAttribute
 	protected String style;
@@ -67,6 +67,22 @@ public abstract class RawSVGElement
 	public String getContent()
 	{
 		return this.content;
+	}
+
+	protected abstract RawSVGTransformer transformer();
+
+	@Override
+	public RawSVGElement translate(double x, double y)
+	{
+		return this	.transformer()
+					.translate(x, y);
+	}
+
+	@Override
+	public RawSVGElement scale(double scaleX, double scaleY)
+	{
+		return this	.transformer()
+					.scale(scaleX, scaleY);
 	}
 
 }

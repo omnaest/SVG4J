@@ -89,4 +89,10 @@ public class RawSVGPolygon extends RawSVGElement
 		return "RawSVGPolygon [points=" + this.points + ", stroke=" + this.stroke + "]";
 	}
 
+	@Override
+	protected RawSVGTransformer transformer()
+	{
+		throw new UnsupportedOperationException();
+	}
+
 }

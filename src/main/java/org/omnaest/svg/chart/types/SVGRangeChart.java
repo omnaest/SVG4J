@@ -123,7 +123,7 @@ public class SVGRangeChart implements RangeChart
 	{
 		super();
 		this.drawer = SVGUtils	.getDrawer(width, height)
-								.setScreenDimensions(width, height);
+								.withScreenDimensions(width, height);
 
 		double bodyRelativeHeight = 0.5;
 		this.labelDrawBox = new DrawBox(this.drawer, 0, 0, (int) (0.2 * width), (int) (height * bodyRelativeHeight));

@@ -1,3 +1,21 @@
+/*
+
+	Copyright 2017 Danny Kunz
+
+	Licensed under the Apache License, Version 2.0 (the "License");
+	you may not use this file except in compliance with the License.
+	You may obtain a copy of the License at
+
+		http://www.apache.org/licenses/LICENSE-2.0
+
+	Unless required by applicable law or agreed to in writing, software
+	distributed under the License is distributed on an "AS IS" BASIS,
+	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	See the License for the specific language governing permissions and
+	limitations under the License.
+
+
+*/
 package org.omnaest.svg.model;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -20,7 +38,7 @@ public class RawSVGPath extends RawSVGElement
 
 	public String getId()
 	{
-		return id;
+		return this.id;
 	}
 
 	public void setId(String id)
@@ -28,11 +46,13 @@ public class RawSVGPath extends RawSVGElement
 		this.id = id;
 	}
 
+	@Override
 	public String getStyle()
 	{
-		return style;
+		return this.style;
 	}
 
+	@Override
 	public RawSVGPath setStyle(String style)
 	{
 		super.setStyle(style);
@@ -41,7 +61,7 @@ public class RawSVGPath extends RawSVGElement
 
 	public String getD()
 	{
-		return d;
+		return this.d;
 	}
 
 	public void setD(String d)
@@ -52,7 +72,13 @@ public class RawSVGPath extends RawSVGElement
 	@Override
 	public String toString()
 	{
-		return "RawSVGPath [id=" + id + ", style=" + style + ", d=" + d + "]";
+		return "RawSVGPath [id=" + this.id + ", style=" + this.style + ", d=" + this.d + "]";
+	}
+
+	@Override
+	protected RawSVGTransformer transformer()
+	{
+		throw new UnsupportedOperationException();
 	}
 
 }

@@ -1,3 +1,21 @@
+/*
+
+	Copyright 2017 Danny Kunz
+
+	Licensed under the Apache License, Version 2.0 (the "License");
+	you may not use this file except in compliance with the License.
+	You may obtain a copy of the License at
+
+		http://www.apache.org/licenses/LICENSE-2.0
+
+	Unless required by applicable law or agreed to in writing, software
+	distributed under the License is distributed on an "AS IS" BASIS,
+	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	See the License for the specific language governing permissions and
+	limitations under the License.
+
+
+*/
 package org.omnaest.svg.model;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -23,7 +41,7 @@ public class RawSVGPolyline extends RawSVGElement
 
 	public String getPoints()
 	{
-		return points;
+		return this.points;
 	}
 
 	public RawSVGPolyline setPoints(String points)
@@ -34,7 +52,7 @@ public class RawSVGPolyline extends RawSVGElement
 
 	public String getStroke()
 	{
-		return stroke;
+		return this.stroke;
 	}
 
 	public RawSVGPolyline setStroke(String stroke)
@@ -45,7 +63,7 @@ public class RawSVGPolyline extends RawSVGElement
 
 	public String getFill()
 	{
-		return fill;
+		return this.fill;
 	}
 
 	public RawSVGPolyline setFill(String fill)
@@ -56,7 +74,7 @@ public class RawSVGPolyline extends RawSVGElement
 
 	public String getOpacity()
 	{
-		return opacity;
+		return this.opacity;
 	}
 
 	public RawSVGPolyline setOpacity(String opacity)
@@ -68,7 +86,13 @@ public class RawSVGPolyline extends RawSVGElement
 	@Override
 	public String toString()
 	{
-		return "RawSVGPolyline [points=" + points + ", stroke=" + stroke + ", fill=" + fill + ", opacity=" + opacity + "]";
+		return "RawSVGPolyline [points=" + this.points + ", stroke=" + this.stroke + ", fill=" + this.fill + ", opacity=" + this.opacity + "]";
+	}
+
+	@Override
+	protected RawSVGTransformer transformer()
+	{
+		throw new UnsupportedOperationException();
 	}
 
 }

@@ -1,3 +1,21 @@
+/*
+
+	Copyright 2017 Danny Kunz
+
+	Licensed under the Apache License, Version 2.0 (the "License");
+	you may not use this file except in compliance with the License.
+	You may obtain a copy of the License at
+
+		http://www.apache.org/licenses/LICENSE-2.0
+
+	Unless required by applicable law or agreed to in writing, software
+	distributed under the License is distributed on an "AS IS" BASIS,
+	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	See the License for the specific language governing permissions and
+	limitations under the License.
+
+
+*/
 package org.omnaest.svg.model;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -7,20 +25,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "line")
 @XmlAccessorType(XmlAccessType.NONE)
-public class RawSVGLine extends RawSVGElement
+public class RawSVGLine extends RawSVGX1X2Y1Y2LocatedElement
 {
-	@XmlAttribute
-	private String x1;
-
-	@XmlAttribute
-	private String y1;
-
-	@XmlAttribute
-	private String x2;
-
-	@XmlAttribute
-	private String y2;
-
 	@XmlAttribute
 	private String stroke;
 
@@ -30,53 +36,37 @@ public class RawSVGLine extends RawSVGElement
 	@XmlAttribute
 	private String style;
 
-	public String getX1()
-	{
-		return x1;
-	}
-
+	@Override
 	public RawSVGLine setX1(String x1)
 	{
-		this.x1 = x1;
+		super.setX1(x1);
 		return this;
 	}
 
-	public String getY1()
-	{
-		return y1;
-	}
-
+	@Override
 	public RawSVGLine setY1(String y1)
 	{
-		this.y1 = y1;
+		super.setY1(y1);
 		return this;
 	}
 
-	public String getX2()
-	{
-		return x2;
-	}
-
+	@Override
 	public RawSVGLine setX2(String x2)
 	{
-		this.x2 = x2;
+		super.setX2(x2);
 		return this;
 	}
 
-	public String getY2()
-	{
-		return y2;
-	}
-
+	@Override
 	public RawSVGLine setY2(String y2)
 	{
-		this.y2 = y2;
+		super.setY2(y2);
 		return this;
 	}
 
 	public String getStroke()
 	{
-		return stroke;
+		return this.stroke;
 	}
 
 	public RawSVGLine setStroke(String stroke)
@@ -87,7 +77,7 @@ public class RawSVGLine extends RawSVGElement
 
 	public String getStrokeWidth()
 	{
-		return strokeWidth;
+		return this.strokeWidth;
 	}
 
 	public RawSVGLine setStrokeWidth(String strokeWidth)
@@ -96,11 +86,13 @@ public class RawSVGLine extends RawSVGElement
 		return this;
 	}
 
+	@Override
 	public String getStyle()
 	{
-		return style;
+		return this.style;
 	}
 
+	@Override
 	public RawSVGLine setStyle(String style)
 	{
 		this.style = style;
@@ -110,8 +102,8 @@ public class RawSVGLine extends RawSVGElement
 	@Override
 	public String toString()
 	{
-		return "RawSVGLine [x1=" + x1 + ", y1=" + y1 + ", x2=" + x2 + ", y2=" + y2 + ", stroke=" + stroke + ", strokeWidth=" + strokeWidth + ", style=" + style
-				+ "]";
+		return "RawSVGLine [stroke=" + this.stroke + ", strokeWidth=" + this.strokeWidth + ", style=" + this.style + ", x1=" + this.x1 + ", y1=" + this.y1
+				+ ", x2=" + this.x2 + ", y2=" + this.y2 + ", transform=" + this.transform + ", content=" + this.content + "]";
 	}
 
 }

@@ -24,10 +24,13 @@ import java.io.IOException;
 import org.apache.commons.io.FileUtils;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.omnaest.svg.SVGDrawer.BoundedArea;
 import org.omnaest.svg.elements.SVGAnker;
+import org.omnaest.svg.elements.SVGCircle;
 import org.omnaest.svg.elements.SVGLine;
 import org.omnaest.svg.elements.SVGRectangle;
 import org.omnaest.svg.elements.SVGText;
+import org.omnaest.svg.other.DisplayResolution;
 
 public class SVGUtilsTest
 {
@@ -55,12 +58,43 @@ public class SVGUtilsTest
 	public void testAnker() throws IOException
 	{
 		SVGUtils.getDrawer(100, 100)
-				.setScreenDimensions(200, 200)
+				.withScreenDimensions(200, 200)
 				.enableCSSForAnkerLinks()
 				.add(new SVGAnker("http://www.google.de")	.addElement(new SVGRectangle(50, 50, 20, 20).setFillColor("blue"))
 															.addElement(new SVGText(10, 10, "Google")))
 				.renderAsResult()
 				.writeToFile(new File("C:/Temp/svgAnkerTest.svg"));
+
+	}
+
+	@Test
+	//@Ignore
+	public void testBoundedContext() throws IOException
+	{
+		SVGDrawer drawer = SVGUtils	.getDrawer(1000, 500)
+									.withScreenDimensions(DisplayResolution._1280x800);
+		drawer.add(new SVGRectangle(0, 0, 1000, 500).setStrokeColor("red"));
+		BoundedArea boundedArea = drawer.newBoundedArea()
+										.withRelativeTranslationX(0.5)
+										.withRelativeTranslationY(0.5)
+										.withRelativeHeight(0.25)
+										.withRelativeWidth(0.25)
+										.withScalingHeight(100)
+										.withScalingWidth(100)
+										.add(new SVGCircle(0, 0, 100))
+										.add(new SVGRectangle(0, 0, 100, 100));
+		boundedArea	.newSubArea()
+					.withRelativeHeight(0.5)
+					.withRelativeWidth(0.5)
+					.withScalingHeight(100)
+					.withScalingWidth(100)
+					.add(new SVGRectangle(0, 0, 100, 100)	.setStrokeColor("yellow")
+															.setFillColor("lightgray"))
+					.withRelativeSizedBorder(0.05)
+					.add(new SVGRectangle(0, 0, 100, 100)	.setStrokeColor("yellow")
+															.setFillColor("white"));
+		drawer	.renderAsResult()
+				.writeToFile(new File("C:/Temp/svgBoundedAreaTest.svg"));
 
 	}
 }

@@ -87,4 +87,10 @@ public class RawSVGGroupElement extends RawSVGElement
 		return this.opacity;
 	}
 
+	@Override
+	public RawSVGTransformer transformer()
+	{
+		return new IgnoringRawSVGTransformer(this);
+	}
+
 }
