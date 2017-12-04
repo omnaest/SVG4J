@@ -18,6 +18,8 @@
 */
 package org.omnaest.svg;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -68,12 +70,40 @@ public class SVGUtilsTest
 	}
 
 	@Test
-	//@Ignore
 	public void testBoundedContext() throws IOException
 	{
 		SVGDrawer drawer = SVGUtils	.getDrawer(1000, 500)
 									.withScreenDimensions(DisplayResolution._1280x800);
-		drawer.add(new SVGRectangle(0, 0, 1000, 500).setStrokeColor("red"));
+		{
+			BoundedArea boundedArea = drawer.newBoundedArea()
+											.withRelativeTranslationX(0.5)
+											.withRelativeTranslationY(0.5)
+											.withRelativeHeight(0.25)
+											.withRelativeWidth(0.25)
+											.withScalingHeight(100)
+											.withScalingWidth(100);
+			assertEquals(250, boundedArea.getRawWidth(), 0.001);
+			assertEquals(125, boundedArea.getRawHeight(), 0.001);
+			assertEquals(100, boundedArea.getWidth(), 0.001);
+			assertEquals(100, boundedArea.getHeight(), 0.001);
+		}
+		{
+			BoundedArea boundedArea = drawer.newBoundedArea();
+			assertEquals(1000, boundedArea.getRawWidth(), 0.001);
+			assertEquals(500, boundedArea.getRawHeight(), 0.001);
+			assertEquals(1000, boundedArea.getWidth(), 0.001);
+			assertEquals(500, boundedArea.getHeight(), 0.001);
+		}
+	}
+
+	@Test
+	//@Ignore
+	public void testBoundedContextWithRender() throws IOException
+	{
+		SVGDrawer drawer = SVGUtils	.getDrawer(1000, 500)
+									.withScreenDimensions(DisplayResolution._1280x800);
+		drawer	.newBoundedArea()
+				.add(new SVGRectangle(0, 0, 1000, 500).setStrokeColor("red"));
 		BoundedArea boundedArea = drawer.newBoundedArea()
 										.withRelativeTranslationX(0.5)
 										.withRelativeTranslationY(0.5)
@@ -83,6 +113,8 @@ public class SVGUtilsTest
 										.withScalingWidth(100)
 										.add(new SVGCircle(0, 0, 100))
 										.add(new SVGRectangle(0, 0, 100, 100));
+		assertEquals(250, boundedArea.getRawWidth(), 0.001);
+		assertEquals(125, boundedArea.getRawHeight(), 0.001);
 		boundedArea	.newSubArea()
 					.withRelativeHeight(0.5)
 					.withRelativeWidth(0.5)

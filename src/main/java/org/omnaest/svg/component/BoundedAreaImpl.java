@@ -18,7 +18,10 @@
 */
 package org.omnaest.svg.component;
 
+import java.util.List;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import org.omnaest.svg.SVGDrawer.BoundedArea;
 import org.omnaest.svg.elements.ScalingSVGElementWrapper;
@@ -36,6 +39,8 @@ public class BoundedAreaImpl extends GenericTranslationAreaImpl<BoundedArea> imp
 	public BoundedAreaImpl(SVGElementAndRawElementConsumer<?> parent, Supplier<Double> parentWidth, Supplier<Double> parentHeigth)
 	{
 		super(parent, parentWidth, parentHeigth);
+		this.width = parentWidth.get();
+		this.height = parentHeigth.get();
 	}
 
 	@Override
@@ -119,7 +124,7 @@ public class BoundedAreaImpl extends GenericTranslationAreaImpl<BoundedArea> imp
 	}
 
 	@Override
-	public BoundedArea withScalingHeight(double scalingHeight)
+	public BoundedArea withScalingHeight(Double scalingHeight)
 	{
 		this.scalingHeight = scalingHeight;
 		return this;
@@ -127,6 +132,18 @@ public class BoundedAreaImpl extends GenericTranslationAreaImpl<BoundedArea> imp
 
 	@Override
 	public BoundedArea withScalingWidth(double scalingWidth)
+	{
+		return this.withScalingWidth(Double.valueOf(scalingWidth));
+	}
+
+	@Override
+	public BoundedArea withScalingHeight(double scalingHeight)
+	{
+		return this.withScalingHeight(Double.valueOf(scalingHeight));
+	}
+
+	@Override
+	public BoundedArea withScalingWidth(Double scalingWidth)
 	{
 		this.scalingWidth = scalingWidth;
 		return this;
@@ -163,6 +180,22 @@ public class BoundedAreaImpl extends GenericTranslationAreaImpl<BoundedArea> imp
 	}
 
 	@Override
+	public BoundedArea withBorder(double borderSize)
+	{
+		double tx = borderSize;
+		double ty = borderSize;
+		double relativeWidth = this.parentWidth.get() - 2 * tx;
+		double relativeHeight = this.parentHeight.get() - 2 * ty;
+		return this	.newSubArea()
+					.withTranslationX(tx)
+					.withTranslationY(ty)
+					.withHeight(relativeHeight)
+					.withWidth(relativeWidth)
+					.withScalingHeight(this.scalingHeight)
+					.withScalingWidth(this.scalingWidth);
+	}
+
+	@Override
 	public BoundedArea withRelativeSizedBorder(double relativeBorderSize)
 	{
 		double tx = relativeBorderSize;
@@ -176,6 +209,26 @@ public class BoundedAreaImpl extends GenericTranslationAreaImpl<BoundedArea> imp
 					.withRelativeWidth(relativeWidth)
 					.withScalingHeight(this.scalingHeight)
 					.withScalingWidth(this.scalingWidth);
+	}
+
+	@Override
+	public List<BoundedArea> asVerticalSlices(int numberOfSlices)
+	{
+		return IntStream.range(0, numberOfSlices)
+						.mapToObj(index -> this	.newSubArea()
+												.withRelativeTranslationX(index * 1.0 / numberOfSlices)
+												.withRelativeWidth(1.0 / numberOfSlices))
+						.collect(Collectors.toList());
+	}
+
+	@Override
+	public List<BoundedArea> asHorizontalSlices(int numberOfSlices)
+	{
+		return IntStream.range(0, numberOfSlices)
+						.mapToObj(index -> this	.newSubArea()
+												.withRelativeTranslationY(index * 1.0 / numberOfSlices)
+												.withRelativeHeight(1.0 / numberOfSlices))
+						.collect(Collectors.toList());
 	}
 
 }

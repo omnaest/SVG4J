@@ -88,6 +88,10 @@ public class SVGDrawer extends AbstractSVGElementConsumer<SVGDrawer>
 
 		BoundedArea withScalingHeight(double scalingHeight);
 
+		BoundedArea withScalingWidth(Double scalingWidth);
+
+		BoundedArea withScalingHeight(Double scalingHeight);
+
 		double getWidth();
 
 		double getHeight();
@@ -95,6 +99,12 @@ public class SVGDrawer extends AbstractSVGElementConsumer<SVGDrawer>
 		BoundedArea newSubArea();
 
 		BoundedArea withRelativeSizedBorder(double relativeBorderSize);
+
+		BoundedArea withBorder(double borderSize);
+
+		List<BoundedArea> asVerticalSlices(int numberOfSlices);
+
+		List<BoundedArea> asHorizontalSlices(int numberOfSlices);
 	}
 
 	public static class SVGRenderResult
