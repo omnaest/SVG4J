@@ -96,14 +96,42 @@ public class SVGDrawer extends AbstractSVGElementConsumer<SVGDrawer>
 
 		double getHeight();
 
+		/**
+		 * Returns a new sub {@link BoundedArea} with its own properties
+		 * 
+		 * @return
+		 */
 		BoundedArea newSubArea();
 
-		BoundedArea withRelativeSizedBorder(double relativeBorderSize);
+		/**
+		 * @see #withPadding(double)
+		 * @param relativePaddingSize
+		 * @return
+		 */
+		BoundedArea withRelativeSizedPadding(double relativePaddingSize);
 
-		BoundedArea withBorder(double borderSize);
+		/**
+		 * Defines a padding which wraps the content, similar to the padding in CSS
+		 * 
+		 * @param paddingSize
+		 * @return
+		 */
+		BoundedArea withPadding(double paddingSize);
 
+		/**
+		 * Returns vertical slices (horizontally cut)
+		 * 
+		 * @param numberOfSlices
+		 * @return
+		 */
 		List<BoundedArea> asVerticalSlices(int numberOfSlices);
 
+		/**
+		 * Returns horizontal slices (vertically cut)
+		 * 
+		 * @param numberOfSlices
+		 * @return
+		 */
 		List<BoundedArea> asHorizontalSlices(int numberOfSlices);
 	}
 

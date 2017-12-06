@@ -180,23 +180,23 @@ public class BoundedAreaImpl extends GenericTranslationAreaImpl<BoundedArea> imp
 	}
 
 	@Override
-	public BoundedArea withBorder(double borderSize)
+	public BoundedArea withPadding(double borderSize)
 	{
 		double tx = borderSize;
 		double ty = borderSize;
-		double relativeWidth = this.parentWidth.get() - 2 * tx;
-		double relativeHeight = this.parentHeight.get() - 2 * ty;
+		double width = this.getRawWidth() - 2 * tx;
+		double height = this.getRawHeight() - 2 * ty;
 		return this	.newSubArea()
 					.withTranslationX(tx)
 					.withTranslationY(ty)
-					.withHeight(relativeHeight)
-					.withWidth(relativeWidth)
+					.withHeight(height)
+					.withWidth(width)
 					.withScalingHeight(this.scalingHeight)
 					.withScalingWidth(this.scalingWidth);
 	}
 
 	@Override
-	public BoundedArea withRelativeSizedBorder(double relativeBorderSize)
+	public BoundedArea withRelativeSizedPadding(double relativeBorderSize)
 	{
 		double tx = relativeBorderSize;
 		double ty = relativeBorderSize;

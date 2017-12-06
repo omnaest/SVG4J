@@ -122,7 +122,7 @@ public class SVGUtilsTest
 					.withScalingWidth(100)
 					.add(new SVGRectangle(0, 0, 100, 100)	.setStrokeColor("yellow")
 															.setFillColor("lightgray"))
-					.withRelativeSizedBorder(0.05)
+					.withRelativeSizedPadding(0.05)
 					.add(new SVGRectangle(0, 0, 100, 100)	.setStrokeColor("yellow")
 															.setFillColor("white"));
 		drawer	.renderAsResult()
