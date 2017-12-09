@@ -57,12 +57,44 @@ public class SVGDrawer extends AbstractSVGElementConsumer<SVGDrawer>
 
 	public static interface GenericTranslationArea<TA extends GenericTranslationArea<TA>> extends SVGElementAndRawElementConsumer<TA>
 	{
-		TA withTranslationY(double y);
-
+		/**
+		 * Translated the whole area in x direction
+		 * 
+		 * @see #withRelativeTranslationX(double)
+		 * @see #withTranslationY(double)
+		 * @param x
+		 * @return
+		 */
 		TA withTranslationX(double x);
 
+		/**
+		 * Translated the whole area in y direction
+		 * 
+		 * @see #withRelativeTranslationY(double)
+		 * @see #withTranslationX(double)
+		 * @param y
+		 * @return
+		 */
+		TA withTranslationY(double y);
+
+		/**
+		 * Translates the whole area in x direction in relation to the width of the (parent) area
+		 * 
+		 * @see #withTranslationX(double)
+		 * @see #withRelativeTranslationY(double)
+		 * @param x
+		 * @return
+		 */
 		TA withRelativeTranslationX(double x);
 
+		/**
+		 * Translates the whole area in y direction in realtion to the height of the (parent) area
+		 * 
+		 * @see #withTranslationY(double)
+		 * @see #withRelativeTranslationX(double)
+		 * @param y
+		 * @return
+		 */
 		TA withRelativeTranslationY(double y);
 	}
 
@@ -72,29 +104,109 @@ public class SVGDrawer extends AbstractSVGElementConsumer<SVGDrawer>
 
 	public static interface BoundedArea extends GenericTranslationArea<BoundedArea>
 	{
+		/**
+		 * Defines the height of the {@link BoundedArea}
+		 * 
+		 * @see #withHeight(double)
+		 * @see #withRelativeHeight(double)
+		 * @param height
+		 * @return
+		 */
 		BoundedArea withHeight(double height);
 
+		/**
+		 * Defines the width of the {@link BoundedArea}
+		 * 
+		 * @see #withWidth(double)
+		 * @see #withRelativeWidth(double)
+		 * @param width
+		 * @return
+		 */
 		BoundedArea withWidth(double width);
 
+		/**
+		 * Similar to {@link #withHeight(double)} using the relative height regarding to the parent
+		 * 
+		 * @see #withHeight(double)
+		 * @see #withRelativeWidth(double)
+		 * @param relativeHeight
+		 * @return
+		 */
 		BoundedArea withRelativeHeight(double relativeHeight);
 
+		/**
+		 * Similar to {@link #withWidth(double)} using the relative width regarding to the parent
+		 * 
+		 * @see #withWidth(double)
+		 * @see #withRelativeHeight(double)
+		 * @param relativeWidth
+		 * @return
+		 */
 		BoundedArea withRelativeWidth(double relativeWidth);
 
+		/**
+		 * Returns the absolute width as seen within the parent area
+		 * 
+		 * @see #getRawHeight()
+		 * @see #getWidth()
+		 * @return
+		 */
 		double getRawWidth();
 
+		/**
+		 * Returns the absolute height as seen within the parent area
+		 * 
+		 * @see #getRawWidth()
+		 * @see #getHeight()
+		 * @return
+		 */
 		double getRawHeight();
 
+		/**
+		 * Returns the width of the current {@link BoundedArea} which can be used for {@link SVGElement}s added to it
+		 * 
+		 * @see #getRawWidth()
+		 * @see #getHeight()
+		 * @return
+		 */
+		double getWidth();
+
+		/**
+		 * Return the height of the current {@link BoundedArea} which can be used for {@link SVGElement}s added to it.
+		 * 
+		 * @see #getRawHeight()
+		 * @see #getWidth()
+		 * @return
+		 */
+		double getHeight();
+
+		/**
+		 * Defines the fixed width which is used then on by added {@link SVGElement}s. This implies a scaling operation between {@link #getWidth()} to
+		 * {@link #getRawWidth()}
+		 * 
+		 * @see #getWidth()
+		 * @see #getRawWidth()
+		 * @see #withScalingHeight(double)
+		 * @param scalingWidth
+		 * @return
+		 */
 		BoundedArea withScalingWidth(double scalingWidth);
 
+		/**
+		 * Defines the fixed height which is used then on by added {@link SVGElement}s. This implies a scaling operation between {@link #getHeight()} and
+		 * {@link #getRawHeight()}
+		 * 
+		 * @see #getHeight()
+		 * @see #getRawHeight()
+		 * @see #withScalingWidth(double)
+		 * @param scalingHeight
+		 * @return
+		 */
 		BoundedArea withScalingHeight(double scalingHeight);
 
 		BoundedArea withScalingWidth(Double scalingWidth);
 
 		BoundedArea withScalingHeight(Double scalingHeight);
-
-		double getWidth();
-
-		double getHeight();
 
 		/**
 		 * Returns a new sub {@link BoundedArea} with its own properties
