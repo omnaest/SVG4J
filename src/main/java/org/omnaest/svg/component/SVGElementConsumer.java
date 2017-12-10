@@ -18,10 +18,13 @@
 */
 package org.omnaest.svg.component;
 
+import java.util.stream.Stream;
+
 import org.omnaest.svg.elements.base.SVGElement;
 
 /**
  * @see RawSVGElementConsumer
+ * @see SVGCompositeElementConsumer
  * @author omnaest
  * @param <R>
  */
@@ -30,5 +33,7 @@ public interface SVGElementConsumer<R>
 	public R add(SVGElement element);
 
 	public R addAll(Iterable<SVGElement> elements);
+
+	public R addAll(Stream<SVGElement> elements);
 
 }

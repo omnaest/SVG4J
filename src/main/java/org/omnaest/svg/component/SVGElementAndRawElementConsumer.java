@@ -18,7 +18,7 @@
 */
 package org.omnaest.svg.component;
 
-public interface SVGElementAndRawElementConsumer<R> extends SVGElementConsumer<R>, RawSVGElementConsumer<R>
+public interface SVGElementAndRawElementConsumer<R> extends SVGElementConsumer<R>, SVGCompositeElementConsumer<R>, RawSVGElementConsumer<R>
 {
 
 }

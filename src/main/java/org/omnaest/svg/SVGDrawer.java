@@ -500,4 +500,5 @@ public class SVGDrawer extends AbstractSVGElementConsumer<SVGDrawer>
 		return this.rawSVGRoot	.getParsedViewBox()
 								.getHeight();
 	}
+
 }

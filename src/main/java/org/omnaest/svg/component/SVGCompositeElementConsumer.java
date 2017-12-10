@@ -18,22 +18,16 @@
 */
 package org.omnaest.svg.component;
 
-import java.util.Collection;
-
-import org.omnaest.svg.SVGDrawer;
-import org.omnaest.svg.model.RawSVGElement;
+import org.omnaest.svg.elements.base.SVGCompositeElement;
 
 /**
+ * @see RawSVGElementConsumer
  * @see SVGElementConsumer
- * @see SVGCompositeElementConsumer
  * @author omnaest
  * @param <R>
  */
-public interface RawSVGElementConsumer<R>
+public interface SVGCompositeElementConsumer<R>
 {
-	public R addRawElement(RawSVGElement rawElement);
+	public R add(SVGCompositeElement element);
 
-	public R addRawElements(Collection<RawSVGElement> rawElements);
-
-	public R addRawElements(SVGDrawer svgDrawer);
 }

@@ -16,24 +16,11 @@
 
 
 */
-package org.omnaest.svg.component;
+package org.omnaest.svg.elements.base;
 
-import java.util.Collection;
+import java.util.stream.Stream;
 
-import org.omnaest.svg.SVGDrawer;
-import org.omnaest.svg.model.RawSVGElement;
-
-/**
- * @see SVGElementConsumer
- * @see SVGCompositeElementConsumer
- * @author omnaest
- * @param <R>
- */
-public interface RawSVGElementConsumer<R>
+public interface SVGCompositeElement
 {
-	public R addRawElement(RawSVGElement rawElement);
-
-	public R addRawElements(Collection<RawSVGElement> rawElements);
-
-	public R addRawElements(SVGDrawer svgDrawer);
+	public Stream<SVGElement> getElements();
 }

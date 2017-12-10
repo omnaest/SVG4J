@@ -16,24 +16,36 @@
 
 
 */
-package org.omnaest.svg.component;
+package org.omnaest.svg.elements.base;
 
-import java.util.Collection;
+import org.omnaest.vector.Vector;
 
-import org.omnaest.svg.SVGDrawer;
-import org.omnaest.svg.model.RawSVGElement;
-
-/**
- * @see SVGElementConsumer
- * @see SVGCompositeElementConsumer
- * @author omnaest
- * @param <R>
- */
-public interface RawSVGElementConsumer<R>
+public class VectorToSVGVectorAdapter implements SVGVector
 {
-	public R addRawElement(RawSVGElement rawElement);
+	private Vector vector;
 
-	public R addRawElements(Collection<RawSVGElement> rawElements);
+	public VectorToSVGVectorAdapter(Vector vector)
+	{
+		super();
+		this.vector = vector;
+	}
 
-	public R addRawElements(SVGDrawer svgDrawer);
+	@Override
+	public double getY()
+	{
+		return this.vector.getY();
+	}
+
+	@Override
+	public double getX()
+	{
+		return this.vector.getX();
+	}
+
+	@Override
+	public String toString()
+	{
+		return "VectorToSVGVectorAdapter [vector=" + this.vector + "]";
+	}
+
 }

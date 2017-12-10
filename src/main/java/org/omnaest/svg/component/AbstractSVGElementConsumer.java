@@ -19,8 +19,11 @@
 package org.omnaest.svg.component;
 
 import java.util.Collection;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.omnaest.svg.SVGDrawer;
+import org.omnaest.svg.elements.base.SVGCompositeElement;
 import org.omnaest.svg.elements.base.SVGElement;
 import org.omnaest.svg.model.RawSVGElement;
 
@@ -57,6 +60,23 @@ public abstract class AbstractSVGElementConsumer<R extends SVGElementAndRawEleme
 			elements.forEach(this::add);
 		}
 		return (R) this;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public R add(SVGCompositeElement element)
+	{
+		if (element != null)
+		{
+			this.addAll(element.getElements());
+		}
+		return (R) this;
+	}
+
+	@Override
+	public R addAll(Stream<SVGElement> elements)
+	{
+		return this.addAll(elements.collect(Collectors.toList()));
 	}
 
 }
