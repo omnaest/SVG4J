@@ -94,7 +94,8 @@ public class SVGPolygon implements SVGElement
 		style.append("stroke-opacity:" + this.strokeOpacity + ";");
 		style.append("fill-opacity:" + this.fillOpacity + ";");
 
-		return new RawSVGPolygon()	.setPoints(sb.toString())
+		return new RawSVGPolygon()	.setPoints(sb	.toString()
+													.trim())
 									.setStroke(this.strokeColor)
 									.setStyle(style.toString());
 	}

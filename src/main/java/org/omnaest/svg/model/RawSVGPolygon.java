@@ -18,10 +18,19 @@
 */
 package org.omnaest.svg.model;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang.math.NumberUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.omnaest.utils.StreamUtils;
 
 @XmlRootElement(name = "polygon")
 @XmlAccessorType(XmlAccessType.NONE)
@@ -92,7 +101,50 @@ public class RawSVGPolygon extends RawSVGElement
 	@Override
 	protected RawSVGTransformer transformer()
 	{
-		throw new UnsupportedOperationException();
+		return new RawSVGTransformer()
+		{
+			public Stream<int[]> parsePoints()
+			{
+				String[] tokens = StringUtils.splitPreserveAllTokens(StringUtils.trim(RawSVGPolygon.this.points), " ");
+
+				Stream<int[]> frames = StreamUtils.framed(2, Arrays	.asList(tokens)
+																	.stream()
+																	.mapToInt(value -> NumberUtils.toInt(value)));
+				return frames;
+			}
+
+			public String renderPoints(Stream<int[]> points)
+			{
+				return points	.flatMap(array -> Arrays.asList(ArrayUtils.toObject(array))
+														.stream())
+								.map(String::valueOf)
+								.collect(Collectors.joining(" "));
+			}
+
+			@Override
+			public RawSVGElement translate(double x, double y)
+			{
+				RawSVGPolygon.this.points = this.renderPoints(this	.parsePoints()
+																	.peek(xy ->
+																	{
+																		xy[0] += x;
+																		xy[1] += y;
+																	}));
+				return RawSVGPolygon.this;
+			}
+
+			@Override
+			public RawSVGElement scale(double scaleX, double scaleY)
+			{
+				RawSVGPolygon.this.points = this.renderPoints(this	.parsePoints()
+																	.peek(xy ->
+																	{
+																		xy[0] *= scaleX;
+																		xy[1] *= scaleY;
+																	}));
+				return RawSVGPolygon.this;
+			}
+		};
 	}
 
 }

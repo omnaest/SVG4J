@@ -38,9 +38,9 @@ public class SVGFlowArrowTest
 		double y3 = 50;
 		SVGUtils.getDrawer(1000, 300)
 				.withScreenDimensions(DisplayResolution._1280x800)
-				.add(new SVGFlowArrow(x1, y1, x2, y2)	.setRelativeWidth(0.4)
+				.add(new SVGFlowArrow(x1, y1, x2, y2)	.setRelativeArrowWidth(0.4)
 														.setText("Flow 1"))
-				.add(new SVGFlowArrow(x2, y2, x3, y3)	.setRelativeWidth(0.4)
+				.add(new SVGFlowArrow(x2, y2, x3, y3)	.setRelativeArrowWidth(0.4)
 														.setText("Flow 2"))
 				.renderAsResult()
 				.writeToFile(new File("C:/Temp/arrowChartTest.svg"));

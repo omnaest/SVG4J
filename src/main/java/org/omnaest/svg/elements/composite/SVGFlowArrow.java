@@ -37,10 +37,11 @@ public class SVGFlowArrow implements SVGCompositeElement
 	private double	x2;
 	private double	y2;
 
-	private Supplier<Double>	length		= () -> new Vector(this.x2, this.y2).subtract(new Vector(this.x1, this.y1))
-																				.absolute();
-	private Supplier<Double>	width		= () -> this.length.get() * 0.1;
-	private Supplier<Double>	strokeWidth	= () -> this.width.get() * 0.1;
+	private Supplier<Double>	length			= () -> new Vector(this.x2, this.y2).subtract(new Vector(this.x1, this.y1))
+																					.absolute();
+	private Supplier<Double>	arrowWidth		= () -> this.length.get() * 0.1;
+	private double				arrowFlatness	= 0.1;
+	private Supplier<Double>	strokeWidth		= () -> this.arrowWidth.get() * 0.1;
 
 	private String	fillColor	= "white";
 	private String	strokeColor	= "black";
@@ -57,21 +58,27 @@ public class SVGFlowArrow implements SVGCompositeElement
 		this.y2 = y2;
 	}
 
+	public SVGFlowArrow setArrowFlatness(double arrowFlatness)
+	{
+		this.arrowFlatness = arrowFlatness;
+		return this;
+	}
+
 	public SVGFlowArrow setFillOpacity(double fillOpacity)
 	{
 		this.fillOpacity = fillOpacity;
 		return this;
 	}
 
-	public SVGFlowArrow setWidth(double width)
+	public SVGFlowArrow setArrowWidth(double width)
 	{
-		this.width = () -> width;
+		this.arrowWidth = () -> width;
 		return this;
 	}
 
-	public SVGFlowArrow setRelativeWidth(double relativeWidth)
+	public SVGFlowArrow setRelativeArrowWidth(double relativeWidth)
 	{
-		this.width = () -> this.length.get() * relativeWidth;
+		this.arrowWidth = () -> this.length.get() * relativeWidth;
 		return this;
 	}
 
@@ -100,7 +107,7 @@ public class SVGFlowArrow implements SVGCompositeElement
 		Vector targetPosition = new Vector(this.x2, this.y2);
 		Vector delta = targetPosition.subtract(sourcePosition);
 
-		Double width = this.width.get();
+		Double width = this.arrowWidth.get();
 
 		Vector upperLeft = sourcePosition.add(delta	.normVector()
 													.rotateZ(90)
@@ -108,8 +115,9 @@ public class SVGFlowArrow implements SVGCompositeElement
 		Vector lowerLeft = sourcePosition.add(delta	.normVector()
 													.rotateZ(-90)
 													.multiply(width / 2));
-		Vector upperRight = upperLeft.add(delta.multiply(0.9));
-		Vector lowerRight = lowerLeft.add(delta.multiply(0.9));
+		double arrowStart = 1.0 - this.arrowFlatness;
+		Vector upperRight = upperLeft.add(delta.multiply(arrowStart));
+		Vector lowerRight = lowerLeft.add(delta.multiply(arrowStart));
 
 		Vector middleRight = sourcePosition.add(delta);
 
@@ -122,7 +130,7 @@ public class SVGFlowArrow implements SVGCompositeElement
 																							.intValue());
 
 		Vector textPosition = upperLeft;
-		SVGText svgText = new SVGText((int) textPosition.getX(), (int) textPosition.getY(), this.text)	.setFontSize((int) (width.intValue() * 0.9))
+		SVGText svgText = new SVGText((int) textPosition.getX(), (int) textPosition.getY(), this.text)	.setFontSize((int) (width.intValue() * arrowStart))
 																										.setRotation((int) delta.determineAngleToXAxis());
 		return Stream.of(svgPolygon, svgText);
 	}
