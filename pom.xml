@@ -48,6 +48,11 @@
 			<artifactId>CommonsJSONAndXML</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+		<dependency>
+			<groupId>org.omnaest.vector</groupId>
+			<artifactId>CommonsVector</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
