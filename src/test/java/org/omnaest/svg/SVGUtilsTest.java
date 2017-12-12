@@ -22,6 +22,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.Ignore;
@@ -70,6 +71,7 @@ public class SVGUtilsTest
 	}
 
 	@Test
+	@Ignore
 	public void testBoundedContext() throws IOException
 	{
 		SVGDrawer drawer = SVGUtils	.getDrawer(1000, 500)
@@ -97,7 +99,7 @@ public class SVGUtilsTest
 	}
 
 	@Test
-	//@Ignore
+	@Ignore
 	public void testBoundedContextWithRender() throws IOException
 	{
 		SVGDrawer drawer = SVGUtils	.getDrawer(1000, 500)
@@ -128,5 +130,151 @@ public class SVGUtilsTest
 		drawer	.renderAsResult()
 				.writeToFile(new File("C:/Temp/svgBoundedAreaTest.svg"));
 
+	}
+
+	@Test
+	public void testBoundedContextWithCoverageMerge() throws IOException
+	{
+		SVGDrawer drawer = SVGUtils	.getDrawer(900, 500)
+									.withScreenDimensions(DisplayResolution._1280x800);
+		BoundedArea boundedArea = drawer.newBoundedArea();
+
+		List<BoundedArea> verticalSlices = boundedArea.asVerticalSlices(3);
+
+		BoundedArea coverageArea = verticalSlices	.get(2)
+													.coverageMergeWith(verticalSlices.get(1));
+
+		assertEquals(-300.0, coverageArea.getRawTranslationX(), 0.01);
+		assertEquals(0.0, coverageArea.getRawTranslationY(), 0.01);
+		assertEquals(600, coverageArea.getRawWidth(), 0.01);
+		assertEquals(500, coverageArea.getRawHeight(), 0.01);
+	}
+
+	@Test
+	public void testBoundedContextWithSlices() throws IOException
+	{
+		SVGDrawer drawer = SVGUtils	.getDrawer(900, 600)
+									.withScreenDimensions(DisplayResolution._1280x800);
+		BoundedArea boundedArea = drawer.newBoundedArea();
+
+		{
+			//
+			List<BoundedArea> verticalSlices = boundedArea.asVerticalSlices(3);
+
+			//
+			assertEquals(	0.0, verticalSlices.get(0)
+											.getRawTranslationX(),
+							0.01);
+			assertEquals(	300.0, verticalSlices.get(1)
+												.getRawTranslationX(),
+							0.01);
+			assertEquals(	600.0, verticalSlices.get(2)
+												.getRawTranslationX(),
+							0.01);
+
+			//
+			assertEquals(	0.0, verticalSlices.get(0)
+											.getRawTranslationY(),
+							0.01);
+
+			//
+			assertEquals(	0.0, verticalSlices.get(0)
+											.getCoordinatesTranslator()
+											.translateX(0),
+							0.01);
+			assertEquals(	300.0, verticalSlices.get(1)
+												.getCoordinatesTranslator()
+												.translateX(0),
+							0.01);
+			assertEquals(	600.0, verticalSlices.get(2)
+												.getCoordinatesTranslator()
+												.translateX(0),
+							0.01);
+
+			//
+			assertEquals(	0.0, verticalSlices.get(2)
+											.getCoordinatesTranslator()
+											.translateY(0),
+							0.01);
+
+		}
+		{
+			List<BoundedArea> horizontalSlices = boundedArea.asHorizontalSlices(3);
+
+			assertEquals(	0.0, horizontalSlices.get(0)
+												.getRawTranslationY(),
+							0.01);
+			assertEquals(	200.0, horizontalSlices.get(1)
+												.getRawTranslationY(),
+							0.01);
+			assertEquals(	400.0, horizontalSlices.get(2)
+												.getRawTranslationY(),
+							0.01);
+			assertEquals(	0.0, horizontalSlices.get(0)
+												.getRawTranslationX(),
+							0.01);
+
+			//
+			assertEquals(	0.0, horizontalSlices.get(0)
+												.getCoordinatesTranslator()
+												.translateY(0),
+							0.01);
+			assertEquals(	200.0, horizontalSlices.get(1)
+												.getCoordinatesTranslator()
+												.translateY(0),
+							0.01);
+			assertEquals(	400.0, horizontalSlices.get(2)
+												.getCoordinatesTranslator()
+												.translateY(0),
+							0.01);
+		}
+
+	}
+
+	@Test
+	public void testBoundedContextWithCoverageMergeDraw() throws IOException
+	{
+		SVGDrawer drawer = SVGUtils.getDrawer(1000, 700);
+		BoundedArea boundedArea = drawer.newBoundedArea()
+										.withPadding(10);
+
+		boundedArea	.newSubArea()
+					.withScalingHeight(100)
+					.withScalingWidth(100)
+					.add(new SVGRectangle(0, 0, 100, 100).setFillOpacity(0.1));
+
+		List<BoundedArea> verticalSlices = boundedArea.asVerticalSlices(3);
+
+		BoundedArea lowerRight = verticalSlices	.get(2)
+												.asHorizontalSlices(2)
+												.get(1);
+		BoundedArea lowerMiddle = verticalSlices.get(1)
+												.asHorizontalSlices(2)
+												.get(1);
+		BoundedArea coverageArea = lowerRight.coverageMergeWith(lowerMiddle);
+
+		System.out.println(coverageArea);
+		coverageArea.withPadding(10)
+					.withScalingWidth(100)
+					.withScalingHeight(100)
+					.add(new SVGRectangle(0, 0, 100, 100).setFillOpacity(0.4))
+					.add(new SVGText(50, 50, "2+3").setFontSize(100));
+
+		lowerMiddle	.newSubArea()
+					.withPadding(10)
+					.withScalingWidth(100)
+					.withScalingHeight(100)
+					.add(new SVGRectangle(0, 0, 100, 100).setFillOpacity(0.4))
+					.add(new SVGText(50, 50, "2").setFontSize(100));
+
+		lowerRight	.newSubArea()
+					.withPadding(10)
+					.withScalingWidth(100)
+					.withScalingHeight(100)
+					.add(new SVGRectangle(0, 0, 100, 100).setFillOpacity(0.4))
+					.add(new SVGText(50, 50, "3").setFontSize(100));
+
+		drawer	.renderAsResult()
+				.writeToFile(new File("C:/Temp/svgCoverageMergeTest.svg"));
 	}
 }

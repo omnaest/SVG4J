@@ -19,16 +19,18 @@
 package org.omnaest.svg.component;
 
 import java.util.List;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import org.omnaest.svg.SVGDrawer.BoundedArea;
+import org.omnaest.svg.SVGDrawer.ParentAccessor;
 import org.omnaest.svg.elements.ScalingSVGElementWrapper;
 import org.omnaest.svg.elements.base.SVGElement;
 import org.omnaest.svg.model.RawSVGElement;
+import org.omnaest.vector.ModifiableVector;
+import org.omnaest.vector.Vector;
 
-public class BoundedAreaImpl extends GenericTranslationAreaImpl<BoundedArea> implements BoundedArea
+public class BoundedAreaImpl extends GenericTranslationAreaImpl<BoundedArea> implements BoundedArea, ParentAccessor
 {
 	private double	height;
 	private double	width;
@@ -36,11 +38,11 @@ public class BoundedAreaImpl extends GenericTranslationAreaImpl<BoundedArea> imp
 	private Double	scalingHeight	= null;
 	private Double	scalingWidth	= null;
 
-	public BoundedAreaImpl(SVGElementAndRawElementConsumer<?> parent, Supplier<Double> parentWidth, Supplier<Double> parentHeigth)
+	public BoundedAreaImpl(ParentAccessor parent)
 	{
-		super(parent, parentWidth, parentHeigth);
-		this.width = parentWidth.get();
-		this.height = parentHeigth.get();
+		super(parent);
+		this.width = parent.getWidth();
+		this.height = parent.getHeight();
 	}
 
 	@Override
@@ -112,14 +114,16 @@ public class BoundedAreaImpl extends GenericTranslationAreaImpl<BoundedArea> imp
 	@Override
 	public BoundedArea withRelativeHeight(double relativeHeight)
 	{
-		double parentHeight = this.parentHeight.get();
+		double parentHeight = this	.getParent()
+									.getHeight();
 		return this.withHeight(parentHeight * relativeHeight);
 	}
 
 	@Override
 	public BoundedArea withRelativeWidth(double relativeWidth)
 	{
-		double parentWidth = this.parentWidth.get();
+		double parentWidth = this	.getParent()
+									.getWidth();
 		return this.withWidth(parentWidth * relativeWidth);
 	}
 
@@ -176,7 +180,30 @@ public class BoundedAreaImpl extends GenericTranslationAreaImpl<BoundedArea> imp
 	@Override
 	public BoundedArea newSubArea()
 	{
-		return new BoundedAreaImpl(this, () -> this.getWidth(), () -> this.getHeight());
+		return new BoundedAreaImpl(this.asParentAccessor());
+	}
+
+	@Override
+	public SVGElementAndRawElementConsumer<?> getConsumer()
+	{
+		return this;
+	}
+
+	@Override
+	public double getTranslationX()
+	{
+		return this.getRawTranslationX();
+	}
+
+	@Override
+	public double getTranslationY()
+	{
+		return this.getRawTranslationY();
+	}
+
+	protected ParentAccessor asParentAccessor()
+	{
+		return this;
 	}
 
 	@Override
@@ -229,6 +256,98 @@ public class BoundedAreaImpl extends GenericTranslationAreaImpl<BoundedArea> imp
 												.withRelativeTranslationY(index * 1.0 / numberOfSlices)
 												.withRelativeHeight(1.0 / numberOfSlices))
 						.collect(Collectors.toList());
+	}
+
+	@Override
+	public BoundedArea coverageMergeWith(BoundedArea boundedArea)
+	{
+		CoordinatesTranslator coordinatesTranslator = this	.getCoordinatesTranslator()
+															.relatedTo(boundedArea);
+
+		double otherX1 = coordinatesTranslator.translateX(0);
+		double otherY1 = coordinatesTranslator.translateY(0);
+
+		double x1 = Math.min(0, otherX1);
+		double y1 = Math.min(0, otherY1);
+
+		double otherX2 = coordinatesTranslator.translateX(boundedArea.getRawWidth());
+		double otherY2 = coordinatesTranslator.translateY(boundedArea.getRawHeight());
+
+		double x2 = Math.max(this.getRawWidth(), otherX2);
+		double y2 = Math.max(this.getRawHeight(), otherY2);
+
+		double width = x2 - x1;
+		double height = y2 - y1;
+
+		return new BoundedAreaImpl(this).withWidth(width)
+										.withHeight(height)
+										.withTranslationX(x1)
+										.withTranslationY(y1);
+	}
+
+	private static class CoordinatesTranslatorImpl implements CoordinatesTranslator
+	{
+		private Vector	parentTranslationVector	= Vector.of(0.0, 0.0);
+		private Vector	otherTranslationVector;
+
+		public CoordinatesTranslatorImpl(BoundedArea boundedArea)
+		{
+			this.otherTranslationVector = this.determineTranslationVector(boundedArea);
+		}
+
+		public CoordinatesTranslatorImpl(BoundedArea boundedArea, Vector parentTranslationVector)
+		{
+			this.parentTranslationVector = parentTranslationVector;
+			this.otherTranslationVector = this.determineTranslationVector(boundedArea);
+		}
+
+		private Vector determineTranslationVector(BoundedArea boundedArea)
+		{
+			ModifiableVector translation = ModifiableVector.of(0.0, 0.0);
+			{
+				ParentAccessor parent = boundedArea;
+				while (parent != null)
+				{
+					translation.addX(parent.getTranslationX());
+					translation.addY(parent.getTranslationY());
+
+					parent = parent.getParent();
+				}
+			}
+			return translation;
+		}
+
+		@Override
+		public CoordinatesTranslator relatedTo(BoundedArea boundedArea)
+		{
+			return new CoordinatesTranslatorImpl(boundedArea, this.otherTranslationVector);
+		}
+
+		@Override
+		public double translateX(double x)
+		{
+			return this.otherTranslationVector.getX() - this.parentTranslationVector.getX() + x;
+		}
+
+		@Override
+		public double translateY(double y)
+		{
+			return this.otherTranslationVector.getY() - this.parentTranslationVector.getY() + y;
+		}
+	}
+
+	@Override
+	public CoordinatesTranslator getCoordinatesTranslator()
+	{
+		return new CoordinatesTranslatorImpl(this);
+	}
+
+	@Override
+	public String toString()
+	{
+		return "BoundedAreaImpl [getRawHeight()=" + this.getRawHeight() + ", getRawWidth()=" + this.getRawWidth() + ", getHeight()=" + this.getHeight()
+				+ ", getWidth()=" + this.getWidth() + ", getRawTranslationX()=" + this.getRawTranslationX() + ", getRawTranslationY()="
+				+ this.getRawTranslationY() + "]";
 	}
 
 }

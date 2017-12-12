@@ -16,15 +16,28 @@
 
 
 */
-package org.omnaest.svg.component;
+package org.omnaest.svg.model;
 
-import org.omnaest.svg.SVGDrawer.ParentAccessor;
-import org.omnaest.svg.SVGDrawer.TranslationArea;
+import static org.junit.Assert.assertEquals;
 
-public class TranslationAreaImpl extends GenericTranslationAreaImpl<TranslationArea> implements TranslationArea
+import org.junit.Test;
+import org.omnaest.svg.elements.SVGText;
+
+public class RawSVGTextTest
 {
-	public TranslationAreaImpl(ParentAccessor parent)
+
+	@Test
+	public void testTransformer() throws Exception
 	{
-		super(parent);
+		RawSVGText rawSVGText = new SVGText(0, 0, "test")	.setFontSize(50)
+															.render();
+
+		String style = rawSVGText	.transformer()
+									.scale(0.5, 0.5)
+									.getStyle();
+
+		//System.out.println(style);
+		assertEquals("font-size:25px", style);
 	}
+
 }

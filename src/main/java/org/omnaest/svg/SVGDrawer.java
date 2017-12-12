@@ -55,6 +55,21 @@ public class SVGDrawer extends AbstractSVGElementConsumer<SVGDrawer>
 	private AtomicInteger		embedReloadTimer		= new AtomicInteger(0);
 	private AtomicBoolean		enableCSSForAnkerLinks	= new AtomicBoolean(false);
 
+	public static interface ParentAccessor
+	{
+		public SVGElementAndRawElementConsumer<?> getConsumer();
+
+		public double getWidth();
+
+		public double getHeight();
+
+		public double getTranslationX();
+
+		public double getTranslationY();
+
+		public ParentAccessor getParent();
+	}
+
 	public static interface GenericTranslationArea<TA extends GenericTranslationArea<TA>> extends SVGElementAndRawElementConsumer<TA>
 	{
 		/**
@@ -96,14 +111,30 @@ public class SVGDrawer extends AbstractSVGElementConsumer<SVGDrawer>
 		 * @return
 		 */
 		TA withRelativeTranslationY(double y);
+
+		double getRawTranslationY();
+
+		double getRawTranslationX();
+
+		ParentAccessor getParent();
 	}
 
 	public static interface TranslationArea extends GenericTranslationArea<TranslationArea>
 	{
 	}
 
-	public static interface BoundedArea extends GenericTranslationArea<BoundedArea>
+	public static interface BoundedArea extends GenericTranslationArea<BoundedArea>, ParentAccessor
 	{
+		public static interface CoordinatesTranslator
+		{
+			public double translateX(double x);
+
+			public double translateY(double y);
+
+			public CoordinatesTranslator relatedTo(BoundedArea boundedArea);
+
+		}
+
 		/**
 		 * Defines the height of the {@link BoundedArea}
 		 * 
@@ -169,6 +200,7 @@ public class SVGDrawer extends AbstractSVGElementConsumer<SVGDrawer>
 		 * @see #getHeight()
 		 * @return
 		 */
+		@Override
 		double getWidth();
 
 		/**
@@ -178,6 +210,7 @@ public class SVGDrawer extends AbstractSVGElementConsumer<SVGDrawer>
 		 * @see #getWidth()
 		 * @return
 		 */
+		@Override
 		double getHeight();
 
 		/**
@@ -245,6 +278,16 @@ public class SVGDrawer extends AbstractSVGElementConsumer<SVGDrawer>
 		 * @return
 		 */
 		List<BoundedArea> asHorizontalSlices(int numberOfSlices);
+
+		CoordinatesTranslator getCoordinatesTranslator();
+
+		/**
+		 * Merges two {@link BoundedArea}s into a single one, which represents the rectangle spanning over both {@link BoundedArea}s
+		 * 
+		 * @param boundedArea
+		 * @return
+		 */
+		BoundedArea coverageMergeWith(BoundedArea boundedArea);
 	}
 
 	public static class SVGRenderResult
@@ -481,12 +524,56 @@ public class SVGDrawer extends AbstractSVGElementConsumer<SVGDrawer>
 
 	public TranslationArea newTranslationArea()
 	{
-		return new TranslationAreaImpl(this, () -> this.getWidth(), () -> this.getHeight());
+		return new TranslationAreaImpl(this.asParentAccessor());
 	}
 
 	public BoundedArea newBoundedArea()
 	{
-		return new BoundedAreaImpl(this, () -> this.getWidth(), () -> this.getHeight());
+		return new BoundedAreaImpl(this.asParentAccessor());
+	}
+
+	private ParentAccessor asParentAccessor()
+	{
+		return new ParentAccessor()
+		{
+			@Override
+			public double getWidth()
+			{
+				return SVGDrawer.this.getWidth();
+			}
+
+			@Override
+			public double getTranslationY()
+			{
+				return 0;
+			}
+
+			@Override
+			public double getTranslationX()
+			{
+				return 0;
+			}
+
+			@Override
+			public double getHeight()
+			{
+				return SVGDrawer.this.getHeight();
+			}
+
+			@Override
+			public SVGElementAndRawElementConsumer<?> getConsumer()
+			{
+				return SVGDrawer.this;
+			}
+
+			@Override
+			public ParentAccessor getParent()
+			{
+				//root returns null
+				return null;
+			}
+
+		};
 	}
 
 	public double getWidth()

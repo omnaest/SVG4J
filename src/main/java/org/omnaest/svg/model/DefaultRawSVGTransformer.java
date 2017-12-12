@@ -18,9 +18,9 @@
 */
 package org.omnaest.svg.model;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
@@ -39,22 +39,21 @@ public class DefaultRawSVGTransformer implements RawSVGTransformer
 
 	public DefaultRawSVGTransformer(RawSVGElement rawSVGElement, SupplierConsumer supplierConsumersX, SupplierConsumer supplierConsumersY)
 	{
-		this(rawSVGElement, Arrays.asList(supplierConsumersX), Arrays.asList(supplierConsumersY), Collections.emptyList(), Collections.emptyList(),
-				Collections.emptyList());
+		this(rawSVGElement, Arrays.asList(supplierConsumersX), Arrays.asList(supplierConsumersY), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
 	}
 
 	public DefaultRawSVGTransformer(RawSVGElement rawSVGElement, SupplierConsumer supplierConsumersLocationX, SupplierConsumer supplierConsumersLocationY,
 									SupplierConsumer supplierConsumersWidth, SupplierConsumer supplierConsumersHeight)
 	{
-		this(rawSVGElement, Arrays.asList(supplierConsumersLocationX), Arrays.asList(supplierConsumersLocationY), Collections.emptyList(),
+		this(rawSVGElement, Arrays.asList(supplierConsumersLocationX), Arrays.asList(supplierConsumersLocationY), new ArrayList<>(),
 				Arrays.asList(supplierConsumersWidth), Arrays.asList(supplierConsumersHeight));
 	}
 
 	public DefaultRawSVGTransformer(RawSVGElement rawSVGElement, SupplierConsumer supplierConsumersX, SupplierConsumer supplierConsumersY,
 									SupplierConsumer supplierConsumersXY)
 	{
-		this(rawSVGElement, Arrays.asList(supplierConsumersX), Arrays.asList(supplierConsumersY), Arrays.asList(supplierConsumersXY), Collections.emptyList(),
-				Collections.emptyList());
+		this(rawSVGElement, Arrays.asList(supplierConsumersX), Arrays.asList(supplierConsumersY), Arrays.asList(supplierConsumersXY), new ArrayList<>(),
+				new ArrayList<>());
 	}
 
 	public DefaultRawSVGTransformer(RawSVGElement rawSVGElement, Collection<SupplierConsumer> supplierConsumersLocationX,
@@ -68,6 +67,18 @@ public class DefaultRawSVGTransformer implements RawSVGTransformer
 		this.supplierConsumersRadius = supplierConsumersRadius;
 		this.supplierConsumersWidth = supplierConsumersWidth;
 		this.supplierConsumersHeight = supplierConsumersHeight;
+	}
+
+	public DefaultRawSVGTransformer addRadiusSupplierConsumer(SupplierConsumer radiusSupplierConsumer)
+	{
+		this.supplierConsumersRadius.add(radiusSupplierConsumer);
+		return this;
+	}
+
+	public DefaultRawSVGTransformer addHeightSupplierConsumer(SupplierConsumer heightSupplierConsumer)
+	{
+		this.supplierConsumersHeight.add(heightSupplierConsumer);
+		return this;
 	}
 
 	@Override

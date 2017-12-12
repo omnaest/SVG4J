@@ -18,6 +18,9 @@
 */
 package org.omnaest.svg.model;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -134,6 +137,35 @@ public class RawSVGText extends RawSVGXYLocatedElement
 			public Double get()
 			{
 				return NumberUtils.toDouble(RawSVGText.this.y);
+			}
+		}).addHeightSupplierConsumer(new SupplierConsumer()
+		{
+			private final String patternStr = "font\\-size[ ]*\\:[ ]*([0-9]*\\.?[0-9]*)[ ]*(px)?";
+
+			@Override
+			public void accept(Double value)
+			{
+				RawSVGText.this.style = RawSVGText.this.style.replaceAll(this.patternStr, "font-size:" + NumberUtils.formatter()
+																													.format(value)
+						+ "px");
+			}
+
+			@Override
+			public Double get()
+			{
+				double retval = 0.0;
+
+				//
+				String text = RawSVGText.this.style;
+				Matcher matcher = Pattern	.compile(this.patternStr, Pattern.CASE_INSENSITIVE)
+											.matcher(text);
+				if (matcher.find() && matcher.groupCount() > 0)
+				{
+					String value = matcher.group(1);
+					retval = NumberUtils.toDouble(value);
+				}
+
+				return retval;
 			}
 		});
 	}
