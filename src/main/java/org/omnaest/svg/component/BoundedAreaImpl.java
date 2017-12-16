@@ -261,28 +261,35 @@ public class BoundedAreaImpl extends GenericTranslationAreaImpl<BoundedArea> imp
 	@Override
 	public BoundedArea coverageMergeWith(BoundedArea boundedArea)
 	{
-		CoordinatesTranslator coordinatesTranslator = this	.getCoordinatesTranslator()
-															.relatedTo(boundedArea);
+		BoundedArea retval = this;
 
-		double otherX1 = coordinatesTranslator.translateX(0);
-		double otherY1 = coordinatesTranslator.translateY(0);
+		if (boundedArea != null)
+		{
+			CoordinatesTranslator coordinatesTranslator = this	.getCoordinatesTranslator()
+																.relatedTo(boundedArea);
 
-		double x1 = Math.min(0, otherX1);
-		double y1 = Math.min(0, otherY1);
+			double otherX1 = coordinatesTranslator.translateX(0);
+			double otherY1 = coordinatesTranslator.translateY(0);
 
-		double otherX2 = coordinatesTranslator.translateX(boundedArea.getRawWidth());
-		double otherY2 = coordinatesTranslator.translateY(boundedArea.getRawHeight());
+			double x1 = Math.min(0, otherX1);
+			double y1 = Math.min(0, otherY1);
 
-		double x2 = Math.max(this.getRawWidth(), otherX2);
-		double y2 = Math.max(this.getRawHeight(), otherY2);
+			double otherX2 = coordinatesTranslator.translateX(boundedArea.getRawWidth());
+			double otherY2 = coordinatesTranslator.translateY(boundedArea.getRawHeight());
 
-		double width = x2 - x1;
-		double height = y2 - y1;
+			double x2 = Math.max(this.getRawWidth(), otherX2);
+			double y2 = Math.max(this.getRawHeight(), otherY2);
 
-		return new BoundedAreaImpl(this).withWidth(width)
-										.withHeight(height)
-										.withTranslationX(x1)
-										.withTranslationY(y1);
+			double width = x2 - x1;
+			double height = y2 - y1;
+
+			retval = new BoundedAreaImpl(this)	.withWidth(width)
+												.withHeight(height)
+												.withTranslationX(x1)
+												.withTranslationY(y1);
+		}
+
+		return retval;
 	}
 
 	private static class CoordinatesTranslatorImpl implements CoordinatesTranslator
