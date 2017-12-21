@@ -20,6 +20,7 @@ package org.omnaest.svg.elements;
 
 import org.omnaest.svg.elements.base.SVGElement;
 import org.omnaest.svg.model.RawSVGText;
+import org.omnaest.utils.ObjectUtils;
 
 public class SVGText implements SVGElement
 {
@@ -33,12 +34,47 @@ public class SVGText implements SVGElement
 	private int		rotation	= 0;
 	private double	opacity		= 1.0;
 
+	private LengthAdjust	lengthAdjust	= null;
+	private Double			length;
+
+	public static enum LengthAdjust
+	{
+		spacingAndGlyphs, spacing
+	}
+
 	public SVGText(int x, int y, String text)
 	{
 		super();
 		this.x = x;
 		this.y = y;
 		this.text = text;
+	}
+
+	public LengthAdjust getLengthAdjust()
+	{
+		return this.lengthAdjust;
+	}
+
+	public SVGText setLengthAdjust(LengthAdjust lengthAdjust)
+	{
+		this.lengthAdjust = lengthAdjust;
+		return this;
+	}
+
+	public double getLength()
+	{
+		return this.length;
+	}
+
+	public SVGText setLength(double length)
+	{
+		if (this.lengthAdjust == null)
+		{
+			this.lengthAdjust = LengthAdjust.spacingAndGlyphs;
+		}
+
+		this.length = length;
+		return this;
 	}
 
 	public String getColor()
@@ -85,6 +121,8 @@ public class SVGText implements SVGElement
 								.setY("" + this.y)
 								.setFill(this.color)
 								.setOpacity(this.opacity)
+								.setTextLength(ObjectUtils.getIfNotNull(this.length, () -> "" + this.length))
+								.setLengthAdjust(ObjectUtils.getIfNotNull(this.lengthAdjust, () -> "" + this.lengthAdjust))
 								.setStyle("font-size:" + this.fontSize + "px")
 								.setTransform("rotate(" + this.rotation + "," + (this.x + this.fontSize / 2) + "," + (this.y + this.fontSize / 2) + ")")
 								.setText(this.text);

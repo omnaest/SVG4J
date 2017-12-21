@@ -75,15 +75,17 @@ public class SVGTextBox implements SVGCompositeElement
 								.subtract(c);
 		Vector c1Rotated = c1.rotateZ(-this.rotation);
 
-		double fontSize = 2 * Math.min(rotatedTextFlow.absolute() * 2.5 / this.text.length(), c1Rotated.absolute());
+		double fontSize = Math.min(rotatedTextFlow.absolute() * 2.5 / this.text.length(), c1Rotated.absolute());
 
 		Vector textLocation = leftUpper	.add(c.inverse())
 										.add(c1Rotated.inverse());
 
 		double border = 0.1 * c1.absolute();
+		double length = regularTextFlow.absolute();
 		SVGText svgText = new SVGText((int) textLocation.getX(), (int) (textLocation.getY() - border), this.text)	.setRotation(-this.rotation)
 																													.setColor(this.textColor)
-																													.setFontSize((int) fontSize);
+																													.setFontSize((int) fontSize)
+																													.setLength(length);
 
 		SVGRectangle svgRectangle = new SVGRectangle(	(int) this.x1, (int) this.y1, (int) (this.x2 - this.x1),
 														(int) (this.y2 - this.y1))	.setStrokeWidth(this.borderSize)

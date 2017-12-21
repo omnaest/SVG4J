@@ -16,7 +16,7 @@
 
 
 */
-package org.omnaest.svg.elements.composite;
+package org.omnaest.svg.elements;
 
 import java.io.File;
 
@@ -24,24 +24,24 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.omnaest.svg.SVGDrawer;
 import org.omnaest.svg.SVGUtils;
-import org.omnaest.svg.elements.SVGCircle;
-import org.omnaest.svg.elements.SVGRectangle;
+import org.omnaest.svg.other.DisplayResolution;
 
-public class SVGTextBoxTest
+public class SVGTextTest
 {
 
 	@Test
 	@Ignore
-	public void testSVGTextBox() throws Exception
+	public void testSVGText() throws Exception
 	{
-		SVGDrawer drawer = SVGUtils.getDrawer(200, 100);
+		SVGDrawer drawer = SVGUtils	.getDrawer(1000, 600)
+									.withScreenDimensions(DisplayResolution._1280x800);
 
-		drawer.add(new SVGRectangle(10, 10, 150 - 10, 80 - 10).setFillOpacity(0.1));
-		drawer.add(new SVGCircle(150, 80, 5));
-		drawer.add(new SVGTextBox(10, 10, 150, 80, "Test").setRotation(0));
+		drawer	.add(new SVGRectangle(10, 10, 599, 399))
+				.add(new SVGText(10, 410, "Test")	.setFontSize(400)
+													.setLength(600));
 
 		drawer	.renderAsResult()
-				.writeToFile(new File("C:/Temp/svgTextBoxTest.svg"));
+				.writeToFile(new File("C:/Temp/svgTextText.svg"));
 	}
 
 }

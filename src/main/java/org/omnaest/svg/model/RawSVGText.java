@@ -39,6 +39,12 @@ public class RawSVGText extends RawSVGXYLocatedElement
 	@XmlAttribute
 	private double opacity;
 
+	@XmlAttribute
+	private String textLength;
+
+	@XmlAttribute
+	private String lengthAdjust;
+
 	@Override
 	public RawSVGText setX(String x)
 	{
@@ -86,6 +92,28 @@ public class RawSVGText extends RawSVGXYLocatedElement
 	public RawSVGText setText(String text)
 	{
 		this.content = text;
+		return this;
+	}
+
+	public String getTextLength()
+	{
+		return this.textLength;
+	}
+
+	public RawSVGText setTextLength(String textLength)
+	{
+		this.textLength = textLength;
+		return this;
+	}
+
+	public String getLengthAdjust()
+	{
+		return this.lengthAdjust;
+	}
+
+	public RawSVGText setLengthAdjust(String lengthAdjust)
+	{
+		this.lengthAdjust = lengthAdjust;
 		return this;
 	}
 
