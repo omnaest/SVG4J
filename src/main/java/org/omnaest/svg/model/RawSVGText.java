@@ -28,6 +28,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.omnaest.svg.model.DefaultRawSVGTransformer.SupplierConsumer;
 import org.omnaest.utils.NumberUtils;
+import org.omnaest.utils.ObjectUtils;
 
 @XmlRootElement(name = "text")
 @XmlAccessorType(XmlAccessType.NONE)
@@ -166,7 +167,7 @@ public class RawSVGText extends RawSVGXYLocatedElement
 			{
 				return NumberUtils.toDouble(RawSVGText.this.y);
 			}
-		}).addHeightSupplierConsumer(new SupplierConsumer()
+		})	.addHeightSupplierConsumer(new SupplierConsumer()
 		{
 			private final String patternStr = "font\\-size[ ]*\\:[ ]*([0-9]*\\.?[0-9]*)[ ]*(px)?";
 
@@ -195,6 +196,24 @@ public class RawSVGText extends RawSVGXYLocatedElement
 
 				return retval;
 			}
-		});
+		})
+			.addWidthSupplierConsumer(new SupplierConsumer()
+			{
+				@Override
+				public void accept(Double value)
+				{
+					if (value != null)
+					{
+						RawSVGText.this.textLength = NumberUtils.formatter()
+																.format(value);
+					}
+				}
+
+				@Override
+				public Double get()
+				{
+					return ObjectUtils.getIfNotNull(RawSVGText.this.textLength, () -> NumberUtils.toDouble(RawSVGText.this.textLength));
+				}
+			});
 	}
 }

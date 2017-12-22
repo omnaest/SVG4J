@@ -29,7 +29,6 @@ import org.omnaest.svg.elements.SVGRectangle;
 
 public class SVGTextBoxTest
 {
-
 	@Test
 	@Ignore
 	public void testSVGTextBox() throws Exception
@@ -43,5 +42,4 @@ public class SVGTextBoxTest
 		drawer	.renderAsResult()
 				.writeToFile(new File("C:/Temp/svgTextBoxTest.svg"));
 	}
-
 }

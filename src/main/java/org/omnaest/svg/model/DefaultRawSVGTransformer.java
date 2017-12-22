@@ -81,6 +81,12 @@ public class DefaultRawSVGTransformer implements RawSVGTransformer
 		return this;
 	}
 
+	public DefaultRawSVGTransformer addWidthSupplierConsumer(SupplierConsumer widthSupplierConsumer)
+	{
+		this.supplierConsumersWidth.add(widthSupplierConsumer);
+		return this;
+	}
+
 	@Override
 	public RawSVGElement translate(double x, double y)
 	{
