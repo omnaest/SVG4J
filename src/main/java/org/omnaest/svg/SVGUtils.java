@@ -20,10 +20,13 @@ package org.omnaest.svg;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.io.FileUtils;
 import org.omnaest.svg.model.RawSVGRoot;
 import org.omnaest.svg.utils.XMLHelper;
+import org.omnaest.utils.StringUtils;
 
 /**
  * {@link SVGUtils}
@@ -35,39 +38,49 @@ import org.omnaest.svg.utils.XMLHelper;
 public class SVGUtils
 {
 
-	/**
-	 * @see SVGDrawer
-	 * @param width
-	 * @param height
-	 * @return
-	 */
-	public static SVGDrawer getDrawer(int width, int height)
-	{
-		return new SVGDrawer(width, height);
-	}
+    /**
+     * @see SVGDrawer
+     * @param width
+     * @param height
+     * @return
+     */
+    public static SVGDrawer getDrawer(int width, int height)
+    {
+        return new SVGDrawer(width, height);
+    }
 
-	public static SVGDrawer getDrawer(int originX, int originY, int width, int height)
-	{
-		return new SVGDrawer(originX, originY, width, height);
-	}
+    public static SVGDrawer getDrawer(int originX, int originY, int width, int height)
+    {
+        return new SVGDrawer(originX, originY, width, height);
+    }
 
-	public static SVGDrawer getDrawer(File svgFile) throws IOException
-	{
-		return new SVGDrawer(parse(svgFile));
-	}
+    public static SVGDrawer getDrawer(InputStream svgInputStream) throws IOException
+    {
+        return new SVGDrawer(parse(svgInputStream));
+    }
 
-	public static SVGDrawer getDrawer(String svg)
-	{
-		return new SVGDrawer(parse(svg));
-	}
+    public static SVGDrawer getDrawer(File svgFile) throws IOException
+    {
+        return new SVGDrawer(parse(svgFile));
+    }
 
-	protected static RawSVGRoot parse(File file) throws IOException
-	{
-		return parse(FileUtils.readFileToString(file, "utf-8"));
-	}
+    public static SVGDrawer getDrawer(String svg)
+    {
+        return new SVGDrawer(parse(svg));
+    }
 
-	protected static RawSVGRoot parse(String svg)
-	{
-		return XMLHelper.parse(svg, RawSVGRoot.class);
-	}
+    protected static RawSVGRoot parse(InputStream inputStream) throws IOException
+    {
+        return parse(StringUtils.toString(inputStream, StandardCharsets.UTF_8));
+    }
+
+    protected static RawSVGRoot parse(File file) throws IOException
+    {
+        return parse(FileUtils.readFileToString(file, "utf-8"));
+    }
+
+    protected static RawSVGRoot parse(String svg)
+    {
+        return XMLHelper.parse(svg, RawSVGRoot.class);
+    }
 }

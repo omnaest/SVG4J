@@ -29,17 +29,23 @@ import org.omnaest.svg.elements.SVGRectangle;
 
 public class SVGTextBoxTest
 {
-	@Test
-	@Ignore
-	public void testSVGTextBox() throws Exception
-	{
-		SVGDrawer drawer = SVGUtils.getDrawer(200, 100);
+    @Test
+    @Ignore
+    public void testSVGTextBox() throws Exception
+    {
+        SVGDrawer drawer = SVGUtils.getDrawer(200, 500);
 
-		drawer.add(new SVGRectangle(10, 10, 150 - 10, 80 - 10).setFillOpacity(0.1));
-		drawer.add(new SVGCircle(150, 80, 5));
-		drawer.add(new SVGTextBox(10, 10, 150, 80, "Test").setRotation(0));
+        for (int ii = 0; ii <= 3; ii += 1)
+        {
+            drawer.add(new SVGRectangle(10, 10, 150 - 10, 80 - 10).setFillOpacity(0.1));
+            drawer.add(new SVGCircle(150, 80, 5));
+            drawer.add(new SVGTextBox(10, 10 + ii * 100, 150, 80 + ii * 100, "Test").setRotation(ii * 30)
+                                                                                    .setBorderSize(1)
 
-		drawer	.renderAsResult()
-				.writeToFile(new File("C:/Temp/svgTextBoxTest.svg"));
-	}
+                                                                                    .setBorderColor("black"));
+        }
+
+        drawer.renderAsResult()
+              .writeToFile(new File("C:/Temp/svgTextBoxTest.svg"));
+    }
 }

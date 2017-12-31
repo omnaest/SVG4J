@@ -23,9 +23,11 @@ import java.util.regex.Pattern;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.omnaest.svg.model.DefaultRawSVGTransformer.SupplierBiConsumer;
 import org.omnaest.svg.model.DefaultRawSVGTransformer.SupplierConsumer;
 import org.omnaest.utils.NumberUtils;
 import org.omnaest.utils.ObjectUtils;
@@ -34,186 +36,296 @@ import org.omnaest.utils.ObjectUtils;
 @XmlAccessorType(XmlAccessType.NONE)
 public class RawSVGText extends RawSVGXYLocatedElement
 {
-	@XmlAttribute
-	private String fill;
+    @XmlAttribute
+    private String fill;
 
-	@XmlAttribute
-	private double opacity;
+    @XmlAttribute
+    private double opacity;
 
-	@XmlAttribute
-	private String textLength;
+    @XmlAttribute(name = "text-anchor")
+    private String textAnchor;
 
-	@XmlAttribute
-	private String lengthAdjust;
+    @XmlAttribute(name = "alignment-baseline")
+    private String alignmentBaseLine;
 
-	@Override
-	public RawSVGText setX(String x)
-	{
-		super.setX(x);
-		return this;
-	}
+    @XmlAttribute(name = "dominant-baseline")
+    private String dominantBaseLine;
 
-	@Override
-	public RawSVGText setY(String y)
-	{
-		super.setY(y);
-		return this;
-	}
+    @XmlAttribute
+    private String textLength;
 
-	public String getFill()
-	{
-		return this.fill;
-	}
+    @XmlAttribute
+    private String lengthAdjust;
 
-	public RawSVGText setFill(String fill)
-	{
-		this.fill = fill;
-		return this;
-	}
+    @XmlAttribute
+    private String dx;
 
-	@Override
-	public RawSVGText setStyle(String style)
-	{
-		super.setStyle(style);
-		return this;
-	}
+    @XmlAttribute
+    private String dy;
 
-	@Override
-	public RawSVGText setTransform(String transform)
-	{
-		super.setTransform(transform);
-		return this;
-	}
+    @XmlAnyElement
+    private Object others;
 
-	public String getText()
-	{
-		return this.content;
-	}
+    @Override
+    public RawSVGText setX(String x)
+    {
+        super.setX(x);
+        return this;
+    }
 
-	public RawSVGText setText(String text)
-	{
-		this.content = text;
-		return this;
-	}
+    @Override
+    public RawSVGText setY(String y)
+    {
+        super.setY(y);
+        return this;
+    }
 
-	public String getTextLength()
-	{
-		return this.textLength;
-	}
+    public String getDx()
+    {
+        return this.dx;
+    }
 
-	public RawSVGText setTextLength(String textLength)
-	{
-		this.textLength = textLength;
-		return this;
-	}
+    public RawSVGText setDx(String dx)
+    {
+        this.dx = dx;
+        return this;
+    }
 
-	public String getLengthAdjust()
-	{
-		return this.lengthAdjust;
-	}
+    public String getDy()
+    {
+        return this.dy;
+    }
 
-	public RawSVGText setLengthAdjust(String lengthAdjust)
-	{
-		this.lengthAdjust = lengthAdjust;
-		return this;
-	}
+    public RawSVGText setDy(String dy)
+    {
+        this.dy = dy;
+        return this;
+    }
 
-	@Override
-	public String toString()
-	{
-		return "RawSVGText [x=" + this.x + ", y=" + this.y + ", fill=" + this.fill + ", style=" + this.style + ", transform=" + this.transform + ", content="
-				+ this.content + "]";
-	}
+    public String getDominantBaseLine()
+    {
+        return this.dominantBaseLine;
+    }
 
-	public RawSVGText setOpacity(double opacity)
-	{
-		this.opacity = opacity;
-		return this;
-	}
+    public RawSVGText setDominantBaseLine(String dominantBaseLine)
+    {
+        this.dominantBaseLine = dominantBaseLine;
+        return this;
+    }
 
-	public double getOpacity()
-	{
-		return this.opacity;
-	}
+    public String getAlignmentBaseLine()
+    {
+        return this.alignmentBaseLine;
+    }
 
-	@Override
-	public RawSVGTransformer transformer()
-	{
-		return new DefaultRawSVGTransformer(this, new SupplierConsumer()
-		{
-			@Override
-			public void accept(Double value)
-			{
-				RawSVGText.this.x = NumberUtils	.formatter()
-												.format(value);
-			}
+    public RawSVGText setAlignmentBaseLine(String alignmentBaseLine)
+    {
+        this.alignmentBaseLine = alignmentBaseLine;
+        return this;
+    }
 
-			@Override
-			public Double get()
-			{
-				return NumberUtils.toDouble(RawSVGText.this.x);
-			}
-		}, new SupplierConsumer()
-		{
-			@Override
-			public void accept(Double value)
-			{
-				RawSVGText.this.y = NumberUtils	.formatter()
-												.format(value);
-			}
+    public String getTextAnchor()
+    {
+        return this.textAnchor;
+    }
 
-			@Override
-			public Double get()
-			{
-				return NumberUtils.toDouble(RawSVGText.this.y);
-			}
-		})	.addHeightSupplierConsumer(new SupplierConsumer()
-		{
-			private final String patternStr = "font\\-size[ ]*\\:[ ]*([0-9]*\\.?[0-9]*)[ ]*(px)?";
+    public RawSVGText setTextAnchor(String textAnchor)
+    {
+        this.textAnchor = textAnchor;
+        return this;
+    }
 
-			@Override
-			public void accept(Double value)
-			{
-				RawSVGText.this.style = RawSVGText.this.style.replaceAll(this.patternStr, "font-size:" + NumberUtils.formatter()
-																													.format(value)
-						+ "px");
-			}
+    public String getFill()
+    {
+        return this.fill;
+    }
 
-			@Override
-			public Double get()
-			{
-				double retval = 0.0;
+    public RawSVGText setFill(String fill)
+    {
+        this.fill = fill;
+        return this;
+    }
 
-				//
-				String text = RawSVGText.this.style;
-				Matcher matcher = Pattern	.compile(this.patternStr, Pattern.CASE_INSENSITIVE)
-											.matcher(text);
-				if (matcher.find() && matcher.groupCount() > 0)
-				{
-					String value = matcher.group(1);
-					retval = NumberUtils.toDouble(value);
-				}
+    @Override
+    public RawSVGText setStyle(String style)
+    {
+        super.setStyle(style);
+        return this;
+    }
 
-				return retval;
-			}
-		})
-			.addWidthSupplierConsumer(new SupplierConsumer()
-			{
-				@Override
-				public void accept(Double value)
-				{
-					if (value != null)
-					{
-						RawSVGText.this.textLength = NumberUtils.formatter()
-																.format(value);
-					}
-				}
+    @Override
+    public RawSVGText setTransform(String transform)
+    {
+        super.setTransform(transform);
+        return this;
+    }
 
-				@Override
-				public Double get()
-				{
-					return ObjectUtils.getIfNotNull(RawSVGText.this.textLength, () -> NumberUtils.toDouble(RawSVGText.this.textLength));
-				}
-			});
-	}
+    public String getText()
+    {
+        return this.content;
+    }
+
+    public RawSVGText setText(String text)
+    {
+        this.content = text;
+        return this;
+    }
+
+    public String getTextLength()
+    {
+        return this.textLength;
+    }
+
+    public RawSVGText setTextLength(String textLength)
+    {
+        this.textLength = textLength;
+        return this;
+    }
+
+    public String getLengthAdjust()
+    {
+        return this.lengthAdjust;
+    }
+
+    public RawSVGText setLengthAdjust(String lengthAdjust)
+    {
+        this.lengthAdjust = lengthAdjust;
+        return this;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "RawSVGText [x=" + this.x + ", y=" + this.y + ", fill=" + this.fill + ", style=" + this.style + ", transform=" + this.transform + ", content="
+                + this.content + "]";
+    }
+
+    public RawSVGText setOpacity(double opacity)
+    {
+        this.opacity = opacity;
+        return this;
+    }
+
+    public double getOpacity()
+    {
+        return this.opacity;
+    }
+
+    @Override
+    public RawSVGTransformer transformer()
+    {
+        return new DefaultRawSVGTransformer(this, new SupplierConsumer()
+        {
+            @Override
+            public void accept(Double value)
+            {
+                RawSVGText.this.x = NumberUtils.formatter()
+                                               .format(value);
+            }
+
+            @Override
+            public Double get()
+            {
+                return NumberUtils.toDouble(RawSVGText.this.x);
+            }
+        }, new SupplierConsumer()
+        {
+            @Override
+            public void accept(Double value)
+            {
+                RawSVGText.this.y = NumberUtils.formatter()
+                                               .format(value);
+            }
+
+            @Override
+            public Double get()
+            {
+                return NumberUtils.toDouble(RawSVGText.this.y);
+            }
+        }).addRadiusSupplierConsumer(new SupplierBiConsumer()
+        {
+            private final String patternStr = "font\\-size[ ]*\\:[ ]*([0-9]*\\.?[0-9]*)[ ]*(px)?";
+
+            @Override
+            public void accept(Double xScaledFontSize, Double yScaledFontSize)
+            {
+                double fontSize = Math.min(xScaledFontSize, yScaledFontSize);
+                RawSVGText.this.style = RawSVGText.this.style.replaceAll(this.patternStr, "font-size:" + NumberUtils.formatter()
+                                                                                                                    .format(fontSize)
+                        + "px");
+            }
+
+            @Override
+            public Double get()
+            {
+                double retval = 0.0;
+
+                //
+                String text = RawSVGText.this.style;
+                Matcher matcher = Pattern.compile(this.patternStr, Pattern.CASE_INSENSITIVE)
+                                         .matcher(text);
+                if (matcher.find() && matcher.groupCount() > 0)
+                {
+                    String value = matcher.group(1);
+                    retval = NumberUtils.toDouble(value);
+                }
+
+                return retval;
+            }
+        })
+          .addWidthSupplierConsumer(new SupplierConsumer()
+          {
+              @Override
+              public void accept(Double value)
+              {
+                  if (value != null)
+                  {
+                      RawSVGText.this.textLength = NumberUtils.formatter()
+                                                              .format(value);
+                  }
+              }
+
+              @Override
+              public Double get()
+              {
+                  return ObjectUtils.getIfNotNull(RawSVGText.this.textLength, () -> NumberUtils.toDouble(RawSVGText.this.textLength));
+              }
+          })
+          .addWidthSupplierConsumer(new SupplierConsumer()
+          {
+              @Override
+              public void accept(Double value)
+              {
+                  if (value != null)
+                  {
+                      RawSVGText.this.dx = NumberUtils.formatter()
+                                                      .format(value);
+                  }
+              }
+
+              @Override
+              public Double get()
+              {
+                  return ObjectUtils.getIfNotNull(RawSVGText.this.dx, () -> NumberUtils.toDouble(RawSVGText.this.dx));
+              }
+          })
+          .addHeightSupplierConsumer(new SupplierConsumer()
+          {
+              @Override
+              public void accept(Double value)
+              {
+                  if (value != null)
+                  {
+                      RawSVGText.this.dy = NumberUtils.formatter()
+                                                      .format(value);
+                  }
+              }
+
+              @Override
+              public Double get()
+              {
+                  return ObjectUtils.getIfNotNull(RawSVGText.this.dy, () -> NumberUtils.toDouble(RawSVGText.this.dy));
+              }
+          });
+    }
 }

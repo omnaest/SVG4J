@@ -23,6 +23,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.omnaest.svg.model.DefaultRawSVGTransformer.SupplierBiConsumer;
 import org.omnaest.svg.model.DefaultRawSVGTransformer.SupplierConsumer;
 import org.omnaest.utils.NumberUtils;
 
@@ -30,173 +31,174 @@ import org.omnaest.utils.NumberUtils;
 @XmlAccessorType(XmlAccessType.NONE)
 public class RawSVGCircle extends RawSVGElement
 {
-	@XmlAttribute
-	private String cx;
+    @XmlAttribute
+    private String cx;
 
-	@XmlAttribute
-	private String cy;
+    @XmlAttribute
+    private String cy;
 
-	@XmlAttribute
-	private String r;
+    @XmlAttribute
+    private String r;
 
-	@XmlAttribute
-	private String stroke;
+    @XmlAttribute
+    private String stroke;
 
-	@XmlAttribute
-	private String fill;
+    @XmlAttribute
+    private String fill;
 
-	@XmlAttribute(name = "fill-opacity")
-	private String fillOpacity;
+    @XmlAttribute(name = "fill-opacity")
+    private String fillOpacity;
 
-	@XmlAttribute(name = "stroke-opacity")
-	private String strokeOpacity;
+    @XmlAttribute(name = "stroke-opacity")
+    private String strokeOpacity;
 
-	@XmlAttribute
-	private String style;
+    @XmlAttribute
+    private String style;
 
-	public String getCx()
-	{
-		return this.cx;
-	}
+    public String getCx()
+    {
+        return this.cx;
+    }
 
-	public RawSVGCircle setCx(String cx)
-	{
-		this.cx = cx;
-		return this;
-	}
+    public RawSVGCircle setCx(String cx)
+    {
+        this.cx = cx;
+        return this;
+    }
 
-	public String getCy()
-	{
-		return this.cy;
-	}
+    public String getCy()
+    {
+        return this.cy;
+    }
 
-	public RawSVGCircle setCy(String cy)
-	{
-		this.cy = cy;
-		return this;
-	}
+    public RawSVGCircle setCy(String cy)
+    {
+        this.cy = cy;
+        return this;
+    }
 
-	public String getR()
-	{
-		return this.r;
-	}
+    public String getR()
+    {
+        return this.r;
+    }
 
-	public RawSVGCircle setR(String r)
-	{
-		this.r = r;
-		return this;
-	}
+    public RawSVGCircle setR(String r)
+    {
+        this.r = r;
+        return this;
+    }
 
-	public String getStroke()
-	{
-		return this.stroke;
-	}
+    public String getStroke()
+    {
+        return this.stroke;
+    }
 
-	public RawSVGCircle setStroke(String stroke)
-	{
-		this.stroke = stroke;
-		return this;
-	}
+    public RawSVGCircle setStroke(String stroke)
+    {
+        this.stroke = stroke;
+        return this;
+    }
 
-	public String getFill()
-	{
-		return this.fill;
-	}
+    public String getFill()
+    {
+        return this.fill;
+    }
 
-	public RawSVGCircle setFill(String fill)
-	{
-		this.fill = fill;
-		return this;
-	}
+    public RawSVGCircle setFill(String fill)
+    {
+        this.fill = fill;
+        return this;
+    }
 
-	public String getFillOpacity()
-	{
-		return this.fillOpacity;
-	}
+    public String getFillOpacity()
+    {
+        return this.fillOpacity;
+    }
 
-	public RawSVGCircle setFillOpacity(String fillOpacity)
-	{
-		this.fillOpacity = fillOpacity;
-		return this;
-	}
+    public RawSVGCircle setFillOpacity(String fillOpacity)
+    {
+        this.fillOpacity = fillOpacity;
+        return this;
+    }
 
-	public String getStrokeOpacity()
-	{
-		return this.strokeOpacity;
-	}
+    public String getStrokeOpacity()
+    {
+        return this.strokeOpacity;
+    }
 
-	public RawSVGCircle setStrokeOpacity(String strokeOpacity)
-	{
-		this.strokeOpacity = strokeOpacity;
-		return this;
-	}
+    public RawSVGCircle setStrokeOpacity(String strokeOpacity)
+    {
+        this.strokeOpacity = strokeOpacity;
+        return this;
+    }
 
-	@Override
-	public String getStyle()
-	{
-		return this.style;
-	}
+    @Override
+    public String getStyle()
+    {
+        return this.style;
+    }
 
-	@Override
-	public RawSVGCircle setStyle(String style)
-	{
-		this.style = style;
-		return this;
-	}
+    @Override
+    public RawSVGCircle setStyle(String style)
+    {
+        this.style = style;
+        return this;
+    }
 
-	@Override
-	public String toString()
-	{
-		return "RawSVGCircle [cx=" + this.cx + ", cy=" + this.cy + ", r=" + this.r + ", stroke=" + this.stroke + ", fill=" + this.fill + ", fillOpacity="
-				+ this.fillOpacity + ", strokeOpacity=" + this.strokeOpacity + ", style=" + this.style + "]";
-	}
+    @Override
+    public String toString()
+    {
+        return "RawSVGCircle [cx=" + this.cx + ", cy=" + this.cy + ", r=" + this.r + ", stroke=" + this.stroke + ", fill=" + this.fill + ", fillOpacity="
+                + this.fillOpacity + ", strokeOpacity=" + this.strokeOpacity + ", style=" + this.style + "]";
+    }
 
-	@Override
-	public RawSVGTransformer transformer()
-	{
-		return new DefaultRawSVGTransformer(this, new SupplierConsumer()
-		{
-			@Override
-			public void accept(Double value)
-			{
-				RawSVGCircle.this.setCx(NumberUtils	.formatter()
-													.format(value));
-			}
+    @Override
+    public RawSVGTransformer transformer()
+    {
+        return new DefaultRawSVGTransformer(this, new SupplierConsumer()
+        {
+            @Override
+            public void accept(Double value)
+            {
+                RawSVGCircle.this.setCx(NumberUtils.formatter()
+                                                   .format(value));
+            }
 
-			@Override
-			public Double get()
-			{
-				return NumberUtils.toDouble(RawSVGCircle.this.getCx());
-			}
-		}, new SupplierConsumer()
-		{
-			@Override
-			public void accept(Double value)
-			{
-				RawSVGCircle.this.setCy(NumberUtils	.formatter()
-													.format(value));
-			}
+            @Override
+            public Double get()
+            {
+                return NumberUtils.toDouble(RawSVGCircle.this.getCx());
+            }
+        }, new SupplierConsumer()
+        {
+            @Override
+            public void accept(Double value)
+            {
+                RawSVGCircle.this.setCy(NumberUtils.formatter()
+                                                   .format(value));
+            }
 
-			@Override
-			public Double get()
-			{
-				return NumberUtils.toDouble(RawSVGCircle.this.getCy());
-			}
-		}, new SupplierConsumer()
-		{
-			@Override
-			public void accept(Double value)
-			{
-				RawSVGCircle.this.setR(NumberUtils	.formatter()
-													.format(value));
-			}
+            @Override
+            public Double get()
+            {
+                return NumberUtils.toDouble(RawSVGCircle.this.getCy());
+            }
+        }, new SupplierBiConsumer()
+        {
+            @Override
+            public void accept(Double valueX, Double valueY)
+            {
+                double value = Math.min(valueX, valueY);
+                RawSVGCircle.this.setR(NumberUtils.formatter()
+                                                  .format(value));
+            }
 
-			@Override
-			public Double get()
-			{
-				return NumberUtils.toDouble(RawSVGCircle.this.getR());
-			}
-		});
-	}
+            @Override
+            public Double get()
+            {
+                return NumberUtils.toDouble(RawSVGCircle.this.getR());
+            }
+        });
+    }
 
 }

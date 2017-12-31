@@ -32,57 +32,71 @@ import javax.xml.bind.annotation.XmlValue;
 @XmlAccessorType(XmlAccessType.NONE)
 public abstract class RawSVGElement implements RawSVGTransformer
 {
-	@XmlAttribute
-	protected String style;
+    @XmlAttribute(name = "class")
+    protected String cssClass;
 
-	@XmlAttribute
-	protected String transform;
+    @XmlAttribute
+    protected String style;
 
-	@XmlValue
-	protected String content;
+    @XmlAttribute
+    protected String transform;
 
-	public String getStyle()
-	{
-		return this.style;
-	}
+    @XmlValue
+    protected String content;
 
-	public RawSVGElement setStyle(String style)
-	{
-		this.style = style;
-		return this;
-	}
+    public String getStyle()
+    {
+        return this.style;
+    }
 
-	public String getTransform()
-	{
-		return this.transform;
-	}
+    public RawSVGElement setStyle(String style)
+    {
+        this.style = style;
+        return this;
+    }
 
-	public RawSVGElement setTransform(String transform)
-	{
-		this.transform = transform;
-		return this;
+    public String getTransform()
+    {
+        return this.transform;
+    }
 
-	}
+    public RawSVGElement setTransform(String transform)
+    {
+        this.transform = transform;
+        return this;
 
-	public String getContent()
-	{
-		return this.content;
-	}
+    }
 
-	protected abstract RawSVGTransformer transformer();
+    public String getContent()
+    {
+        return this.content;
+    }
 
-	@Override
-	public RawSVGElement translate(double x, double y)
-	{
-		return this	.transformer()
-					.translate(x, y);
-	}
+    public String getCssClass()
+    {
+        return this.cssClass;
+    }
 
-	@Override
-	public RawSVGElement scale(double scaleX, double scaleY)
-	{
-		return this	.transformer()
-					.scale(scaleX, scaleY);
-	}
+    public RawSVGElement setCssClass(String cssClass)
+    {
+        this.cssClass = cssClass;
+        return this;
+    }
+
+    protected abstract RawSVGTransformer transformer();
+
+    @Override
+    public RawSVGElement translate(double x, double y)
+    {
+        return this.transformer()
+                   .translate(x, y);
+    }
+
+    @Override
+    public RawSVGElement scale(double scaleX, double scaleY)
+    {
+        return this.transformer()
+                   .scale(scaleX, scaleY);
+    }
 
 }

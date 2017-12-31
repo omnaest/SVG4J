@@ -24,25 +24,38 @@ import java.util.List;
 
 import org.junit.Test;
 import org.omnaest.svg.SVGChartUtils;
+import org.omnaest.svg.chart.EntryChart;
 import org.omnaest.svg.chart.EntryChart.Entry;
+import org.omnaest.utils.ComparatorUtils;
+import org.omnaest.utils.NumberUtils;
 
 public class SVGBoxMapChartTest
 {
 
-	@Test
-	public void testAddData() throws Exception
-	{
-		SVGBoxMapChart chart = SVGChartUtils.newBoxMapChart(1000, 500);
+    @Test
+    public void testAddData() throws Exception
+    {
+        SVGBoxMapChart chart = SVGChartUtils.newBoxMapChart(1000, 500)
+                                            .setThresholdPrimary(0.5)
+                                            .setThresholdSecondary(1.55);
 
-		List<Entry> entries = new ArrayList<>();
-		for (int ii = 0; ii < 99; ii++)
-		{
-			entries.add(new Entry("text " + ii, Math.random()));
-		}
-		chart.addData(entries.stream());
+        List<Entry> entries = new ArrayList<>();
+        for (int ii = 0; ii < 99; ii++)
+        {
+            double random = 2.0 * ii / 100.0;
+            entries.add(new Entry("text " + ii + "(" + NumberUtils.formatter()
+                                                                  .withPercentage()
+                                                                  .format(random)
+                    + ")", random));
+        }
+        chart.addData(entries.stream()
+                             .sorted(ComparatorUtils.builder()
+                                                    .of(EntryChart.Entry.class)
+                                                    .with(entry -> entry.getValue())
+                                                    .build()));
 
-		chart	.renderAsResult()
-				.writeToFile(new File("C:/Temp/svgBoxMapChartTest.svg"));
-	}
+        chart.renderAsResult()
+             .writeToFile(new File("C:/Temp/svgBoxMapChartTest.svg"));
+    }
 
 }

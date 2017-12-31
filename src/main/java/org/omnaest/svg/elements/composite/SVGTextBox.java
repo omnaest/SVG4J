@@ -22,107 +22,134 @@ import java.util.stream.Stream;
 
 import org.omnaest.svg.elements.SVGRectangle;
 import org.omnaest.svg.elements.SVGText;
+import org.omnaest.svg.elements.SVGText.TextAnchor;
 import org.omnaest.svg.elements.base.SVGCompositeElement;
 import org.omnaest.svg.elements.base.SVGElement;
 import org.omnaest.vector.Vector;
 
 public class SVGTextBox implements SVGCompositeElement
 {
-	private double	x1;
-	private double	y1;
-	private double	x2;
-	private double	y2;
-	private int		rotation;
-	private String	text;
-	private String	textColor	= "black";
+    private double x1;
+    private double y1;
+    private double x2;
+    private double y2;
+    private int    rotation;
+    private String text;
+    private String textColor = "black";
 
-	private int		borderSize			= 0;
-	private String	backgroundColor		= "white";
-	private double	backgroundOpacity	= 0.0;
-	private String	borderColor			= "white";
+    private int    borderSize        = 0;
+    private String backgroundColor   = "white";
+    private double backgroundOpacity = 0.0;
+    private String borderColor       = "white";
 
-	public SVGTextBox(double x1, double y1, double x2, double y2, String text)
-	{
-		super();
-		this.x1 = x1;
-		this.y1 = y1;
-		this.x2 = x2;
-		this.y2 = y2;
-		this.text = text;
-	}
+    public SVGTextBox(double x1, double y1, double x2, double y2, String text)
+    {
+        super();
+        this.x1 = x1;
+        this.y1 = y1;
+        this.x2 = x2;
+        this.y2 = y2;
+        this.text = text;
+    }
 
-	public SVGTextBox setRotation(int rotation)
-	{
-		this.rotation = rotation;
-		return this;
-	}
+    public SVGTextBox setRotation(int rotation)
+    {
+        this.rotation = rotation;
+        return this;
+    }
 
-	@Override
-	public Stream<SVGElement> getElements()
-	{
-		Vector leftUpper = Vector.of(this.x1, this.y1);
-		Vector rightLower = Vector.of(this.x2, this.y2);
-		Vector rightUpper = Vector.of(this.x2, this.y1);
+    @Override
+    public Stream<SVGElement> getElements()
+    {
+        int margin = this.borderSize * 2;
+        Vector leftUpper = Vector.of(this.x1 + margin, this.y1 + margin);
+        Vector leftLower = Vector.of(this.x1 + margin, this.y2 - margin);
+        Vector rightLower = Vector.of(this.x2 - margin, this.y2 - margin);
+        Vector rightUpper = Vector.of(this.x2 - margin, this.y1 + margin);
 
-		Vector regularTextFlow = Vector	.of(this.x2, this.y2)
-										.subtract(Vector.of(this.x1, this.y2));
-		Vector rotatedTextFlow = regularTextFlow.rotateZ(-this.rotation);
+        Vector regularTextFlow = rightLower.subtract(leftLower);
+        Vector orthogonalTextFlow = leftUpper.subtract(leftLower);
 
-		Vector c = rotatedTextFlow.subtract(regularTextFlow	.normVector()
-															.multiply(rotatedTextFlow.absolute()));
+        Vector center = leftLower.add(regularTextFlow.multiply(0.5))
+                                 .add(orthogonalTextFlow.multiply(0.5));
 
-		Vector c1 = rightUpper	.subtract(rightLower)
-								.subtract(c);
-		Vector c1Rotated = c1.rotateZ(-this.rotation);
+        Vector diagonalTextFlow;
+        {
+            Vector rotatedTextFlow = regularTextFlow.rotateZ(this.rotation);
+            Vector diagonalTextFlowFromBottom = rotatedTextFlow.normVector()
+                                                               .multiply(rotatedTextFlow.absolute() * regularTextFlow.absolute()
+                                                                       / rotatedTextFlow.multiplyScalar(regularTextFlow.normVector()));
 
-		double fontSize = Math.min(rotatedTextFlow.absolute() * 2.5 / this.text.length(), c1Rotated.absolute());
+            Vector diagonalTextFlowFromLeft = rotatedTextFlow.normVector()
+                                                             .multiply(rotatedTextFlow.absolute() * orthogonalTextFlow.absolute()
+                                                                     / rotatedTextFlow.multiplyScalar(orthogonalTextFlow.normVector()));
 
-		Vector textLocation = leftUpper	.add(c.inverse())
-										.add(c1Rotated.inverse());
+            if (Double.isNaN(diagonalTextFlowFromLeft.absolute()))
+            {
+                diagonalTextFlow = diagonalTextFlowFromBottom;
+            }
+            else if (Double.isNaN(diagonalTextFlowFromBottom.absolute()))
+            {
+                diagonalTextFlow = diagonalTextFlowFromLeft;
+            }
+            else if (diagonalTextFlowFromBottom.absolute() < diagonalTextFlowFromLeft.absolute())
+            {
+                diagonalTextFlow = diagonalTextFlowFromBottom;
+            }
+            else
+            {
+                diagonalTextFlow = diagonalTextFlowFromLeft;
+            }
+        }
 
-		double border = 0.1 * c1.absolute();
-		double length = regularTextFlow.absolute();
-		SVGText svgText = new SVGText((int) textLocation.getX(), (int) (textLocation.getY() - border), this.text)	.setRotation(-this.rotation)
-																													.setColor(this.textColor)
-																													.setFontSize((int) fontSize)
-																													.setLength(length);
+        //
+        Vector textLocation = center;
+        double length = diagonalTextFlow.absolute() * 0.8;
 
-		SVGRectangle svgRectangle = new SVGRectangle(	(int) this.x1, (int) this.y1, (int) (this.x2 - this.x1),
-														(int) (this.y2 - this.y1))	.setStrokeWidth(this.borderSize)
-																					.setStrokeColor(this.borderColor)
-																					.setFillColor(this.backgroundColor)
-																					.setFillOpacity(this.backgroundOpacity);
-		return Stream.of(svgRectangle, svgText);
-	}
+        double referenceFontSize = diagonalTextFlow.absolute();
+        double fontSize = referenceFontSize / this.text.length() * 2;
+        SVGText svgText = new SVGText((int) textLocation.getX(), (int) textLocation.getY(), this.text).setRotation(-this.rotation)
+                                                                                                      .setColor(this.textColor)
+                                                                                                      .setFontSize((int) fontSize)
+                                                                                                      .setLength(length)
+                                                                                                      .setTextAnchor(TextAnchor.MIDDLE);
 
-	public SVGTextBox setBorderSize(int borderSize)
-	{
-		this.borderSize = borderSize;
-		return this;
-	}
+        SVGRectangle svgRectangle = new SVGRectangle((int) this.x1, (int) this.y1, (int) (this.x2 - this.x1),
+                                                     (int) (this.y2 - this.y1)).setStrokeWidth(this.borderSize)
+                                                                               .setStrokeColor(this.borderColor)
+                                                                               .setFillColor(this.backgroundColor)
+                                                                               .setFillOpacity(this.backgroundOpacity);
+        return Stream.of(svgRectangle, svgText);
+    }
 
-	public SVGTextBox setTextColor(String textColor)
-	{
-		this.textColor = textColor;
-		return this;
-	}
+    public SVGTextBox setBorderSize(int borderSize)
+    {
+        this.borderSize = borderSize;
+        return this;
+    }
 
-	public SVGTextBox setBorderColor(String borderColor)
-	{
-		this.borderColor = borderColor;
-		return this;
-	}
+    public SVGTextBox setTextColor(String textColor)
+    {
+        this.textColor = textColor;
+        return this;
+    }
 
-	public SVGTextBox setBackgroundColor(String backgroundColor)
-	{
-		this.backgroundColor = backgroundColor;
-		return this;
-	}
+    public SVGTextBox setBorderColor(String borderColor)
+    {
+        this.borderColor = borderColor;
+        return this;
+    }
 
-	public SVGTextBox setBackgroundOpacity(double backgroundOpacity)
-	{
-		this.backgroundOpacity = backgroundOpacity;
-		return this;
-	}
+    public SVGTextBox setBackgroundColor(String backgroundColor)
+    {
+        this.backgroundColor = backgroundColor;
+        return this;
+    }
+
+    public SVGTextBox setBackgroundOpacity(double backgroundOpacity)
+    {
+        this.backgroundOpacity = backgroundOpacity;
+        return this;
+    }
 
 }
