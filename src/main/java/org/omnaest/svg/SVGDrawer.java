@@ -342,12 +342,13 @@ public class SVGDrawer extends AbstractSVGElementConsumer<SVGDrawer>
             return XMLHelper.serialize(this.rawSVGRoot);
         }
 
-        public void writeToFile(File file) throws IOException
+        public SVGRenderResult writeToFile(File file) throws IOException
         {
             if (file != null)
             {
                 FileUtils.writeStringToFile(file, this.getAsSVG(), "utf-8");
             }
+            return this;
         }
 
         /**
@@ -555,7 +556,11 @@ public class SVGDrawer extends AbstractSVGElementConsumer<SVGDrawer>
 
     public SVGDrawer withScreenDimensions(ResolutionProvider displayResolution)
     {
-        return this.withScreenDimensions(displayResolution.getWidth(), displayResolution.getHeight());
+        if (displayResolution != null)
+        {
+            this.withScreenDimensions(displayResolution.getWidth(), displayResolution.getHeight());
+        }
+        return this;
     }
 
     public SVGDrawer withScreenDimensions(int width, int height)

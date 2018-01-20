@@ -175,7 +175,7 @@ public class SVGText implements SVGElement
                                                  .withMaximumFractionDigits(4)
                                                  .format(delta.getY()))
                                .setStyle("font-size:" + this.fontSize + "px")
-                               .setTransform("rotate(" + this.rotation + "," + this.x + "," + this.y + ")")
+                               .setTransform(this.rotation != 0 ? "rotate(" + this.rotation + "," + this.x + "," + this.y + ")" : "")
                                .setText(this.text);
     }
 

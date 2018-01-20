@@ -41,6 +41,7 @@ public class SVGTextBox implements SVGCompositeElement
     private String backgroundColor   = "white";
     private double backgroundOpacity = 0.0;
     private String borderColor       = "white";
+    private double borderOpacity     = 1.0;
 
     public SVGTextBox(double x1, double y1, double x2, double y2, String text)
     {
@@ -106,19 +107,25 @@ public class SVGTextBox implements SVGCompositeElement
         Vector textLocation = center;
         double length = diagonalTextFlow.absolute() * 0.8;
 
-        double referenceFontSize = diagonalTextFlow.absolute();
-        double fontSize = referenceFontSize / this.text.length() * 2;
+        double referenceFontSize = length;
+        double fontSize = referenceFontSize / Math.round(this.text.length() / 2.0);
         SVGText svgText = new SVGText((int) textLocation.getX(), (int) textLocation.getY(), this.text).setRotation(-this.rotation)
                                                                                                       .setColor(this.textColor)
-                                                                                                      .setFontSize((int) fontSize)
+                                                                                                      .setFontSize((int) Math.round(fontSize))
                                                                                                       .setLength(length)
                                                                                                       .setTextAnchor(TextAnchor.MIDDLE);
 
         SVGRectangle svgRectangle = new SVGRectangle((int) this.x1, (int) this.y1, (int) (this.x2 - this.x1),
                                                      (int) (this.y2 - this.y1)).setStrokeWidth(this.borderSize)
                                                                                .setStrokeColor(this.borderColor)
+                                                                               .setStrokeOpacity(this.borderOpacity)
                                                                                .setFillColor(this.backgroundColor)
                                                                                .setFillOpacity(this.backgroundOpacity);
+        //        SVGRectangle innerSvgRectangle = new SVGRectangle((int) (leftUpper.getX() + regularTextFlow.absolute() * 0.1), (int) leftUpper.getY(), (int) (length),
+        //                                                          (int) (orthogonalTextFlow.absolute())).setStrokeWidth(2)
+        //                                                                                                .setStrokeColor("green")
+        //                                                                                                .setFillOpacity(0.0);
+        //        SVGCircle svgCircle = new SVGCircle((int) textLocation.getX(), (int) textLocation.getY(), 5);
         return Stream.of(svgRectangle, svgText);
     }
 
@@ -149,6 +156,12 @@ public class SVGTextBox implements SVGCompositeElement
     public SVGTextBox setBackgroundOpacity(double backgroundOpacity)
     {
         this.backgroundOpacity = backgroundOpacity;
+        return this;
+    }
+
+    public SVGTextBox setBorderOpacity(double borderOpacity)
+    {
+        this.borderOpacity = borderOpacity;
         return this;
     }
 

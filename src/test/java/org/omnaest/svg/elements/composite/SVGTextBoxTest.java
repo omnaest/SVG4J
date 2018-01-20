@@ -20,6 +20,7 @@ package org.omnaest.svg.elements.composite;
 
 import java.io.File;
 
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.omnaest.svg.SVGDrawer;
@@ -43,6 +44,25 @@ public class SVGTextBoxTest
                                                                                     .setBorderSize(1)
 
                                                                                     .setBorderColor("black"));
+        }
+
+        drawer.renderAsResult()
+              .writeToFile(new File("C:/Temp/svgTextBoxTest.svg"));
+    }
+
+    @Test
+    @Ignore
+    public void testSVGTextBox2() throws Exception
+    {
+        SVGDrawer drawer = SVGUtils.getDrawer(200, 500);
+
+        int max = 3;
+        for (int ii = 0; ii <= max; ii += 1)
+        {
+            drawer.add(new SVGRectangle(10, 10, 150 - 10, 80 - 10).setFillOpacity(0.1));
+            drawer.add(new SVGCircle(150, 80, 5));
+            drawer.add(new SVGTextBox(10, 10 + ii * 100, 150, 80 + ii * 100, StringUtils.repeat("T", 3 * ii + 1)).setBorderSize(1)
+                                                                                                                 .setBorderColor("black"));
         }
 
         drawer.renderAsResult()
