@@ -23,61 +23,47 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 
 @XmlRootElement(name = "defs")
 @XmlAccessorType(XmlAccessType.NONE)
-@XmlSeeAlso({ RawSVGLinearGradient.class, RawSVGStyle.class })
+@XmlSeeAlso({ RawSVGLinearGradient.class, RawSVGRadialGradient.class, RawSVGStyle.class })
 public class RawSVGDefinition extends RawSVGElement
 {
-	@XmlAttribute
-	private String id;
+    @XmlElementRef
+    private List<RawSVGDefinitionElement> elements = new ArrayList<>();
 
-	@XmlElementRef
-	private List<RawSVGDefinitionElement> elements = new ArrayList<>();
+    public List<RawSVGDefinitionElement> getElements()
+    {
+        return this.elements;
+    }
 
-	public List<RawSVGDefinitionElement> getElements()
-	{
-		return this.elements;
-	}
+    @SuppressWarnings("unchecked")
+    public void setElements(List<? extends RawSVGDefinitionElement> elements)
+    {
+        this.elements = (List<RawSVGDefinitionElement>) elements;
+    }
 
-	@SuppressWarnings("unchecked")
-	public void setElements(List<? extends RawSVGDefinitionElement> elements)
-	{
-		this.elements = (List<RawSVGDefinitionElement>) elements;
-	}
+    @Override
+    public String toString()
+    {
+        return "RawSVGDefinitionElement [id=" + this.getId() + ", elements=" + this.elements + "]";
+    }
 
-	public String getId()
-	{
-		return this.id;
-	}
+    public RawSVGDefinition addElement(RawSVGStyle element)
+    {
+        if (element != null)
+        {
+            this.elements.add(element);
+        }
+        return this;
+    }
 
-	public void setId(String id)
-	{
-		this.id = id;
-	}
-
-	@Override
-	public String toString()
-	{
-		return "RawSVGDefinitionElement [id=" + this.id + ", elements=" + this.elements + "]";
-	}
-
-	public RawSVGDefinition addElement(RawSVGStyle element)
-	{
-		if (element != null)
-		{
-			this.elements.add(element);
-		}
-		return this;
-	}
-
-	@Override
-	public RawSVGTransformer transformer()
-	{
-		return new IgnoringRawSVGTransformer(this);
-	}
+    @Override
+    public RawSVGTransformer transformer()
+    {
+        return new IgnoringRawSVGTransformer(this);
+    }
 }

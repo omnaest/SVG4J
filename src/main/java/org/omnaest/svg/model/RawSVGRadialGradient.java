@@ -31,30 +31,33 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.omnaest.svg.model.DefaultRawSVGTransformer.SupplierConsumer;
 import org.omnaest.utils.NumberUtils;
 
-@XmlRootElement(name = "linearGradient")
+@XmlRootElement(name = "radialGradient")
 @XmlAccessorType(XmlAccessType.NONE)
-public class RawSVGLinearGradient extends RawSVGDefinitionElement
+public class RawSVGRadialGradient extends RawSVGDefinitionElement
 {
     @XmlAttribute(namespace = "http://www.w3.org/1999/xlink")
     private String href;
+
+    @XmlAttribute
+    private String cx;
+
+    @XmlAttribute
+    private String cy;
+
+    @XmlAttribute
+    private String fx;
+
+    @XmlAttribute
+    private String fy;
+
+    @XmlAttribute
+    private String r;
 
     @XmlAttribute
     private String gradientTransform;
 
     @XmlAttribute
     private String gradientUnits;
-
-    @XmlAttribute
-    private String x1;
-
-    @XmlAttribute
-    private String y1;
-
-    @XmlAttribute
-    private String x2;
-
-    @XmlAttribute
-    private String y2;
 
     @XmlElementRef
     private List<RawSVGStopElement> stops;
@@ -89,44 +92,54 @@ public class RawSVGLinearGradient extends RawSVGDefinitionElement
         this.gradientUnits = gradientUnits;
     }
 
-    public String getX1()
+    public String getCx()
     {
-        return this.x1;
+        return this.cx;
     }
 
-    public void setX1(String x1)
+    public void setCx(String cx)
     {
-        this.x1 = x1;
+        this.cx = cx;
     }
 
-    public String getY1()
+    public String getCy()
     {
-        return this.y1;
+        return this.cy;
     }
 
-    public void setY1(String y1)
+    public void setCy(String cy)
     {
-        this.y1 = y1;
+        this.cy = cy;
     }
 
-    public String getX2()
+    public String getFx()
     {
-        return this.x2;
+        return this.fx;
     }
 
-    public void setX2(String x2)
+    public void setFx(String fx)
     {
-        this.x2 = x2;
+        this.fx = fx;
     }
 
-    public String getY2()
+    public String getFy()
     {
-        return this.y2;
+        return this.fy;
     }
 
-    public void setY2(String y2)
+    public void setFy(String fy)
     {
-        this.y2 = y2;
+        this.fy = fy;
+    }
+
+    public String getR()
+    {
+        return this.r;
+    }
+
+    public void setR(String r)
+    {
+        this.r = r;
     }
 
     public List<RawSVGStopElement> getStops()
@@ -147,56 +160,56 @@ public class RawSVGLinearGradient extends RawSVGDefinitionElement
             @Override
             public void accept(Double value)
             {
-                RawSVGLinearGradient.this.setX1(NumberUtils.formatter()
+                RawSVGRadialGradient.this.setCx(NumberUtils.formatter()
                                                            .format(value));
             }
 
             @Override
             public Double get()
             {
-                return NumberUtils.toDouble(RawSVGLinearGradient.this.getX1());
+                return NumberUtils.toDouble(RawSVGRadialGradient.this.getCx());
             }
         }, new SupplierConsumer()
         {
             @Override
             public void accept(Double value)
             {
-                RawSVGLinearGradient.this.setX2(NumberUtils.formatter()
+                RawSVGRadialGradient.this.setFx(NumberUtils.formatter()
                                                            .format(value));
             }
 
             @Override
             public Double get()
             {
-                return NumberUtils.toDouble(RawSVGLinearGradient.this.getX2());
+                return NumberUtils.toDouble(RawSVGRadialGradient.this.getFx());
             }
         }), Arrays.asList(new SupplierConsumer()
         {
             @Override
             public void accept(Double value)
             {
-                RawSVGLinearGradient.this.setY1(NumberUtils.formatter()
+                RawSVGRadialGradient.this.setCy(NumberUtils.formatter()
                                                            .format(value));
             }
 
             @Override
             public Double get()
             {
-                return NumberUtils.toDouble(RawSVGLinearGradient.this.getY1());
+                return NumberUtils.toDouble(RawSVGRadialGradient.this.getCy());
             }
         }, new SupplierConsumer()
         {
             @Override
             public void accept(Double value)
             {
-                RawSVGLinearGradient.this.setY2(NumberUtils.formatter()
+                RawSVGRadialGradient.this.setFy(NumberUtils.formatter()
                                                            .format(value));
             }
 
             @Override
             public Double get()
             {
-                return NumberUtils.toDouble(RawSVGLinearGradient.this.getY2());
+                return NumberUtils.toDouble(RawSVGRadialGradient.this.getFy());
             }
         }), Collections.emptyList(), Collections.emptyList(), Collections.emptyList());
     }
@@ -204,9 +217,8 @@ public class RawSVGLinearGradient extends RawSVGDefinitionElement
     @Override
     public String toString()
     {
-        return "RawSVGLinearGradient [id=" + this.getId() + ", href=" + this.href + ", gradientTransform=" + this.gradientTransform + ", gradientUnits="
-                + this.gradientUnits + ", x1=" + this.x1 + ", y1=" + this.y1 + ", x2=" + this.x2 + ", y2=" + this.y2 + ", stops=" + this.stops + ", style="
-                + this.style + ", transform=" + this.transform + ", content=" + this.content + "]";
+        return "RawSVGRadialGradient [href=" + this.href + ", cx=" + this.cx + ", cy=" + this.cy + ", fx=" + this.fx + ", fy=" + this.fy + ", r=" + this.r
+                + ", gradientTransform=" + this.gradientTransform + ", gradientUnits=" + this.gradientUnits + ", stops=" + this.stops + "]";
     }
 
 }

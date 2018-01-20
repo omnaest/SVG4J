@@ -32,6 +32,9 @@ import javax.xml.bind.annotation.XmlValue;
 @XmlAccessorType(XmlAccessType.NONE)
 public abstract class RawSVGElement implements RawSVGTransformer
 {
+    @XmlAttribute
+    private String id;
+
     @XmlAttribute(name = "class")
     protected String cssClass;
 
@@ -80,6 +83,17 @@ public abstract class RawSVGElement implements RawSVGTransformer
     public RawSVGElement setCssClass(String cssClass)
     {
         this.cssClass = cssClass;
+        return this;
+    }
+
+    public String getId()
+    {
+        return this.id;
+    }
+
+    public RawSVGElement setId(String id)
+    {
+        this.id = id;
         return this;
     }
 

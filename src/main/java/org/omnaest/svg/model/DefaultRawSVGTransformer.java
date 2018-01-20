@@ -42,11 +42,13 @@ public class DefaultRawSVGTransformer implements RawSVGTransformer
     private Collection<SupplierBiConsumer> supplierConsumersRadius;
     private RawSVGElement                  rawSVGElement;
 
+    @Deprecated
     public DefaultRawSVGTransformer(RawSVGElement rawSVGElement, SupplierConsumer supplierConsumersX, SupplierConsumer supplierConsumersY)
     {
         this(rawSVGElement, Arrays.asList(supplierConsumersX), Arrays.asList(supplierConsumersY), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
     }
 
+    @Deprecated
     public DefaultRawSVGTransformer(RawSVGElement rawSVGElement, SupplierConsumer supplierConsumersLocationX, SupplierConsumer supplierConsumersLocationY,
                                     SupplierConsumer supplierConsumersWidth, SupplierConsumer supplierConsumersHeight)
     {
@@ -54,6 +56,7 @@ public class DefaultRawSVGTransformer implements RawSVGTransformer
                 Arrays.asList(supplierConsumersWidth), Arrays.asList(supplierConsumersHeight));
     }
 
+    @Deprecated
     public DefaultRawSVGTransformer(RawSVGElement rawSVGElement, SupplierConsumer supplierConsumersX, SupplierConsumer supplierConsumersY,
                                     SupplierBiConsumer supplierConsumersXY)
     {
@@ -61,6 +64,7 @@ public class DefaultRawSVGTransformer implements RawSVGTransformer
                 new ArrayList<>());
     }
 
+    @Deprecated
     public DefaultRawSVGTransformer(RawSVGElement rawSVGElement, Collection<SupplierConsumer> supplierConsumersLocationX,
                                     Collection<SupplierConsumer> supplierConsumersLocationY, Collection<SupplierBiConsumer> supplierConsumersRadius,
                                     Collection<SupplierConsumer> supplierConsumersWidth, Collection<SupplierConsumer> supplierConsumersHeight)
@@ -72,6 +76,24 @@ public class DefaultRawSVGTransformer implements RawSVGTransformer
         this.supplierConsumersRadius = supplierConsumersRadius;
         this.supplierConsumersWidth = supplierConsumersWidth;
         this.supplierConsumersHeight = supplierConsumersHeight;
+    }
+
+    public DefaultRawSVGTransformer(RawSVGElement rawSVGElement)
+    {
+        super();
+        this.rawSVGElement = rawSVGElement;
+    }
+
+    public DefaultRawSVGTransformer addLocationXSupplierConsumer(SupplierConsumer locationXSupplierConsumer)
+    {
+        this.supplierConsumersLocationX.add(locationXSupplierConsumer);
+        return this;
+    }
+
+    public DefaultRawSVGTransformer addLocationYSupplierConsumer(SupplierConsumer locationYSupplierConsumer)
+    {
+        this.supplierConsumersLocationY.add(locationYSupplierConsumer);
+        return this;
     }
 
     public DefaultRawSVGTransformer addRadiusSupplierConsumer(SupplierBiConsumer radiusSupplierConsumer)

@@ -316,4 +316,13 @@ public class SVGUtilsTest
               .writeToFile(new File("C:/Temp/svgInkScapeTest.svg"));
     }
 
+    @Test
+    public void testLinkScape2() throws IOException
+    {
+        SVGDrawer drawer = SVGUtils.getDrawer(new File("C:/Temp/inkscapeTest.svg"));
+
+        drawer.renderAsResult()
+              .writeToFile(new File("C:/Temp/inkscapeTest_parsed.svg"));
+    }
+
 }

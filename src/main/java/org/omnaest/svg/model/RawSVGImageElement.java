@@ -27,103 +27,85 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.NONE)
 public class RawSVGImageElement extends RawSVGXYLocatedWithWidthAndHeightElement
 {
-	@XmlAttribute
-	private String id;
 
-	@XmlAttribute
-	private String style;
+    @XmlAttribute(namespace = "http://www.w3.org/1999/xlink")
+    private String href;
 
-	@XmlAttribute
-	private String transform;
+    @Override
+    public String getTransform()
+    {
+        return this.transform;
+    }
 
-	@XmlAttribute(namespace = "http://www.w3.org/1999/xlink")
-	private String href;
+    @Override
+    public RawSVGImageElement setTransform(String transform)
+    {
+        super.setTransform(transform);
+        return this;
+    }
 
-	@Override
-	public String getTransform()
-	{
-		return this.transform;
-	}
+    @Override
+    public String getStyle()
+    {
+        return this.style;
+    }
 
-	@Override
-	public RawSVGImageElement setTransform(String transform)
-	{
-		super.setTransform(transform);
-		return this;
-	}
+    @Override
+    public RawSVGImageElement setStyle(String style)
+    {
+        super.setStyle(style);
+        return this;
+    }
 
-	@Override
-	public String getStyle()
-	{
-		return this.style;
-	}
+    public String getHref()
+    {
+        return this.href;
+    }
 
-	@Override
-	public RawSVGImageElement setStyle(String style)
-	{
-		super.setStyle(style);
-		return this;
-	}
+    public void setHref(String href)
+    {
+        this.href = href;
+    }
 
-	public String getHref()
-	{
-		return this.href;
-	}
+    @Override
+    public RawSVGImageElement setWidth(String width)
+    {
+        super.setWidth(width);
+        return this;
+    }
 
-	public void setHref(String href)
-	{
-		this.href = href;
-	}
+    @Override
+    public RawSVGImageElement setHeight(String height)
+    {
+        super.setHeight(height);
+        return this;
+    }
 
-	public String getId()
-	{
-		return this.id;
-	}
+    @Override
+    public String getX()
+    {
+        return this.x;
+    }
 
-	public void setId(String id)
-	{
-		this.id = id;
-	}
+    @Override
+    public RawSVGImageElement setX(String x)
+    {
+        super.setX(x);
+        return this;
+    }
 
-	@Override
-	public RawSVGImageElement setWidth(String width)
-	{
-		super.setWidth(width);
-		return this;
-	}
+    @Override
+    public RawSVGImageElement setY(String y)
+    {
+        super.setY(y);
+        return this;
+    }
 
-	@Override
-	public RawSVGImageElement setHeight(String height)
-	{
-		super.setHeight(height);
-		return this;
-	}
-
-	@Override
-	public String getX()
-	{
-		return this.x;
-	}
-
-	@Override
-	public RawSVGImageElement setX(String x)
-	{
-		super.setX(x);
-		return this;
-	}
-
-	@Override
-	public RawSVGImageElement setY(String y)
-	{
-		super.setY(y);
-		return this;
-	}
-
-	@Override
-	public String toString()
-	{
-		return "RawSVGImageElement [id=" + this.id + ", width=" + this.getWidth() + ", height=" + this.getHeight() + ", x=" + this.x + ", y=" + this.y
-				+ ", style=" + this.style + ", transform=" + this.transform + ", href=" + this.href + "]";
-	}
+    @Override
+    public String toString()
+    {
+        return "RawSVGImageElement [id=" + this.getId() + ", width=" + this.getWidth() + ", height=" + this.getHeight() + ", x=" + this.x + ", y=" + this.y
+                + ", style=" + this.style + ", transform=" + this.transform + ", href=" + this.href + "]";
+    }
 
 }

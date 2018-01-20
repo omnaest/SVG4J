@@ -30,67 +30,55 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.NONE)
 public class RawSVGGroupElement extends RawSVGElement
 {
-	@XmlAttribute
-	private String id;
 
-	@XmlAttribute
-	private String transform;
+    @XmlAttribute
+    private String transform;
 
-	@XmlAttribute
-	private String opacity;
+    @XmlAttribute
+    private String opacity;
 
-	@XmlElementRef
-	private List<RawSVGElement> elements;
+    @XmlElementRef
+    private List<RawSVGElement> elements;
 
-	public List<RawSVGElement> getElements()
-	{
-		return this.elements;
-	}
+    public List<RawSVGElement> getElements()
+    {
+        return this.elements;
+    }
 
-	public RawSVGGroupElement setElements(List<RawSVGElement> elements)
-	{
-		this.elements = elements;
-		return this;
-	}
+    public RawSVGGroupElement setElements(List<RawSVGElement> elements)
+    {
+        this.elements = elements;
+        return this;
+    }
 
-	public String getId()
-	{
-		return this.id;
-	}
+    @Override
+    public RawSVGGroupElement setTransform(String transform)
+    {
+        super.setTransform(transform);
+        return this;
+    }
 
-	public void setId(String id)
-	{
-		this.id = id;
-	}
+    @Override
+    public String toString()
+    {
+        return "RawSVGGroupElement [id=" + this.getId() + ", transform=" + this.transform + ", elements=" + this.elements + "]";
+    }
 
-	@Override
-	public RawSVGGroupElement setTransform(String transform)
-	{
-		super.setTransform(transform);
-		return this;
-	}
+    public RawSVGGroupElement setOpacity(String opacity)
+    {
+        this.opacity = opacity;
+        return this;
+    }
 
-	@Override
-	public String toString()
-	{
-		return "RawSVGGroupElement [id=" + this.id + ", transform=" + this.transform + ", elements=" + this.elements + "]";
-	}
+    public String getOpacity()
+    {
+        return this.opacity;
+    }
 
-	public RawSVGGroupElement setOpacity(String opacity)
-	{
-		this.opacity = opacity;
-		return this;
-	}
-
-	public String getOpacity()
-	{
-		return this.opacity;
-	}
-
-	@Override
-	public RawSVGTransformer transformer()
-	{
-		return new IgnoringRawSVGTransformer(this);
-	}
+    @Override
+    public RawSVGTransformer transformer()
+    {
+        return new IgnoringRawSVGTransformer(this);
+    }
 
 }
