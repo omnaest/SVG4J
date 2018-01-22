@@ -40,7 +40,7 @@ public class RawSVGText extends RawSVGXYLocatedElement
     private String fill;
 
     @XmlAttribute
-    private double opacity;
+    private Double opacity;
 
     @XmlAttribute(name = "text-anchor")
     private String textAnchor;
@@ -327,5 +327,12 @@ public class RawSVGText extends RawSVGXYLocatedElement
                   return ObjectUtils.getIfNotNull(RawSVGText.this.dy, () -> NumberUtils.toDouble(RawSVGText.this.dy));
               }
           });
+    }
+
+    public RawSVGText clearContent()
+    {
+        this.others = null;
+        this.content = null;
+        return this;
     }
 }

@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "g")
 @XmlAccessorType(XmlAccessType.NONE)
-public class RawSVGGroupElement extends RawSVGElement
+public class RawSVGGroupElement extends RawSVGElement implements RawSVGElementWithChildren
 {
 
     @XmlAttribute
@@ -40,6 +40,7 @@ public class RawSVGGroupElement extends RawSVGElement
     @XmlElementRef
     private List<RawSVGElement> elements;
 
+    @Override
     public List<RawSVGElement> getElements()
     {
         return this.elements;

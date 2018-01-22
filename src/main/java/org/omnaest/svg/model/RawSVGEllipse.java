@@ -69,6 +69,12 @@ public class RawSVGEllipse extends RawSVGElement
     }
 
     @Override
+    public String toString()
+    {
+        return "RawSVGEllipse [cx=" + this.cx + ", cy=" + this.cy + ", rx=" + this.rx + ", ry=" + this.ry + "]";
+    }
+
+    @Override
     protected RawSVGTransformer transformer()
     {
 

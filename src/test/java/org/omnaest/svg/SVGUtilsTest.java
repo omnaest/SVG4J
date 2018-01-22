@@ -33,6 +33,7 @@ import org.omnaest.svg.elements.SVGCircle;
 import org.omnaest.svg.elements.SVGLine;
 import org.omnaest.svg.elements.SVGRectangle;
 import org.omnaest.svg.elements.SVGText;
+import org.omnaest.svg.model.RawSVGText;
 import org.omnaest.svg.other.DisplayResolution;
 
 public class SVGUtilsTest
@@ -44,11 +45,11 @@ public class SVGUtilsTest
     {
         File sourceFile = new File("C:\\Z\\anatomy images\\Female_shadow_anatomy_without_labels.svg");
         String svg = SVGUtils.getDrawer(sourceFile)
-                             .modifyRawElements((elements) -> elements.skip(0)
-                                                                      .limit(1))
+                             .visitAndModifyRawElements((elements) -> elements.skip(0)
+                                                                              .limit(1))
                              .addRawElements(SVGUtils.getDrawer(sourceFile)
-                                                     .modifyRawElements((elements) -> elements.skip(1)
-                                                                                              .limit(10)))
+                                                     .visitAndModifyRawElements((elements) -> elements.skip(1)
+                                                                                                      .limit(10)))
                              .add(new SVGLine(640, 0, 640, 2000).setStrokeWidth(4))
                              .render();
 
@@ -319,7 +320,16 @@ public class SVGUtilsTest
     @Test
     public void testLinkScape2() throws IOException
     {
-        SVGDrawer drawer = SVGUtils.getDrawer(new File("C:/Temp/inkscapeTest.svg"));
+        SVGDrawer drawer = SVGUtils.getDrawer(new File("C:/Temp/inkscapeTest.svg"))
+                                   .visitRawElementsTransitively(elements ->
+                                   {
+                                       RawSVGText rawSVGElement = (RawSVGText) elements.filter(element -> element.getId()
+                                                                                                                 .equals("text6123"))
+                                                                                       .findFirst()
+                                                                                       .get();
+                                       rawSVGElement.clearContent()
+                                                    .setText("Changed");
+                                   });
 
         drawer.renderAsResult()
               .writeToFile(new File("C:/Temp/inkscapeTest_parsed.svg"));

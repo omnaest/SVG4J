@@ -27,6 +27,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
@@ -42,9 +43,11 @@ import org.omnaest.svg.elements.base.SVGElement;
 import org.omnaest.svg.model.RawSVGAnkerElement;
 import org.omnaest.svg.model.RawSVGDefinition;
 import org.omnaest.svg.model.RawSVGElement;
+import org.omnaest.svg.model.RawSVGElementWithChildren;
 import org.omnaest.svg.model.RawSVGRoot;
 import org.omnaest.svg.model.RawSVGStyle;
 import org.omnaest.svg.utils.XMLHelper;
+import org.omnaest.utils.ListUtils;
 
 /**
  * @see SVGUtils
@@ -501,12 +504,42 @@ public class SVGDrawer extends AbstractSVGElementConsumer<SVGDrawer>
         return this;
     }
 
-    public SVGDrawer modifyRawElements(UnaryOperator<Stream<RawSVGElement>> rawElementModifier)
+    public SVGDrawer visitAndModifyRawElements(UnaryOperator<Stream<RawSVGElement>> rawElementModifier)
     {
         this.rawSVGRoot.setElements(rawElementModifier.apply(this.rawSVGRoot.getElements()
                                                                             .stream())
                                                       .collect(Collectors.toList()));
 
+        return this;
+    }
+
+    public SVGDrawer visitRawElements(Consumer<Stream<RawSVGElement>> rawElementModifier)
+    {
+        rawElementModifier.accept(this.rawSVGRoot.getElements()
+                                                 .stream());
+        return this;
+    }
+
+    public SVGDrawer visitRawElementsTransitively(Consumer<Stream<RawSVGElement>> rawElementModifier)
+    {
+        rawElementModifier.accept(this.rawSVGRoot.getElements()
+                                                 .stream()
+                                                 .flatMap(new Function<RawSVGElement, Stream<RawSVGElement>>()
+                                                 {
+                                                     @Override
+                                                     public Stream<RawSVGElement> apply(RawSVGElement element)
+                                                     {
+                                                         Stream<RawSVGElement> retval = Stream.of(element);
+                                                         if (element instanceof RawSVGElementWithChildren)
+                                                         {
+                                                             retval = Stream.concat(retval,
+                                                                                    ListUtils.defaultIfNull(((RawSVGElementWithChildren) element).getElements())
+                                                                                             .stream()
+                                                                                             .flatMap(e -> this.apply(e)));
+                                                         }
+                                                         return retval;
+                                                     }
+                                                 }));
         return this;
     }
 
