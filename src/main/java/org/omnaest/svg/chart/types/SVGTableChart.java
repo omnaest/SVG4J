@@ -217,7 +217,7 @@ public class SVGTableChart implements TableChart
                                       .withScalingHeight(100)
                                       .withScalingWidth(100)
                                       .add(new SVGTextBox(0, 0, 100, 100, lar.getRight()
-                                                                             .getLabel()).setRotation(-90)
+                                                                             .getLabel()).setRotation(90)
                                                                                          .setTextColor(this.columnTextColor)
                                                                                          .setBackgroundColor(this.columnBackgroundColor)
                                                                                          .setBorderColor(this.columnBorderColor)

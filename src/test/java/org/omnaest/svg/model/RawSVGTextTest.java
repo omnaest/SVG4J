@@ -55,7 +55,22 @@ public class RawSVGTextTest
                                  .getStyle();
 
         //System.out.println(style);
-        assertEquals("font-size:25px", style);
+        assertEquals("font-size:75px", style);
+    }
+
+    @Test
+    public void testTransformer3() throws Exception
+    {
+        RawSVGText rawSVGText = new SVGText(0, 0, "test").setFontSize(50)
+                                                         .setRotation(-90)
+                                                         .render();
+
+        String style = rawSVGText.transformer()
+                                 .scale(1.5, 0.5)
+                                 .getStyle();
+
+        //System.out.println(style);
+        assertEquals("font-size:75px", style);
     }
 
     @Test

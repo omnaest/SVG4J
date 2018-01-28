@@ -249,7 +249,7 @@ public class RawSVGText extends RawSVGXYLocatedElement
                                                  })
                                                  .addLocationXSupplierConsumer(new SupplierConsumer()
                                                  {
-                                                     private String patternStr = "rotate\\([0-9\\. ]+\\,([0-9\\. ]+)\\,([0-9\\. ]+)\\)";
+                                                     private String patternStr = "rotate\\([0-9\\.\\- ]+\\,([0-9\\.\\- ]+)\\,([0-9\\.\\- ]+)\\)";
 
                                                      @Override
                                                      public void accept(Double value)
@@ -276,7 +276,7 @@ public class RawSVGText extends RawSVGXYLocatedElement
                                                  })
                                                  .addLocationYSupplierConsumer(new SupplierConsumer()
                                                  {
-                                                     private String patternStr = "rotate\\([0-9\\. ]+\\,([0-9\\. ]+)\\,([0-9\\. ]+)\\)";
+                                                     private String patternStr = "rotate\\([0-9\\.\\- ]+\\,([0-9\\.\\- ]+)\\,([0-9\\.\\- ]+)\\)";
 
                                                      @Override
                                                      public void accept(Double value)
@@ -302,8 +302,8 @@ public class RawSVGText extends RawSVGXYLocatedElement
                                                  })
                                                  .addRadiusSupplierConsumer(new SupplierBiConsumer()
                                                  {
-                                                     private String fontSizePatternStr = "font\\-size[ ]*\\:[ ]*([0-9]*\\.?[0-9]*)[ ]*(px)?";
-                                                     private String rotationPatternStr = "rotate\\(([0-9\\. ]+)\\,([0-9\\. ]+)\\,([0-9\\. ]+)\\)";
+                                                     private String fontSizePatternStr = "font\\-size[ ]*\\:[ ]*([\\-]?[0-9]*\\.?[0-9]*)[ ]*(px)?";
+                                                     private String rotationPatternStr = "rotate\\(([0-9\\.\\- ]+)\\,([0-9\\.\\- ]+)\\,([0-9\\.\\- ]+)\\)";
 
                                                      @Override
                                                      public void accept(Double xScaledFontSize, Double yScaledFontSize)
@@ -315,7 +315,7 @@ public class RawSVGText extends RawSVGXYLocatedElement
                                                          boolean isHorizontal = rotation <= 45 && rotation >= -45;
 
                                                          //
-                                                         double fontSize = isHorizontal ? yScaledFontSize : xScaledFontSize;
+                                                         double fontSize = Math.max(0, isHorizontal ? yScaledFontSize : xScaledFontSize);
                                                          RawSVGText.this.style = RawSVGText.this.style.replaceAll(this.fontSizePatternStr, "font-size:"
                                                                  + NumberUtils.formatter()
                                                                               .withMaximumFractionDigits(6)
