@@ -42,6 +42,15 @@ public class SVGTableChart implements TableChart
     private double rowBackgroundOpacity    = 0.5;
     private String rowTextColor            = "black";
 
+    private double relativePaddingSize = 0.2;
+
+    @Override
+    public TableChart withRelativePadding(double relativePaddingSize)
+    {
+        this.relativePaddingSize = relativePaddingSize;
+        return this;
+    }
+
     @Override
     public TableChart withPositiveColor(String positiveColor)
     {
@@ -110,7 +119,7 @@ public class SVGTableChart implements TableChart
                                    .withScreenDimensions(this.displayResolution);
 
         BoundedArea surrounding = drawer.newBoundedArea()
-                                        .withRelativeSizedPadding(0.1);
+                                        .withRelativeSizedPadding(this.relativePaddingSize);
 
         double columnProportion = 0.2;
         BoundedArea contentArea = surrounding.newSubArea()

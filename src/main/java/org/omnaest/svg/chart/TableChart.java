@@ -153,4 +153,6 @@ public interface TableChart extends Chart
     public TableChart withNegativeColor(String negativeColor);
 
     public TableChart withPositiveColor(String positiveColor);
+
+    TableChart withRelativePadding(double relativePaddingSize);
 }
