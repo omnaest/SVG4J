@@ -249,13 +249,13 @@ public class RawSVGText extends RawSVGXYLocatedElement
                                                  })
                                                  .addLocationXSupplierConsumer(new SupplierConsumer()
                                                  {
-                                                     private Pattern pattern = Pattern.compile("rotate\\([0-9\\. ]+\\,([0-9\\. ]+)\\,([0-9\\. ]+)\\)");
+                                                     private String patternStr = "rotate\\([0-9\\. ]+\\,([0-9\\. ]+)\\,([0-9\\. ]+)\\)";
 
                                                      @Override
                                                      public void accept(Double value)
                                                      {
                                                          MatcherUtils.matcher()
-                                                                     .of(this.pattern)
+                                                                     .of(Pattern.compile(this.patternStr))
                                                                      .matchAgainst(RawSVGText.this.transform)
                                                                      .ifPresent(match ->
                                                                      {
@@ -269,19 +269,20 @@ public class RawSVGText extends RawSVGXYLocatedElement
                                                      @Override
                                                      public Double get()
                                                      {
-                                                         Map<Integer, String> groups = PatternUtils.matchToGroups(this.pattern, RawSVGText.this.transform);
+                                                         Map<Integer, String> groups = PatternUtils.matchToGroups(Pattern.compile(this.patternStr),
+                                                                                                                  RawSVGText.this.transform);
                                                          return NumberUtils.toDouble(groups.get(1));
                                                      }
                                                  })
                                                  .addLocationYSupplierConsumer(new SupplierConsumer()
                                                  {
-                                                     private Pattern pattern = Pattern.compile("rotate\\([0-9\\. ]+\\,([0-9\\. ]+)\\,([0-9\\. ]+)\\)");
+                                                     private String patternStr = "rotate\\([0-9\\. ]+\\,([0-9\\. ]+)\\,([0-9\\. ]+)\\)";
 
                                                      @Override
                                                      public void accept(Double value)
                                                      {
                                                          MatcherUtils.matcher()
-                                                                     .of(this.pattern)
+                                                                     .of(Pattern.compile(this.patternStr))
                                                                      .matchAgainst(RawSVGText.this.transform)
                                                                      .ifPresent(match ->
                                                                      {
@@ -294,19 +295,28 @@ public class RawSVGText extends RawSVGXYLocatedElement
                                                      @Override
                                                      public Double get()
                                                      {
-                                                         Map<Integer, String> groups = PatternUtils.matchToGroups(this.pattern, RawSVGText.this.transform);
+                                                         Map<Integer, String> groups = PatternUtils.matchToGroups(Pattern.compile(this.patternStr),
+                                                                                                                  RawSVGText.this.transform);
                                                          return NumberUtils.toDouble(groups.get(2));
                                                      }
                                                  })
                                                  .addRadiusSupplierConsumer(new SupplierBiConsumer()
                                                  {
-                                                     private final String patternStr = "font\\-size[ ]*\\:[ ]*([0-9]*\\.?[0-9]*)[ ]*(px)?";
+                                                     private String fontSizePatternStr = "font\\-size[ ]*\\:[ ]*([0-9]*\\.?[0-9]*)[ ]*(px)?";
+                                                     private String rotationPatternStr = "rotate\\(([0-9\\. ]+)\\,([0-9\\. ]+)\\,([0-9\\. ]+)\\)";
 
                                                      @Override
                                                      public void accept(Double xScaledFontSize, Double yScaledFontSize)
                                                      {
-                                                         double fontSize = Math.min(xScaledFontSize, yScaledFontSize);
-                                                         RawSVGText.this.style = RawSVGText.this.style.replaceAll(this.patternStr, "font-size:"
+                                                         //
+                                                         double rotation = NumberUtils.toDouble(PatternUtils.matchToGroups(Pattern.compile(this.rotationPatternStr),
+                                                                                                                           RawSVGText.this.transform)
+                                                                                                            .get(1));
+                                                         boolean isHorizontal = rotation <= 45 && rotation >= -45;
+
+                                                         //
+                                                         double fontSize = isHorizontal ? yScaledFontSize : xScaledFontSize;
+                                                         RawSVGText.this.style = RawSVGText.this.style.replaceAll(this.fontSizePatternStr, "font-size:"
                                                                  + NumberUtils.formatter()
                                                                               .withMaximumFractionDigits(6)
                                                                               .format(fontSize)
@@ -320,7 +330,7 @@ public class RawSVGText extends RawSVGXYLocatedElement
 
                                                          //
                                                          String text = RawSVGText.this.style;
-                                                         Matcher matcher = Pattern.compile(this.patternStr, Pattern.CASE_INSENSITIVE)
+                                                         Matcher matcher = Pattern.compile(this.fontSizePatternStr, Pattern.CASE_INSENSITIVE)
                                                                                   .matcher(text);
                                                          if (matcher.find() && matcher.groupCount() > 0)
                                                          {
