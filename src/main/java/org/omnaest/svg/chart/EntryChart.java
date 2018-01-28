@@ -20,8 +20,6 @@ package org.omnaest.svg.chart;
 
 import java.util.stream.Stream;
 
-import org.omnaest.svg.SVGDrawer.SVGRenderResult;
-
 /**
  * {@link Chart} with {@link Entry}s
  * 
@@ -29,38 +27,36 @@ import org.omnaest.svg.SVGDrawer.SVGRenderResult;
  */
 public interface EntryChart extends Chart
 {
-	public static class Entry
-	{
-		private String	text;
-		private double	value;
+    public static class Entry
+    {
+        private String text;
+        private double value;
 
-		public Entry(String text, double value)
-		{
-			super();
-			this.text = text;
-			this.value = value;
-		}
+        public Entry(String text, double value)
+        {
+            super();
+            this.text = text;
+            this.value = value;
+        }
 
-		public String getText()
-		{
-			return this.text;
-		}
+        public String getText()
+        {
+            return this.text;
+        }
 
-		public double getValue()
-		{
-			return this.value;
-		}
+        public double getValue()
+        {
+            return this.value;
+        }
 
-		@Override
-		public String toString()
-		{
-			return "Entry [text=" + this.text + ", value=" + this.value + "]";
-		}
+        @Override
+        public String toString()
+        {
+            return "Entry [text=" + this.text + ", value=" + this.value + "]";
+        }
 
-	}
+    }
 
-	public EntryChart addData(Stream<Entry> entries);
-
-	SVGRenderResult renderAsResult();
+    public EntryChart addData(Stream<Entry> entries);
 
 }

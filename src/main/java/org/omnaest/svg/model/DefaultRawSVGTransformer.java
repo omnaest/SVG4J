@@ -25,6 +25,8 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
+import org.omnaest.utils.ObjectUtils;
+
 public class DefaultRawSVGTransformer implements RawSVGTransformer
 {
     public static interface SupplierConsumer extends Supplier<Double>, Consumer<Double>
@@ -35,11 +37,11 @@ public class DefaultRawSVGTransformer implements RawSVGTransformer
     {
     }
 
-    private Collection<SupplierConsumer>   supplierConsumersLocationX;
-    private Collection<SupplierConsumer>   supplierConsumersLocationY;
-    private Collection<SupplierConsumer>   supplierConsumersWidth;
-    private Collection<SupplierConsumer>   supplierConsumersHeight;
-    private Collection<SupplierBiConsumer> supplierConsumersRadius;
+    private Collection<SupplierConsumer>   supplierConsumersLocationX = new ArrayList<>();
+    private Collection<SupplierConsumer>   supplierConsumersLocationY = new ArrayList<>();
+    private Collection<SupplierConsumer>   supplierConsumersWidth     = new ArrayList<>();
+    private Collection<SupplierConsumer>   supplierConsumersHeight    = new ArrayList<>();
+    private Collection<SupplierBiConsumer> supplierConsumersRadius    = new ArrayList<>();
     private RawSVGElement                  rawSVGElement;
 
     @Deprecated
@@ -127,9 +129,9 @@ public class DefaultRawSVGTransformer implements RawSVGTransformer
     {
         this.supplierConsumersLocationX.forEach(cs -> cs.accept(cs.get() * scaleX));
         this.supplierConsumersLocationY.forEach(cs -> cs.accept(cs.get() * scaleY));
-        this.supplierConsumersWidth.forEach(cs -> cs.accept(cs.get() * scaleX));
-        this.supplierConsumersHeight.forEach(cs -> cs.accept(cs.get() * scaleY));
-        this.supplierConsumersRadius.forEach(cs -> cs.accept(cs.get() * scaleX, cs.get() * scaleY));
+        this.supplierConsumersWidth.forEach(cs -> ObjectUtils.ifNotNull(cs.get(), value -> cs.accept(cs.get() * scaleX)));
+        this.supplierConsumersHeight.forEach(cs -> ObjectUtils.ifNotNull(cs.get(), value -> cs.accept(value * scaleY)));
+        this.supplierConsumersRadius.forEach(cs -> ObjectUtils.ifNotNull(cs.get(), value -> cs.accept(value * scaleX, cs.get() * scaleY)));
         return this.rawSVGElement;
     }
 

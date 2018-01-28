@@ -21,12 +21,14 @@ package org.omnaest.svg;
 import org.omnaest.svg.chart.CoordinateChart;
 import org.omnaest.svg.chart.RangeChart;
 import org.omnaest.svg.chart.RedGreenDeviationRangeChart;
+import org.omnaest.svg.chart.TableChart;
 import org.omnaest.svg.chart.types.SVGBarChart;
 import org.omnaest.svg.chart.types.SVGBoxMapChart;
 import org.omnaest.svg.chart.types.SVGClockChart;
 import org.omnaest.svg.chart.types.SVGLineChart;
 import org.omnaest.svg.chart.types.SVGRangeChart;
 import org.omnaest.svg.chart.types.SVGRedGreenDeviationRangeChart;
+import org.omnaest.svg.chart.types.SVGTableChart;
 
 /**
  * SVG Utils to create simple charts
@@ -36,34 +38,39 @@ import org.omnaest.svg.chart.types.SVGRedGreenDeviationRangeChart;
  */
 public class SVGChartUtils
 {
-	public static CoordinateChart newLineChart(int width, int height)
-	{
-		return new SVGLineChart(width, height);
-	}
+    public static CoordinateChart newLineChart(int width, int height)
+    {
+        return new SVGLineChart(width, height);
+    }
 
-	public static CoordinateChart newBarChart(int width, int height)
-	{
-		return new SVGBarChart(width, height);
-	}
+    public static CoordinateChart newBarChart(int width, int height)
+    {
+        return new SVGBarChart(width, height);
+    }
 
-	public static CoordinateChart newClockChart(int width, int height)
-	{
-		return new SVGClockChart(width, height);
-	}
+    public static CoordinateChart newClockChart(int width, int height)
+    {
+        return new SVGClockChart(width, height);
+    }
 
-	public static RangeChart newRangeChart(int width, int height)
-	{
-		return new SVGRangeChart(width, height);
-	}
+    public static RangeChart newRangeChart(int width, int height)
+    {
+        return new SVGRangeChart(width, height);
+    }
 
-	public static RedGreenDeviationRangeChart newRedGreenDeviationRangeChart(int width, int height)
-	{
-		return new SVGRedGreenDeviationRangeChart(width, height);
-	}
+    public static RedGreenDeviationRangeChart newRedGreenDeviationRangeChart(int width, int height)
+    {
+        return new SVGRedGreenDeviationRangeChart(width, height);
+    }
 
-	public static SVGBoxMapChart newBoxMapChart(int width, int height)
-	{
-		return new SVGBoxMapChart(width, height);
-	}
+    public static SVGBoxMapChart newBoxMapChart(int width, int height)
+    {
+        return new SVGBoxMapChart(width, height);
+    }
+
+    public static TableChart newTableChart()
+    {
+        return new SVGTableChart();
+    }
 
 }

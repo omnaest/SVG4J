@@ -18,7 +18,11 @@
 */
 package org.omnaest.svg.chart;
 
+import org.omnaest.svg.SVGDrawer.SVGRenderResult;
+
 public interface Chart
 {
-	String render();
+    public String render();
+
+    public SVGRenderResult renderAsResult();
 }

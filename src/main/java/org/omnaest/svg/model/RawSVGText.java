@@ -18,6 +18,7 @@
 */
 package org.omnaest.svg.model;
 
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -29,8 +30,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.omnaest.svg.model.DefaultRawSVGTransformer.SupplierBiConsumer;
 import org.omnaest.svg.model.DefaultRawSVGTransformer.SupplierConsumer;
+import org.omnaest.utils.MatcherUtils;
 import org.omnaest.utils.NumberUtils;
 import org.omnaest.utils.ObjectUtils;
+import org.omnaest.utils.PatternUtils;
 
 @XmlRootElement(name = "text")
 @XmlAccessorType(XmlAccessType.NONE)
@@ -214,7 +217,7 @@ public class RawSVGText extends RawSVGXYLocatedElement
     @Override
     public RawSVGTransformer transformer()
     {
-        return new DefaultRawSVGTransformer(this, new SupplierConsumer()
+        return new DefaultRawSVGTransformer(this).addLocationXSupplierConsumer(new SupplierConsumer()
         {
             @Override
             public void accept(Double value)
@@ -228,105 +231,161 @@ public class RawSVGText extends RawSVGXYLocatedElement
             {
                 return NumberUtils.toDouble(RawSVGText.this.x);
             }
-        }, new SupplierConsumer()
-        {
-            @Override
-            public void accept(Double value)
-            {
-                RawSVGText.this.y = NumberUtils.formatter()
-                                               .format(value);
-            }
-
-            @Override
-            public Double get()
-            {
-                return NumberUtils.toDouble(RawSVGText.this.y);
-            }
-        }).addRadiusSupplierConsumer(new SupplierBiConsumer()
-        {
-            private final String patternStr = "font\\-size[ ]*\\:[ ]*([0-9]*\\.?[0-9]*)[ ]*(px)?";
-
-            @Override
-            public void accept(Double xScaledFontSize, Double yScaledFontSize)
-            {
-                double fontSize = Math.min(xScaledFontSize, yScaledFontSize);
-                RawSVGText.this.style = RawSVGText.this.style.replaceAll(this.patternStr, "font-size:" + NumberUtils.formatter()
-                                                                                                                    .format(fontSize)
-                        + "px");
-            }
-
-            @Override
-            public Double get()
-            {
-                double retval = 0.0;
-
-                //
-                String text = RawSVGText.this.style;
-                Matcher matcher = Pattern.compile(this.patternStr, Pattern.CASE_INSENSITIVE)
-                                         .matcher(text);
-                if (matcher.find() && matcher.groupCount() > 0)
-                {
-                    String value = matcher.group(1);
-                    retval = NumberUtils.toDouble(value);
-                }
-
-                return retval;
-            }
         })
-          .addWidthSupplierConsumer(new SupplierConsumer()
-          {
-              @Override
-              public void accept(Double value)
-              {
-                  if (value != null)
-                  {
-                      RawSVGText.this.textLength = NumberUtils.formatter()
-                                                              .format(value);
-                  }
-              }
+                                                 .addLocationYSupplierConsumer(new SupplierConsumer()
+                                                 {
+                                                     @Override
+                                                     public void accept(Double value)
+                                                     {
+                                                         RawSVGText.this.y = NumberUtils.formatter()
+                                                                                        .format(value);
+                                                     }
 
-              @Override
-              public Double get()
-              {
-                  return ObjectUtils.getIfNotNull(RawSVGText.this.textLength, () -> NumberUtils.toDouble(RawSVGText.this.textLength));
-              }
-          })
-          .addWidthSupplierConsumer(new SupplierConsumer()
-          {
-              @Override
-              public void accept(Double value)
-              {
-                  if (value != null)
-                  {
-                      RawSVGText.this.dx = NumberUtils.formatter()
-                                                      .format(value);
-                  }
-              }
+                                                     @Override
+                                                     public Double get()
+                                                     {
+                                                         return NumberUtils.toDouble(RawSVGText.this.y);
+                                                     }
+                                                 })
+                                                 .addLocationXSupplierConsumer(new SupplierConsumer()
+                                                 {
+                                                     private Pattern pattern = Pattern.compile("rotate\\([0-9\\. ]+\\,([0-9\\. ]+)\\,([0-9\\. ]+)\\)");
 
-              @Override
-              public Double get()
-              {
-                  return ObjectUtils.getIfNotNull(RawSVGText.this.dx, () -> NumberUtils.toDouble(RawSVGText.this.dx));
-              }
-          })
-          .addHeightSupplierConsumer(new SupplierConsumer()
-          {
-              @Override
-              public void accept(Double value)
-              {
-                  if (value != null)
-                  {
-                      RawSVGText.this.dy = NumberUtils.formatter()
-                                                      .format(value);
-                  }
-              }
+                                                     @Override
+                                                     public void accept(Double value)
+                                                     {
+                                                         MatcherUtils.matcher()
+                                                                     .of(this.pattern)
+                                                                     .matchAgainst(RawSVGText.this.transform)
+                                                                     .ifPresent(match ->
+                                                                     {
+                                                                         RawSVGText.this.transform = match.replaceGroupsWith(NumberUtils.formatter()
+                                                                                                                                        .format(value),
+                                                                                                                             null);
 
-              @Override
-              public Double get()
-              {
-                  return ObjectUtils.getIfNotNull(RawSVGText.this.dy, () -> NumberUtils.toDouble(RawSVGText.this.dy));
-              }
-          });
+                                                                     });
+                                                     }
+
+                                                     @Override
+                                                     public Double get()
+                                                     {
+                                                         Map<Integer, String> groups = PatternUtils.matchToGroups(this.pattern, RawSVGText.this.transform);
+                                                         return NumberUtils.toDouble(groups.get(1));
+                                                     }
+                                                 })
+                                                 .addLocationYSupplierConsumer(new SupplierConsumer()
+                                                 {
+                                                     private Pattern pattern = Pattern.compile("rotate\\([0-9\\. ]+\\,([0-9\\. ]+)\\,([0-9\\. ]+)\\)");
+
+                                                     @Override
+                                                     public void accept(Double value)
+                                                     {
+                                                         MatcherUtils.matcher()
+                                                                     .of(this.pattern)
+                                                                     .matchAgainst(RawSVGText.this.transform)
+                                                                     .ifPresent(match ->
+                                                                     {
+                                                                         RawSVGText.this.transform = match.replaceGroupsWith(null, NumberUtils.formatter()
+                                                                                                                                              .format(value));
+
+                                                                     });
+                                                     }
+
+                                                     @Override
+                                                     public Double get()
+                                                     {
+                                                         Map<Integer, String> groups = PatternUtils.matchToGroups(this.pattern, RawSVGText.this.transform);
+                                                         return NumberUtils.toDouble(groups.get(2));
+                                                     }
+                                                 })
+                                                 .addRadiusSupplierConsumer(new SupplierBiConsumer()
+                                                 {
+                                                     private final String patternStr = "font\\-size[ ]*\\:[ ]*([0-9]*\\.?[0-9]*)[ ]*(px)?";
+
+                                                     @Override
+                                                     public void accept(Double xScaledFontSize, Double yScaledFontSize)
+                                                     {
+                                                         double fontSize = Math.min(xScaledFontSize, yScaledFontSize);
+                                                         RawSVGText.this.style = RawSVGText.this.style.replaceAll(this.patternStr, "font-size:"
+                                                                 + NumberUtils.formatter()
+                                                                              .withMaximumFractionDigits(6)
+                                                                              .format(fontSize)
+                                                                 + "px");
+                                                     }
+
+                                                     @Override
+                                                     public Double get()
+                                                     {
+                                                         double retval = 0.0;
+
+                                                         //
+                                                         String text = RawSVGText.this.style;
+                                                         Matcher matcher = Pattern.compile(this.patternStr, Pattern.CASE_INSENSITIVE)
+                                                                                  .matcher(text);
+                                                         if (matcher.find() && matcher.groupCount() > 0)
+                                                         {
+                                                             String value = matcher.group(1);
+                                                             retval = NumberUtils.toDouble(value);
+                                                         }
+
+                                                         return retval;
+                                                     }
+                                                 })
+                                                 .addWidthSupplierConsumer(new SupplierConsumer()
+                                                 {
+                                                     @Override
+                                                     public void accept(Double value)
+                                                     {
+                                                         if (value != null)
+                                                         {
+                                                             RawSVGText.this.textLength = NumberUtils.formatter()
+                                                                                                     .format(value);
+                                                         }
+                                                     }
+
+                                                     @Override
+                                                     public Double get()
+                                                     {
+                                                         return ObjectUtils.getIfNotNull(RawSVGText.this.textLength,
+                                                                                         () -> NumberUtils.toDouble(RawSVGText.this.textLength));
+                                                     }
+                                                 })
+                                                 .addWidthSupplierConsumer(new SupplierConsumer()
+                                                 {
+                                                     @Override
+                                                     public void accept(Double value)
+                                                     {
+                                                         if (value != null)
+                                                         {
+                                                             RawSVGText.this.dx = NumberUtils.formatter()
+                                                                                             .format(value);
+                                                         }
+                                                     }
+
+                                                     @Override
+                                                     public Double get()
+                                                     {
+                                                         return ObjectUtils.getIfNotNull(RawSVGText.this.dx, () -> NumberUtils.toDouble(RawSVGText.this.dx));
+                                                     }
+                                                 })
+                                                 .addHeightSupplierConsumer(new SupplierConsumer()
+                                                 {
+                                                     @Override
+                                                     public void accept(Double value)
+                                                     {
+                                                         if (value != null)
+                                                         {
+                                                             RawSVGText.this.dy = NumberUtils.formatter()
+                                                                                             .format(value);
+                                                         }
+                                                     }
+
+                                                     @Override
+                                                     public Double get()
+                                                     {
+                                                         return ObjectUtils.getIfNotNull(RawSVGText.this.dy, () -> NumberUtils.toDouble(RawSVGText.this.dy));
+                                                     }
+                                                 });
     }
 
     public RawSVGText clearContent()

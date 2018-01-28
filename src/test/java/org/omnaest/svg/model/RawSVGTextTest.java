@@ -19,6 +19,9 @@
 package org.omnaest.svg.model;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import java.util.regex.Pattern;
 
 import org.junit.Test;
 import org.omnaest.svg.elements.SVGText;
@@ -26,18 +29,40 @@ import org.omnaest.svg.elements.SVGText;
 public class RawSVGTextTest
 {
 
-	@Test
-	public void testTransformer() throws Exception
-	{
-		RawSVGText rawSVGText = new SVGText(0, 0, "test")	.setFontSize(50)
-															.render();
+    @Test
+    public void testTransformer() throws Exception
+    {
+        RawSVGText rawSVGText = new SVGText(0, 0, "test").setFontSize(50)
+                                                         .render();
 
-		String style = rawSVGText	.transformer()
-									.scale(0.5, 0.5)
-									.getStyle();
+        String style = rawSVGText.transformer()
+                                 .scale(1.0, 0.5)
+                                 .getStyle();
 
-		//System.out.println(style);
-		assertEquals("font-size:25px", style);
-	}
+        //System.out.println(style);
+        assertEquals("font-size:25px", style);
+    }
+
+    @Test
+    public void testTransformer2() throws Exception
+    {
+        RawSVGText rawSVGText = new SVGText(0, 0, "test").setFontSize(50)
+                                                         .setRotation(90)
+                                                         .render();
+
+        String style = rawSVGText.transformer()
+                                 .scale(1.5, 0.5)
+                                 .getStyle();
+
+        //System.out.println(style);
+        assertEquals("font-size:25px", style);
+    }
+
+    @Test
+    public void testFontSizePattern()
+    {
+        boolean matches = Pattern.matches("font\\-size[ ]*\\:[ ]*([0-9]*\\.?[0-9]*)[ ]*(px)?", "font-size:38.400000000000006px");
+        assertTrue(matches);
+    }
 
 }

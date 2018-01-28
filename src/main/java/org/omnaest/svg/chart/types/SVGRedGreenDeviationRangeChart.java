@@ -19,6 +19,7 @@
 package org.omnaest.svg.chart.types;
 
 import org.omnaest.svg.SVGChartUtils;
+import org.omnaest.svg.SVGDrawer.SVGRenderResult;
 import org.omnaest.svg.chart.RangeChart;
 import org.omnaest.svg.chart.RangeChart.Color;
 import org.omnaest.svg.chart.RangeChart.ScalePosition;
@@ -26,67 +27,73 @@ import org.omnaest.svg.chart.RedGreenDeviationRangeChart;
 
 public class SVGRedGreenDeviationRangeChart implements RedGreenDeviationRangeChart
 {
-	private RangeChart	rangeChart;
-	private double		min;
-	private double		max;
+    private RangeChart rangeChart;
+    private double     min;
+    private double     max;
 
-	public SVGRedGreenDeviationRangeChart(int width, int height)
-	{
-		super();
-		this.rangeChart = SVGChartUtils.newRangeChart(width, height);
-	}
+    public SVGRedGreenDeviationRangeChart(int width, int height)
+    {
+        super();
+        this.rangeChart = SVGChartUtils.newRangeChart(width, height);
+    }
 
-	@Override
-	public String render()
-	{
-		return this.rangeChart.render();
-	}
+    @Override
+    public String render()
+    {
+        return this.rangeChart.render();
+    }
 
-	@Override
-	public RedGreenDeviationRangeChart setHorizontalScale(double min, double max)
-	{
-		this.min = min;
-		this.max = max;
-		this.rangeChart.setHorizontalScale(min, max);
-		return this;
-	}
+    @Override
+    public SVGRenderResult renderAsResult()
+    {
+        return this.rangeChart.renderAsResult();
+    }
 
-	@Override
-	public RedGreenDeviationRangeChart setLabel(String label)
-	{
-		this.rangeChart.setLabel(label);
-		return this;
-	}
+    @Override
+    public RedGreenDeviationRangeChart setHorizontalScale(double min, double max)
+    {
+        this.min = min;
+        this.max = max;
+        this.rangeChart.setHorizontalScale(min, max);
+        return this;
+    }
 
-	@Override
-	public RedGreenDeviationRangeChart addGreenRange(double center, double deviation)
-	{
+    @Override
+    public RedGreenDeviationRangeChart setLabel(String label)
+    {
+        this.rangeChart.setLabel(label);
+        return this;
+    }
 
-		double min = Math.max(center - deviation, this.min);
-		double max = Math.min(center + deviation, this.max);
-		double minGreen = Math.max(center - deviation * 1.2, this.min);
-		double maxGreen = Math.min(center + deviation * 1.2, this.max);
-		double fadeOutOpacity = 0.0;
-		this.rangeChart.addRange(Color.GREEN, minGreen, maxGreen, center, fadeOutOpacity);
+    @Override
+    public RedGreenDeviationRangeChart addGreenRange(double center, double deviation)
+    {
 
-		this.rangeChart.addRange(Color.RED, this.min, min, this.min, fadeOutOpacity);
-		this.rangeChart.addRange(Color.RED, max, this.max, this.max, fadeOutOpacity);
+        double min = Math.max(center - deviation, this.min);
+        double max = Math.min(center + deviation, this.max);
+        double minGreen = Math.max(center - deviation * 1.2, this.min);
+        double maxGreen = Math.min(center + deviation * 1.2, this.max);
+        double fadeOutOpacity = 0.0;
+        this.rangeChart.addRange(Color.GREEN, minGreen, maxGreen, center, fadeOutOpacity);
 
-		this.rangeChart.addScalePoint(this.min, ScalePosition.HIGH);
-		this.rangeChart.addScalePoint(this.max, ScalePosition.HIGH);
-		this.rangeChart.addScalePoint(center, ScalePosition.HIGH);
-		this.rangeChart.addScalePoint(min, ScalePosition.HIGH);
-		this.rangeChart.addScalePoint(max, ScalePosition.HIGH);
+        this.rangeChart.addRange(Color.RED, this.min, min, this.min, fadeOutOpacity);
+        this.rangeChart.addRange(Color.RED, max, this.max, this.max, fadeOutOpacity);
 
-		return this;
-	}
+        this.rangeChart.addScalePoint(this.min, ScalePosition.HIGH);
+        this.rangeChart.addScalePoint(this.max, ScalePosition.HIGH);
+        this.rangeChart.addScalePoint(center, ScalePosition.HIGH);
+        this.rangeChart.addScalePoint(min, ScalePosition.HIGH);
+        this.rangeChart.addScalePoint(max, ScalePosition.HIGH);
 
-	@Override
-	public RedGreenDeviationRangeChart addPoint(double value)
-	{
-		this.rangeChart.addPoint(Color.YELLOW, value);
-		this.rangeChart.addScalePoint(value, ScalePosition.LOW);
-		return this;
-	}
+        return this;
+    }
+
+    @Override
+    public RedGreenDeviationRangeChart addPoint(double value)
+    {
+        this.rangeChart.addPoint(Color.YELLOW, value);
+        this.rangeChart.addScalePoint(value, ScalePosition.LOW);
+        return this;
+    }
 
 }

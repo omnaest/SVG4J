@@ -30,17 +30,15 @@ import org.omnaest.svg.SVGDrawer.ResolutionProvider;
 import org.omnaest.svg.SVGDrawer.SVGRenderResult;
 import org.omnaest.svg.SVGUtils;
 import org.omnaest.svg.chart.EntryChart;
+import org.omnaest.svg.chart.types.helper.ThresholdOpacity;
 import org.omnaest.svg.elements.composite.SVGTextBox;
 
 public class SVGBoxMapChart implements EntryChart
 {
     private SVGDrawer drawer;
 
-    private String positiveColor      = "green";
-    private String negativeColor      = "red";
-    private String textColor          = "black";
-    private double thresholdPrimary   = 0.5;
-    private Double thresholdSecondary = null;
+    private String           textColor        = "black";
+    private ThresholdOpacity thresholdOpacity = new ThresholdOpacity();
 
     private Supplier<Integer> chartPadding = () -> 0;
 
@@ -52,13 +50,13 @@ public class SVGBoxMapChart implements EntryChart
 
     public SVGBoxMapChart setThresholdPrimary(double thresholdPrimary)
     {
-        this.thresholdPrimary = thresholdPrimary;
+        this.thresholdOpacity.setThresholdPrimary(thresholdPrimary);
         return this;
     }
 
     public SVGBoxMapChart setThresholdSecondary(double thresholdSecondary)
     {
-        this.thresholdSecondary = thresholdSecondary;
+        this.thresholdOpacity.setThresholdSecondary(thresholdSecondary);
         return this;
     }
 
@@ -99,8 +97,8 @@ public class SVGBoxMapChart implements EntryChart
                 if (entry != null)
                 {
                     double value = entry.getValue();
-                    double backgroundOpacity = this.determineBackgroundOpacity(value);
-                    String backgroundColor = this.determineBackgroundColor(value);
+                    double backgroundOpacity = this.thresholdOpacity.determineBackgroundOpacity(value);
+                    String backgroundColor = this.thresholdOpacity.determineBackgroundColor(value);
                     verticalSlices.get(jj)
                                   .withRelativeSizedPadding(0.05)
                                   .withScalingHeight(100)
@@ -117,48 +115,15 @@ public class SVGBoxMapChart implements EntryChart
         return this;
     }
 
-    private String determineBackgroundColor(double value)
-    {
-        return value < this.thresholdPrimary || (this.thresholdSecondary != null && value > this.thresholdSecondary) ? this.negativeColor : this.positiveColor;
-    }
-
-    private double determineBackgroundOpacity(double normValue)
-    {
-        double baseOpacity = 0.2;
-
-        double value = this.determineDeltaValue(normValue, this.thresholdPrimary);
-
-        if (this.thresholdSecondary != null)
-        {
-            if (normValue > this.thresholdSecondary)
-            {
-                value = this.determineDeltaValue(normValue, this.thresholdSecondary);
-            }
-            else if (normValue > this.thresholdPrimary && normValue < this.thresholdSecondary)
-            {
-                double value2 = this.determineDeltaValue(normValue, this.thresholdSecondary);
-                value = Math.min(value, value2);
-            }
-        }
-
-        double retval = baseOpacity + (1 - baseOpacity) * value;
-        return retval;
-    }
-
-    private double determineDeltaValue(double normValue, double threshold)
-    {
-        return Math.abs(normValue - threshold) / threshold;
-    }
-
     public SVGBoxMapChart setPositiveColor(String positiveColor)
     {
-        this.positiveColor = positiveColor;
+        this.thresholdOpacity.setPositiveColor(positiveColor);
         return this;
     }
 
     public SVGBoxMapChart setNegativeColor(String negativeColor)
     {
-        this.negativeColor = negativeColor;
+        this.thresholdOpacity.setNegativeColor(negativeColor);
         return this;
     }
 
