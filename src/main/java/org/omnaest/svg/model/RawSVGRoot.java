@@ -73,6 +73,19 @@ public class RawSVGRoot
     @XmlAttribute
     private String viewBox;
 
+    @XmlAttribute(name = "class")
+    private String cssClass;
+
+    public String getCssClass()
+    {
+        return this.cssClass;
+    }
+
+    public void setCssClass(String cssClass)
+    {
+        this.cssClass = cssClass;
+    }
+
     public String getId()
     {
         return this.id;

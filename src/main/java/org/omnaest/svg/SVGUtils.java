@@ -25,8 +25,8 @@ import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.io.FileUtils;
 import org.omnaest.svg.model.RawSVGRoot;
-import org.omnaest.svg.utils.XMLHelper;
 import org.omnaest.utils.StringUtils;
+import org.omnaest.utils.XMLHelper;
 
 /**
  * {@link SVGUtils}
@@ -81,6 +81,9 @@ public class SVGUtils
 
     protected static RawSVGRoot parse(String svg)
     {
-        return XMLHelper.parse(svg, RawSVGRoot.class);
+        return XMLHelper.parse()
+                        .from(svg)
+                        .enforceNamespace("http://www.w3.org/2000/svg")
+                        .into(RawSVGRoot.class);
     }
 }

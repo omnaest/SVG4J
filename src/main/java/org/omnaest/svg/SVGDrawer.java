@@ -46,8 +46,8 @@ import org.omnaest.svg.model.RawSVGElement;
 import org.omnaest.svg.model.RawSVGElementWithChildren;
 import org.omnaest.svg.model.RawSVGRoot;
 import org.omnaest.svg.model.RawSVGStyle;
-import org.omnaest.svg.utils.XMLHelper;
 import org.omnaest.utils.ListUtils;
+import org.omnaest.utils.XMLHelper;
 
 /**
  * @see SVGUtils

@@ -310,11 +310,19 @@ public class SVGUtilsTest
     @Test
     public void testLinkScape() throws IOException
     {
-        SVGDrawer drawer = SVGUtils.getDrawer(this.getClass()
-                                                  .getResourceAsStream("/inkScapeExample.svg"));
+        try
+        {
+            SVGDrawer drawer = SVGUtils.getDrawer(this.getClass()
+                                                      .getResourceAsStream("/inkScapeExample.svg"));
 
-        drawer.renderAsResult()
-              .writeToFile(new File("C:/Temp/svgInkScapeTest.svg"));
+            drawer.renderAsResult()
+                  .writeToFile(new File("C:/Temp/svgInkScapeTest.svg"));
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            throw e;
+        }
     }
 
     @Test
