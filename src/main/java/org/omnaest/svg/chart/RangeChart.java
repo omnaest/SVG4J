@@ -20,24 +20,26 @@ package org.omnaest.svg.chart;
 
 public interface RangeChart extends Chart
 {
-	public enum Color
-	{
-		RED, BLUE, GREEN, BLACK, YELLOW
-	}
+    public enum Color
+    {
+        RED, BLUE, GREEN, BLACK, YELLOW
+    }
 
-	public enum ScalePosition
-	{
-		HIGH, LOW
-	}
+    public enum ScalePosition
+    {
+        HIGH, LOW
+    }
 
-	public RangeChart setHorizontalScale(double min, double max);
+    public RangeChart setHorizontalScale(double min, double max);
 
-	public RangeChart addRange(Color color, double min, double max, double center, double fadeOutOpacity);
+    public RangeChart addRange(Color color, double min, double max, double center, double fadeOutOpacity);
 
-	public RangeChart setLabel(String label);
+    public RangeChart addRangeBox(Color color, double min, double max, double opacity);
 
-	public RangeChart addPoint(Color color, double value);
+    public RangeChart setLabel(String label);
 
-	public RangeChart addScalePoint(double value, ScalePosition position);
+    public RangeChart addPoint(Color color, double value);
+
+    public RangeChart addScalePoint(double value, ScalePosition position);
 
 }

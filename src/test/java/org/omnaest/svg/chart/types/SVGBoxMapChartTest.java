@@ -44,7 +44,7 @@ public class SVGBoxMapChartTest
         {
             double random = 2.0 * ii / 100.0;
             entries.add(new Entry("text " + ii + "(" + NumberUtils.formatter()
-                                                                  .withPercentage()
+                                                                  .asPercentage()
                                                                   .format(random)
                     + ")", random));
         }

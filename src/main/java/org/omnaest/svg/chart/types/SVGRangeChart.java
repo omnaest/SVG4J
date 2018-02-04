@@ -21,6 +21,7 @@ package org.omnaest.svg.chart.types;
 import java.util.Locale;
 
 import org.omnaest.svg.SVGDrawer;
+import org.omnaest.svg.SVGDrawer.BoundedArea;
 import org.omnaest.svg.SVGDrawer.SVGRenderResult;
 import org.omnaest.svg.SVGUtils;
 import org.omnaest.svg.chart.RangeChart;
@@ -42,14 +43,14 @@ public class SVGRangeChart implements RangeChart
 
     public static class DrawBox
     {
-        private SVGDrawer drawer;
+        private BoundedArea drawer;
 
         private int left;
         private int top;
         private int right;
         private int bottom;
 
-        public DrawBox(SVGDrawer drawer, int left, int top, int right, int bottom)
+        public DrawBox(BoundedArea drawer, int left, int top, int right, int bottom)
         {
             super();
             this.drawer = drawer;
@@ -126,10 +127,25 @@ public class SVGRangeChart implements RangeChart
         this.drawer = SVGUtils.getDrawer(width, height)
                               .withScreenDimensions(width, height);
 
+        BoundedArea boundedArea = this.drawer.newBoundedArea();
+        this.initByBoundedArea(boundedArea);
+    }
+
+    public SVGRangeChart(BoundedArea boundedArea)
+    {
+        super();
+
+        this.initByBoundedArea(boundedArea);
+    }
+
+    private void initByBoundedArea(BoundedArea boundedArea)
+    {
         double bodyRelativeHeight = 0.5;
-        this.labelDrawBox = new DrawBox(this.drawer, 0, 0, (int) (0.2 * width), (int) (height * bodyRelativeHeight));
-        this.bodyDrawBox = new DrawBox(this.drawer, this.labelDrawBox.getRight(), 0, (int) (width * 0.95), (int) (height * bodyRelativeHeight));
-        this.scaleDrawBox = new DrawBox(this.drawer, this.labelDrawBox.getRight(), (int) (height * bodyRelativeHeight), (int) (width * 0.95), height);
+        int width = (int) boundedArea.getWidth();
+        int height = (int) boundedArea.getHeight();
+        this.labelDrawBox = new DrawBox(boundedArea, 0, 0, (int) (0.2 * width), (int) (height * bodyRelativeHeight));
+        this.bodyDrawBox = new DrawBox(boundedArea, this.labelDrawBox.getRight(), 0, (int) (width * 0.95), (int) (height * bodyRelativeHeight));
+        this.scaleDrawBox = new DrawBox(boundedArea, this.labelDrawBox.getRight(), (int) (height * bodyRelativeHeight), (int) (width * 0.95), height);
     }
 
     @Override
@@ -189,6 +205,28 @@ public class SVGRangeChart implements RangeChart
                                 .setStrokeOpacity(0.0);
             }
         }
+
+        return this;
+    }
+
+    @Override
+    public RangeChart addRangeBox(Color color, double min, double max, double opacity)
+    {
+        double minRelativeX = this.calculateHorizontalRelativePosition(min);
+        double maxRelativeX = this.calculateHorizontalRelativePosition(max);
+
+        int height = (int) (0.9 * this.bodyDrawBox.getHeight());
+        int y = (int) (0.05 * this.bodyDrawBox.getHeight());
+        int reducedY = (int) (y + height * 0.25);
+        int reducedHeight = (int) (height * 0.5);
+
+        this.bodyDrawBox.addRectangle((int) (minRelativeX * this.bodyDrawBox.getWidth()), reducedY,
+                                      (int) ((maxRelativeX - minRelativeX) * this.bodyDrawBox.getWidth()), reducedHeight)
+                        .setStrokeColor(color.name())
+                        .setStrokeOpacity(1.0)
+                        .setStrokeWidth(3)
+                        .setFillColor(color.name())
+                        .setFillOpacity(opacity);
 
         return this;
     }

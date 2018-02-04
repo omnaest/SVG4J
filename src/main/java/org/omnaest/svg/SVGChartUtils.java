@@ -21,6 +21,7 @@ package org.omnaest.svg;
 import org.omnaest.svg.chart.CoordinateChart;
 import org.omnaest.svg.chart.RangeChart;
 import org.omnaest.svg.chart.RedGreenDeviationRangeChart;
+import org.omnaest.svg.chart.RedGreenDeviationTableChart;
 import org.omnaest.svg.chart.TableChart;
 import org.omnaest.svg.chart.types.SVGBarChart;
 import org.omnaest.svg.chart.types.SVGBoxMapChart;
@@ -28,6 +29,7 @@ import org.omnaest.svg.chart.types.SVGClockChart;
 import org.omnaest.svg.chart.types.SVGLineChart;
 import org.omnaest.svg.chart.types.SVGRangeChart;
 import org.omnaest.svg.chart.types.SVGRedGreenDeviationRangeChart;
+import org.omnaest.svg.chart.types.SVGRedGreenDeviationTableChart;
 import org.omnaest.svg.chart.types.SVGTableChart;
 
 /**
@@ -61,6 +63,11 @@ public class SVGChartUtils
     public static RedGreenDeviationRangeChart newRedGreenDeviationRangeChart(int width, int height)
     {
         return new SVGRedGreenDeviationRangeChart(width, height);
+    }
+
+    public static RedGreenDeviationTableChart newRedGreenDeviationTableChart(int width, int height)
+    {
+        return new SVGRedGreenDeviationTableChart(width, height);
     }
 
     public static SVGBoxMapChart newBoxMapChart(int width, int height)

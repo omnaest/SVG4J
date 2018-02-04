@@ -19,6 +19,7 @@
 package org.omnaest.svg.chart.types;
 
 import org.omnaest.svg.SVGChartUtils;
+import org.omnaest.svg.SVGDrawer.BoundedArea;
 import org.omnaest.svg.SVGDrawer.SVGRenderResult;
 import org.omnaest.svg.chart.RangeChart;
 import org.omnaest.svg.chart.RangeChart.Color;
@@ -30,11 +31,18 @@ public class SVGRedGreenDeviationRangeChart implements RedGreenDeviationRangeCha
     private RangeChart rangeChart;
     private double     min;
     private double     max;
+    private boolean    renderScalePoints = true;
 
     public SVGRedGreenDeviationRangeChart(int width, int height)
     {
         super();
         this.rangeChart = SVGChartUtils.newRangeChart(width, height);
+    }
+
+    public SVGRedGreenDeviationRangeChart(BoundedArea boundedArea)
+    {
+        super();
+        this.rangeChart = new SVGRangeChart(boundedArea);
     }
 
     @Override
@@ -79,12 +87,40 @@ public class SVGRedGreenDeviationRangeChart implements RedGreenDeviationRangeCha
         this.rangeChart.addRange(Color.RED, this.min, min, this.min, fadeOutOpacity);
         this.rangeChart.addRange(Color.RED, max, this.max, this.max, fadeOutOpacity);
 
-        this.rangeChart.addScalePoint(this.min, ScalePosition.HIGH);
-        this.rangeChart.addScalePoint(this.max, ScalePosition.HIGH);
-        this.rangeChart.addScalePoint(center, ScalePosition.HIGH);
-        this.rangeChart.addScalePoint(min, ScalePosition.HIGH);
-        this.rangeChart.addScalePoint(max, ScalePosition.HIGH);
+        if (this.renderScalePoints)
+        {
+            this.rangeChart.addScalePoint(this.min, ScalePosition.HIGH);
+            this.rangeChart.addScalePoint(this.max, ScalePosition.HIGH);
+            this.rangeChart.addScalePoint(center, ScalePosition.HIGH);
+            this.rangeChart.addScalePoint(min, ScalePosition.HIGH);
+            this.rangeChart.addScalePoint(max, ScalePosition.HIGH);
+        }
 
+        return this;
+    }
+
+    @Override
+    public RedGreenDeviationRangeChart addYellowRangeBox(double min, double max)
+    {
+        min = Math.max(min, this.min);
+        max = Math.min(max, this.max);
+        double opacity = 0.5;
+
+        this.rangeChart.addRangeBox(Color.YELLOW, min, max, opacity);
+
+        if (this.renderScalePoints)
+        {
+            this.rangeChart.addScalePoint(min, ScalePosition.LOW);
+            this.rangeChart.addScalePoint(max, ScalePosition.LOW);
+        }
+
+        return this;
+    }
+
+    @Override
+    public RedGreenDeviationRangeChart doNotRenderScalePoints()
+    {
+        this.renderScalePoints = false;
         return this;
     }
 
@@ -92,7 +128,11 @@ public class SVGRedGreenDeviationRangeChart implements RedGreenDeviationRangeCha
     public RedGreenDeviationRangeChart addPoint(double value)
     {
         this.rangeChart.addPoint(Color.YELLOW, value);
-        this.rangeChart.addScalePoint(value, ScalePosition.LOW);
+
+        if (this.renderScalePoints)
+        {
+            this.rangeChart.addScalePoint(value, ScalePosition.LOW);
+        }
         return this;
     }
 

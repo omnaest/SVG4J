@@ -18,19 +18,17 @@
 */
 package org.omnaest.svg.chart;
 
-public interface RedGreenDeviationRangeChart extends Chart
+import java.util.stream.Stream;
+
+import org.omnaest.svg.SVGDrawer.ResolutionProvider;
+
+public interface RedGreenDeviationTableChart extends Chart
 {
 
-    RedGreenDeviationRangeChart setHorizontalScale(double min, double max);
+    public RedGreenDeviationTableChart withScreenDimensions(ResolutionProvider displayResolution);
 
-    RedGreenDeviationRangeChart setLabel(String label);
+    public Stream<RedGreenDeviationRangeChart> createRows(int number);
 
-    RedGreenDeviationRangeChart addGreenRange(double center, double deviation);
-
-    RedGreenDeviationRangeChart addPoint(double value);
-
-    RedGreenDeviationRangeChart addYellowRangeBox(double min, double max);
-
-    RedGreenDeviationRangeChart doNotRenderScalePoints();
+    public RedGreenDeviationTableChart withRelativePadding(double relativePadding);
 
 }
