@@ -21,74 +21,72 @@ package org.omnaest.svg.model;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlRootElement;
 
 import org.omnaest.svg.model.DefaultRawSVGTransformer.SupplierConsumer;
 import org.omnaest.utils.NumberUtils;
 
-@XmlRootElement(name = "text")
 @XmlAccessorType(XmlAccessType.NONE)
-public class RawSVGXYLocatedElement extends RawSVGElement
+public abstract class RawSVGXYLocatedElement extends RawSVGElement
 {
-	@XmlAttribute
-	protected String x;
+    @XmlAttribute
+    protected String x;
 
-	@XmlAttribute
-	protected String y;
+    @XmlAttribute
+    protected String y;
 
-	public RawSVGXYLocatedElement setX(String x)
-	{
-		this.x = x;
-		return this;
-	}
+    public RawSVGXYLocatedElement setX(String x)
+    {
+        this.x = x;
+        return this;
+    }
 
-	public String getX()
-	{
-		return this.x;
-	}
+    public String getX()
+    {
+        return this.x;
+    }
 
-	public String getY()
-	{
-		return this.y;
-	}
+    public String getY()
+    {
+        return this.y;
+    }
 
-	public RawSVGXYLocatedElement setY(String y)
-	{
-		this.y = y;
-		return this;
-	}
+    public RawSVGXYLocatedElement setY(String y)
+    {
+        this.y = y;
+        return this;
+    }
 
-	@Override
-	public RawSVGTransformer transformer()
-	{
-		return new DefaultRawSVGTransformer(this, new SupplierConsumer()
-		{
-			@Override
-			public void accept(Double value)
-			{
-				RawSVGXYLocatedElement.this.setX(NumberUtils.formatter()
-															.format(value));
-			}
+    @Override
+    public RawSVGTransformer transformer()
+    {
+        return new DefaultRawSVGTransformer(this, new SupplierConsumer()
+        {
+            @Override
+            public void accept(Double value)
+            {
+                RawSVGXYLocatedElement.this.setX(NumberUtils.formatter()
+                                                            .format(value));
+            }
 
-			@Override
-			public Double get()
-			{
-				return NumberUtils.toDouble(RawSVGXYLocatedElement.this.getX());
-			}
-		}, new SupplierConsumer()
-		{
-			@Override
-			public void accept(Double value)
-			{
-				RawSVGXYLocatedElement.this.setY(NumberUtils.formatter()
-															.format(value));
-			}
+            @Override
+            public Double get()
+            {
+                return NumberUtils.toDouble(RawSVGXYLocatedElement.this.getX());
+            }
+        }, new SupplierConsumer()
+        {
+            @Override
+            public void accept(Double value)
+            {
+                RawSVGXYLocatedElement.this.setY(NumberUtils.formatter()
+                                                            .format(value));
+            }
 
-			@Override
-			public Double get()
-			{
-				return NumberUtils.toDouble(RawSVGXYLocatedElement.this.getY());
-			}
-		});
-	}
+            @Override
+            public Double get()
+            {
+                return NumberUtils.toDouble(RawSVGXYLocatedElement.this.getY());
+            }
+        });
+    }
 }

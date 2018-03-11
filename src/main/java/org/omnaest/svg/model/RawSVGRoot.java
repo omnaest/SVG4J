@@ -24,6 +24,7 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
@@ -44,7 +45,8 @@ import org.omnaest.utils.NumberUtils;
               RawSVGDefinition.class,
               RawSVGAnkerElement.class,
               RawSVGStyle.class,
-              RawSVGEllipse.class })
+              RawSVGEllipse.class,
+              RawSVGTSpan.class })
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlRootElement(name = "svg")
 public class RawSVGRoot
@@ -67,6 +69,9 @@ public class RawSVGRoot
     @XmlElementRef
     private List<RawSVGElement> elements;
 
+    @XmlElement
+    private RawStyle style;
+
     @XmlAttribute
     private String baseProfile;
 
@@ -75,6 +80,16 @@ public class RawSVGRoot
 
     @XmlAttribute(name = "class")
     private String cssClass;
+
+    public RawStyle getStyle()
+    {
+        return this.style;
+    }
+
+    public void setStyle(RawStyle style)
+    {
+        this.style = style;
+    }
 
     public String getCssClass()
     {

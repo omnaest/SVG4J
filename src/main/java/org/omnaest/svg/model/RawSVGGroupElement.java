@@ -23,12 +23,13 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "g")
 @XmlAccessorType(XmlAccessType.NONE)
-public class RawSVGGroupElement extends RawSVGElement implements RawSVGElementWithChildren
+public class RawSVGGroupElement extends RawSVGDefinitionElement implements RawSVGElementWithChildren
 {
 
     @XmlAttribute
@@ -39,6 +40,33 @@ public class RawSVGGroupElement extends RawSVGElement implements RawSVGElementWi
 
     @XmlElementRef
     private List<RawSVGElement> elements;
+
+    @XmlElement(name = "desc")
+    private String description;
+
+    @XmlElement
+    private String title;
+
+    public String getTitle()
+    {
+        return this.title;
+    }
+
+    public void setTitle(String title)
+    {
+        this.title = title;
+    }
+
+    public String getDescription()
+    {
+        return this.description;
+    }
+
+    public RawSVGGroupElement setDescription(String description)
+    {
+        this.description = description;
+        return this;
+    }
 
     @Override
     public List<RawSVGElement> getElements()
@@ -80,6 +108,12 @@ public class RawSVGGroupElement extends RawSVGElement implements RawSVGElementWi
     public RawSVGTransformer transformer()
     {
         return new IgnoringRawSVGTransformer(this);
+    }
+
+    public RawSVGGroupElement addElement(RawSVGElement element)
+    {
+        this.elements.add(element);
+        return this;
     }
 
 }

@@ -25,37 +25,32 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "style")
 @XmlAccessorType(XmlAccessType.NONE)
-public class RawSVGStyle extends RawSVGDefinitionElement
+public class RawSVGStyle extends RawSVGDefinitionElement implements RawSVGElementWithContent
 {
-	@XmlAttribute
-	private String type = "text/css";
+    @XmlAttribute
+    private String type = "text/css";
 
-	@Override
-	public String getContent()
-	{
-		return this.content;
-	}
+    public String getType()
+    {
+        return this.type;
+    }
 
-	public RawSVGStyle setContent(String content)
-	{
-		this.content = content;
-		return this;
-	}
+    public void setType(String type)
+    {
+        this.type = type;
+    }
 
-	public String getType()
-	{
-		return this.type;
-	}
+    @Override
+    public RawSVGStyle setContent(String text)
+    {
+        super.setContent(text);
+        return this;
+    }
 
-	public void setType(String type)
-	{
-		this.type = type;
-	}
-
-	@Override
-	public RawSVGTransformer transformer()
-	{
-		return new IgnoringRawSVGTransformer(this);
-	}
+    @Override
+    public RawSVGTransformer transformer()
+    {
+        return new IgnoringRawSVGTransformer(this);
+    }
 
 }

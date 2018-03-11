@@ -183,7 +183,7 @@ public class SVGRangeChart implements RangeChart
             double maxRelativeX = this.calculateHorizontalRelativePosition(max);
             double centerRelativeX = this.calculateHorizontalRelativePosition(center);
 
-            double partitions = 1000;
+            double partitions = 100;
             double relativeXRange = maxRelativeX - minRelativeX;
             for (int ii = 0; ii < partitions; ii++)
             {
@@ -202,7 +202,9 @@ public class SVGRangeChart implements RangeChart
                 this.bodyDrawBox.addRectangle(x, y, width, height)
                                 .setFillColor(color.name())
                                 .setFillOpacity(opacity)
-                                .setStrokeOpacity(0.0);
+                                .setStrokeColor(color.name())
+                                .setStrokeOpacity(opacity)
+                                .setStrokeWidth(0);
             }
         }
 

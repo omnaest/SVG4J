@@ -21,6 +21,7 @@ package org.omnaest.svg;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.io.FileUtils;
@@ -59,6 +60,11 @@ public class SVGUtils
         return new SVGDrawer(parse(svgInputStream));
     }
 
+    public static SVGDrawer getDrawer(Reader reader) throws IOException
+    {
+        return new SVGDrawer(parse(reader));
+    }
+
     public static SVGDrawer getDrawer(File svgFile) throws IOException
     {
         return new SVGDrawer(parse(svgFile));
@@ -74,6 +80,11 @@ public class SVGUtils
         return parse(StringUtils.toString(inputStream, StandardCharsets.UTF_8));
     }
 
+    protected static RawSVGRoot parse(Reader reader) throws IOException
+    {
+        return parse(StringUtils.toString(reader));
+    }
+
     protected static RawSVGRoot parse(File file) throws IOException
     {
         return parse(FileUtils.readFileToString(file, "utf-8"));
@@ -83,6 +94,7 @@ public class SVGUtils
     {
         return XMLHelper.parse()
                         .from(svg)
+                        .withSAXParser()
                         .enforceNamespace("http://www.w3.org/2000/svg")
                         .into(RawSVGRoot.class);
     }

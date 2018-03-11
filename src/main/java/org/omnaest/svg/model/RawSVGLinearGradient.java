@@ -206,7 +206,7 @@ public class RawSVGLinearGradient extends RawSVGDefinitionElement
     {
         return "RawSVGLinearGradient [id=" + this.getId() + ", href=" + this.href + ", gradientTransform=" + this.gradientTransform + ", gradientUnits="
                 + this.gradientUnits + ", x1=" + this.x1 + ", y1=" + this.y1 + ", x2=" + this.x2 + ", y2=" + this.y2 + ", stops=" + this.stops + ", style="
-                + this.style + ", transform=" + this.transform + ", content=" + this.content + "]";
+                + this.style + ", transform=" + this.transform + ", content=" + this.rawContent + "]";
     }
 
 }

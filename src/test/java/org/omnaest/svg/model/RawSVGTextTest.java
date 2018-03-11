@@ -25,9 +25,48 @@ import java.util.regex.Pattern;
 
 import org.junit.Test;
 import org.omnaest.svg.elements.SVGText;
+import org.omnaest.utils.XMLHelper;
 
 public class RawSVGTextTest
 {
+    @Test
+    public void testContent()
+    {
+        RawSVGText text = new RawSVGText();
+        text.setText("value");
+        assertEquals("value", text.getText());
+    }
+
+    @Test
+    public void testContentWithTSpan()
+    {
+        RawSVGText text = new RawSVGText();
+        text.addTSpan(new RawSVGTSpan().setContent("span value"));
+        assertEquals("span value", text.getText());
+    }
+
+    @Test
+    public void testContentSerialization()
+    {
+        try
+        {
+            RawSVGText text = new RawSVGText();
+            text.addTSpan(new RawSVGTSpan().setContent("span value"));
+
+            String xml = XMLHelper.serializer()
+                                  .withoutHeader()
+                                  .withCompactPrint()
+                                  .serialize(text);
+            //            System.out.println(xml);
+            RawSVGText clone = XMLHelper.parse(xml, RawSVGText.class);
+            assertEquals("span value", clone.getText());
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            throw e;
+        }
+    }
 
     @Test
     public void testTransformer() throws Exception

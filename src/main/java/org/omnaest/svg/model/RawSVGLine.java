@@ -103,7 +103,7 @@ public class RawSVGLine extends RawSVGX1X2Y1Y2LocatedElement
 	public String toString()
 	{
 		return "RawSVGLine [stroke=" + this.stroke + ", strokeWidth=" + this.strokeWidth + ", style=" + this.style + ", x1=" + this.x1 + ", y1=" + this.y1
-				+ ", x2=" + this.x2 + ", y2=" + this.y2 + ", transform=" + this.transform + ", content=" + this.content + "]";
+				+ ", x2=" + this.x2 + ", y2=" + this.y2 + ", transform=" + this.transform + ", content=" + this.rawContent + "]";
 	}
 
 }

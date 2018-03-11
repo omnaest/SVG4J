@@ -532,10 +532,12 @@ public class SVGDrawer extends AbstractSVGElementConsumer<SVGDrawer>
                                                          Stream<RawSVGElement> retval = Stream.of(element);
                                                          if (element instanceof RawSVGElementWithChildren)
                                                          {
-                                                             retval = Stream.concat(retval,
-                                                                                    ListUtils.defaultIfNull(((RawSVGElementWithChildren) element).getElements())
-                                                                                             .stream()
-                                                                                             .flatMap(e -> this.apply(e)));
+                                                             List<RawSVGElement> children = ((RawSVGElementWithChildren) element).getElements();
+                                                             retval = Stream.concat(retval, ListUtils.defaultIfNull(children)
+                                                                                                     .stream()
+                                                                                                     .collect(Collectors.toList())
+                                                                                                     .stream()
+                                                                                                     .flatMap(e -> this.apply(e)));
                                                          }
                                                          return retval;
                                                      }

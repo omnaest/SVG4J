@@ -24,7 +24,6 @@ import java.util.regex.Pattern;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -66,8 +65,8 @@ public class RawSVGText extends RawSVGXYLocatedElement
     @XmlAttribute
     private String dy;
 
-    @XmlAnyElement
-    private Object others;
+    //    @XmlAnyElement
+    //    private Object others;
 
     @Override
     public RawSVGText setX(String x)
@@ -165,12 +164,12 @@ public class RawSVGText extends RawSVGXYLocatedElement
 
     public String getText()
     {
-        return this.content;
+        return this.getContent();
     }
 
     public RawSVGText setText(String text)
     {
-        this.content = text;
+        this.setContent(text);
         return this;
     }
 
@@ -200,7 +199,7 @@ public class RawSVGText extends RawSVGXYLocatedElement
     public String toString()
     {
         return "RawSVGText [x=" + this.x + ", y=" + this.y + ", fill=" + this.fill + ", style=" + this.style + ", transform=" + this.transform + ", content="
-                + this.content + "]";
+                + this.getContent() + "]";
     }
 
     public RawSVGText setOpacity(double opacity)
@@ -400,8 +399,8 @@ public class RawSVGText extends RawSVGXYLocatedElement
 
     public RawSVGText clearContent()
     {
-        this.others = null;
-        this.content = null;
+        //        this.others = null;
+        this.setContent(null);
         return this;
     }
 }

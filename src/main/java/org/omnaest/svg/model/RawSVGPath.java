@@ -34,6 +34,9 @@ public class RawSVGPath extends RawSVGElement
     @XmlAttribute
     private String d;
 
+    @XmlAttribute
+    private String stroke;
+
     @Override
     public String getStyle()
     {
@@ -67,6 +70,17 @@ public class RawSVGPath extends RawSVGElement
     protected RawSVGTransformer transformer()
     {
         throw new UnsupportedOperationException();
+    }
+
+    public RawSVGPath setStroke(String stroke)
+    {
+        this.stroke = stroke;
+        return this;
+    }
+
+    public String getStroke()
+    {
+        return this.stroke;
     }
 
 }

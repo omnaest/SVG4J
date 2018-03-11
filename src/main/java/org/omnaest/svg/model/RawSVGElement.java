@@ -18,10 +18,15 @@
 */
 package org.omnaest.svg.model;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlValue;
+import javax.xml.bind.annotation.XmlElementRef;
+import javax.xml.bind.annotation.XmlMixed;
 
 /**
  * Please register any subclass at {@link RawSVGRoot}
@@ -44,8 +49,12 @@ public abstract class RawSVGElement implements RawSVGTransformer
     @XmlAttribute
     protected String transform;
 
-    @XmlValue
-    protected String content;
+    //    @XmlValue
+    //    protected String content;
+
+    @XmlElementRef(type = RawSVGTSpan.class)
+    @XmlMixed
+    protected List<Object> rawContent = new ArrayList<>();
 
     public String getStyle()
     {
@@ -72,12 +81,59 @@ public abstract class RawSVGElement implements RawSVGTransformer
 
     public String getContent()
     {
-        return this.content;
+        return this.rawContent.stream()
+                              .map(value ->
+                              {
+                                  if (value instanceof String)
+                                  {
+                                      return (String) value;
+                                  }
+                                  else if (value instanceof RawSVGElementWithContent)
+                                  {
+                                      return ((RawSVGElementWithContent) value).getContent();
+                                  }
+                                  else
+                                  {
+                                      return "";
+                                  }
+                              })
+                              .collect(Collectors.joining());
     }
+
+    public RawSVGElement setContent(String text)
+    {
+        this.rawContent.clear();
+        if (text != null)
+        {
+            this.rawContent.add(text);
+        }
+        return this;
+    }
+
+    public RawSVGElement addTSpan(RawSVGTSpan span)
+    {
+        this.rawContent.add(span);
+        return this;
+    }
+
+    //    public String getContent()
+    //    {
+    //        return this.content;
+    //    }
 
     public String getCssClass()
     {
         return this.cssClass;
+    }
+
+    public List<Object> getRawContent()
+    {
+        return this.rawContent;
+    }
+
+    public void setRawContent(List<Object> rawContent)
+    {
+        this.rawContent = rawContent;
     }
 
     public RawSVGElement setCssClass(String cssClass)
