@@ -29,23 +29,32 @@ import java.util.stream.Stream;
 
 import org.apache.commons.lang.StringUtils;
 import org.omnaest.svg.SVGDrawer;
+import org.omnaest.svg.SVGDrawer.BoundedArea;
+import org.omnaest.svg.SVGDrawer.ResolutionProvider;
 import org.omnaest.svg.SVGDrawer.SVGRenderResult;
 import org.omnaest.svg.SVGUtils;
 import org.omnaest.svg.chart.CoordinateChart;
 import org.omnaest.svg.chart.common.AxisOptions.SortDirection;
+import org.omnaest.utils.element.cached.CachedElement;
 
 public abstract class AbstractChart implements CoordinateChart
 {
-    protected SVGDrawer drawer;
+    private SVGDrawer drawer;
 
-    protected int width;
-    protected int height;
-    protected int pixelFactor = 1;
+    protected int    width;
+    protected int    height;
+    protected int    pixelFactor         = 1;
+    protected double relativePaddingSize = 0.0;
 
     protected List<IdAndLabel>             horizontalAxisValues;
     protected AxisOptions                  horizontalAxisOptions = new AxisOptions().setRotation(-45);
     protected List<? extends AxisPoint<?>> verticalAxisValues;
     protected AxisOptions                  verticalAxisOptions;
+
+    private CachedElement<BoundedArea> boundedAreaCache = CachedElement.of(() -> this.drawer.newBoundedArea()
+                                                                                            .withRelativeSizedPadding(this.relativePaddingSize)
+                                                                                            .withScalingHeight(this.height)
+                                                                                            .withScalingWidth(this.width));
 
     protected List<String> colors = Arrays.asList("red", "blue", "green", "yellow", "brown", "purple");
 
@@ -97,6 +106,26 @@ public abstract class AbstractChart implements CoordinateChart
         this.height = height;
         this.drawer = SVGUtils.getDrawer(width, height);
         this.pixelFactor = Math.min(width, height) / 100;
+
+    }
+
+    @Override
+    public CoordinateChart withScreenDimensions(ResolutionProvider displayResolution)
+    {
+        this.drawer.withScreenDimensions(displayResolution);
+        return this;
+    }
+
+    @Override
+    public CoordinateChart withRelativePadding(double relativePaddingSize)
+    {
+        this.relativePaddingSize = relativePaddingSize;
+        return this;
+    }
+
+    protected BoundedArea getBoundedArea()
+    {
+        return this.boundedAreaCache.get();
     }
 
     @Override
@@ -112,7 +141,7 @@ public abstract class AbstractChart implements CoordinateChart
     }
 
     @Override
-    public AbstractChart setColors(List<String> colors)
+    public CoordinateChart setColors(List<String> colors)
     {
         this.colors = colors;
         return this;
@@ -164,7 +193,7 @@ public abstract class AbstractChart implements CoordinateChart
     protected abstract void renderHorizontalAxis();
 
     @Override
-    public AbstractChart addData(Stream<? extends Stream<? extends Point<?, ?>>> data)
+    public CoordinateChart addData(Stream<? extends Stream<? extends Point<?, ?>>> data)
     {
         //
         List<List<? extends Point<?, ?>>> dataPoints = this.collectData(data);

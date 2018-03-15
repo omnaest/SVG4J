@@ -35,76 +35,77 @@ import org.omnaest.svg.elements.base.SVGElement;
 
 public class SVGBarChart extends AbstractCartesianCoordinateChart
 {
-	public SVGBarChart(int width, int height)
-	{
-		super(width, height);
-	}
+    public SVGBarChart(int width, int height)
+    {
+        super(width, height);
+    }
 
-	private List<SVGElement> getLayer(int index, Map<Integer, List<SVGElement>> layers)
-	{
-		return layers.computeIfAbsent(index, (id) -> new ArrayList<>());
-	}
+    private List<SVGElement> getLayer(int index, Map<Integer, List<SVGElement>> layers)
+    {
+        return layers.computeIfAbsent(index, (id) -> new ArrayList<>());
+    }
 
-	@Override
-	protected void renderData(	Stream<Stream<? extends Point<?, ?>>> data, Map<String, Integer> horizontalAxis, Map<Object, Double> verticalAxis,
-								Iterator<String> colors)
-	{
-		List<Stream<? extends Point<?, ?>>> dataStreams = data.collect(Collectors.toList());
-		int numberOfDataLines = dataStreams.size();
+    @Override
+    protected void renderData(Stream<Stream<? extends Point<?, ?>>> data, Map<String, Integer> horizontalAxis, Map<Object, Double> verticalAxis,
+                              Iterator<String> colors)
+    {
+        List<Stream<? extends Point<?, ?>>> dataStreams = data.collect(Collectors.toList());
+        int numberOfDataLines = dataStreams.size();
 
-		int padding = this.calculatePadding();
-		int sliceWidth = (this.width - 2 * padding) / this.horizontalAxisValues.size() / numberOfDataLines;
+        int padding = this.calculatePadding();
+        int sliceWidth = (this.width - 2 * padding) / this.horizontalAxisValues.size() / numberOfDataLines;
 
-		AtomicInteger dataStreamIndexCounter = new AtomicInteger(0);
-		dataStreams.forEach(points ->
-		{
-			int dataStreamIndex = dataStreamIndexCounter.getAndIncrement();
+        AtomicInteger dataStreamIndexCounter = new AtomicInteger(0);
+        dataStreams.forEach(points ->
+        {
+            int dataStreamIndex = dataStreamIndexCounter.getAndIncrement();
 
-			String color = colors.next();
+            String color = colors.next();
 
-			Map<Integer, List<SVGElement>> layers = new TreeMap<>();
+            Map<Integer, List<SVGElement>> layers = new TreeMap<>();
 
-			points	.map(point ->
-			{
-				String horizontalAxisId = Objects.toString(point.getX());
-				Object verticalAxisId = point.getY();
-				Integer rasterXPosition = horizontalAxis.get(horizontalAxisId);
-				Double rasterYPosition = verticalAxisId instanceof Double ? (Double) verticalAxisId : verticalAxis.get(verticalAxisId);
-				if (rasterXPosition != null && rasterYPosition != null)
-				{
-					int x = this.calculateHorizontalPosition(rasterXPosition);
-					int y = this.calculateVerticalPosition(rasterYPosition);
+            points.map(point ->
+            {
+                String horizontalAxisId = Objects.toString(point.getX());
+                Object verticalAxisId = point.getY();
+                Integer rasterXPosition = horizontalAxis.get(horizontalAxisId);
+                Double rasterYPosition = verticalAxisId instanceof Double ? (Double) verticalAxisId : verticalAxis.get(verticalAxisId);
+                if (rasterXPosition != null && rasterYPosition != null)
+                {
+                    int x = this.calculateHorizontalPosition(rasterXPosition);
+                    int y = this.calculateVerticalPosition(rasterYPosition);
 
-					return new Vector(x, y);
-				}
-				else
-				{
-					return null;
-				}
-			})
-					.filter(vector -> vector != null)
-					.sorted((v1, v2) -> Integer.compare(v1.getX(), v2.getX()))
-					.forEach(vector ->
-					{
-						int x = vector.getX() + (sliceWidth * dataStreamIndex);
-						int y = vector.getY();
-						int width = sliceWidth;
-						int height = this.height - padding - y;
+                    return new Vector(x, y);
+                }
+                else
+                {
+                    return null;
+                }
+            })
+                  .filter(vector -> vector != null)
+                  .sorted((v1, v2) -> Integer.compare(v1.getX(), v2.getX()))
+                  .forEach(vector ->
+                  {
+                      int x = vector.getX() + (sliceWidth * dataStreamIndex);
+                      int y = vector.getY();
+                      int width = sliceWidth;
+                      int height = this.height - padding - y;
 
-						this.getLayer(1, layers)
-							.add(new SVGRectangle(x, y, width, height)	.setFillColor(color)
-																		.setStrokeColor("black")
-																		.setStrokeWidth(this.pixelFactor / 2));
-					});
+                      this.getLayer(1, layers)
+                          .add(new SVGRectangle(x, y, width, height).setFillColor(color)
+                                                                    .setStrokeColor("black")
+                                                                    .setStrokeWidth(this.pixelFactor / 2));
+                  });
 
-			//
-			this.drawer.addAll(layers	.values()
-										.stream()
-										.flatMap(layer -> layer.stream())
-										.collect(Collectors.toList()));
+            //
+            this.getBoundedArea()
+                .addAll(layers.values()
+                              .stream()
+                              .flatMap(layer -> layer.stream())
+                              .collect(Collectors.toList()));
 
-		});
+        });
 
-	}
+    }
 
 }

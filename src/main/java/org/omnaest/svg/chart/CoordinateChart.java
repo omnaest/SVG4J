@@ -21,6 +21,7 @@ package org.omnaest.svg.chart;
 import java.util.List;
 import java.util.stream.Stream;
 
+import org.omnaest.svg.SVGDrawer.ResolutionProvider;
 import org.omnaest.svg.chart.common.AxisOptions;
 import org.omnaest.svg.chart.common.AxisPoint;
 import org.omnaest.svg.chart.common.IdAndLabel;
@@ -29,19 +30,23 @@ import org.omnaest.svg.chart.common.Point;
 public interface CoordinateChart extends Chart
 {
 
-	CoordinateChart addVerticalAxis(List<? extends AxisPoint<?>> values);
+    CoordinateChart addVerticalAxis(List<? extends AxisPoint<?>> values);
 
-	CoordinateChart addVerticalAxis(List<? extends AxisPoint<?>> values, AxisOptions options);
+    CoordinateChart addVerticalAxis(List<? extends AxisPoint<?>> values, AxisOptions options);
 
-	CoordinateChart addHorizontalAxis(List<IdAndLabel> values);
+    CoordinateChart addHorizontalAxis(List<IdAndLabel> values);
 
-	CoordinateChart addHorizontalAxis(List<IdAndLabel> values, AxisOptions options);
+    CoordinateChart addHorizontalAxis(List<IdAndLabel> values, AxisOptions options);
 
-	CoordinateChart setColors(List<String> colors);
+    CoordinateChart setColors(List<String> colors);
 
-	CoordinateChart addData(Stream<? extends Stream<? extends Point<?, ?>>> data);
+    CoordinateChart addData(Stream<? extends Stream<? extends Point<?, ?>>> data);
 
-	CoordinateChart setHorizontalAxisOptions(AxisOptions options);
+    CoordinateChart setHorizontalAxisOptions(AxisOptions options);
 
-	CoordinateChart setVerticalAxisOptions(AxisOptions options);
+    CoordinateChart setVerticalAxisOptions(AxisOptions options);
+
+    CoordinateChart withScreenDimensions(ResolutionProvider displayResolution);
+
+    CoordinateChart withRelativePadding(double relativePaddingSize);
 }
