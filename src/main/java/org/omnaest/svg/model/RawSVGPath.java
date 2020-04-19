@@ -37,6 +37,9 @@ public class RawSVGPath extends RawSVGElement
     @XmlAttribute
     private String stroke;
 
+    @XmlAttribute(name = "stroke-width")
+    private String strokeWidth;
+
     @Override
     public String getStyle()
     {
@@ -81,6 +84,17 @@ public class RawSVGPath extends RawSVGElement
     public String getStroke()
     {
         return this.stroke;
+    }
+
+    public String getStrokeWidth()
+    {
+        return this.strokeWidth;
+    }
+
+    public RawSVGPath setStrokeWidth(String strokeWidth)
+    {
+        this.strokeWidth = strokeWidth;
+        return this;
     }
 
 }

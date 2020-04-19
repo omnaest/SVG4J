@@ -53,7 +53,7 @@ public class SVGBarChart extends AbstractCartesianCoordinateChart
         int numberOfDataLines = dataStreams.size();
 
         int padding = this.calculatePadding();
-        int sliceWidth = (this.width - 2 * padding) / this.horizontalAxisValues.size() / numberOfDataLines;
+        int sliceWidth = (this.width - 2 * padding) / Math.max(1, this.horizontalAxisValues.size()) / Math.max(1, numberOfDataLines);
 
         AtomicInteger dataStreamIndexCounter = new AtomicInteger(0);
         dataStreams.forEach(points ->

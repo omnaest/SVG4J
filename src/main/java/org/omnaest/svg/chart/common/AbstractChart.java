@@ -56,7 +56,8 @@ public abstract class AbstractChart implements CoordinateChart
                                                                                             .withScalingHeight(this.height)
                                                                                             .withScalingWidth(this.width));
 
-    protected List<String> colors = Arrays.asList("red", "blue", "green", "yellow", "brown", "purple");
+    protected List<String> colors = Arrays.asList("red", "blue", "green", "yellow", "orange", "brown", "purple", "darkred", "darkgreen", "darkyellow",
+                                                  "darkorange");
 
     protected static class Vector
     {

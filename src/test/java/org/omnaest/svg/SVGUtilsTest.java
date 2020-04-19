@@ -308,7 +308,8 @@ public class SVGUtilsTest
     }
 
     @Test
-    public void testLinkScape() throws IOException
+    @Ignore
+    public void testInkScape() throws IOException
     {
         try
         {
@@ -326,7 +327,8 @@ public class SVGUtilsTest
     }
 
     @Test
-    public void testLinkScape2() throws IOException
+    @Ignore
+    public void testInkScape2() throws IOException
     {
         SVGDrawer drawer = SVGUtils.getDrawer(new File("C:/Temp/inkscapeTest.svg"))
                                    .visitRawElementsTransitively(elements ->

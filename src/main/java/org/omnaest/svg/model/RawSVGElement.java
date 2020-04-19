@@ -27,6 +27,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlMixed;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * Please register any subclass at {@link RawSVGRoot}
@@ -79,6 +80,7 @@ public abstract class RawSVGElement implements RawSVGTransformer
 
     }
 
+    @XmlTransient
     public String getContent()
     {
         return this.rawContent.stream()

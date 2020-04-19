@@ -21,6 +21,7 @@ package org.omnaest.svg.model;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.util.List;
 import java.util.regex.Pattern;
 
 import org.junit.Test;
@@ -60,6 +61,34 @@ public class RawSVGTextTest
             //            System.out.println(xml);
             RawSVGText clone = XMLHelper.parse(xml, RawSVGText.class);
             assertEquals("span value", clone.getText());
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+    @Test
+    public void testContentSerialization2()
+    {
+        try
+        {
+            RawSVGText text = new RawSVGText();
+            text.addTSpan(new RawSVGTSpan().setContent("span value1"))
+                .addTSpan(new RawSVGTSpan().setContent("span value2"));
+
+            String xml = XMLHelper.serializer()
+                                  .withoutHeader()
+                                  .withCompactPrint()
+                                  .serialize(text);
+            //            System.out.println(xml);
+            RawSVGText clone = XMLHelper.parse(xml, RawSVGText.class);
+            assertEquals("span value1span value2", clone.getText());
+            List<Object> rawContent = clone.getRawContent();
+            assertEquals(2, rawContent.size());
+            assertTrue(rawContent.iterator()
+                                 .next() instanceof RawSVGTSpan);
         }
         catch (Exception e)
         {

@@ -26,6 +26,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSeeAlso;
 
 import org.omnaest.svg.model.DefaultRawSVGTransformer.SupplierBiConsumer;
 import org.omnaest.svg.model.DefaultRawSVGTransformer.SupplierConsumer;
@@ -36,6 +37,7 @@ import org.omnaest.utils.PatternUtils;
 
 @XmlRootElement(name = "text")
 @XmlAccessorType(XmlAccessType.NONE)
+@XmlSeeAlso(RawSVGTSpan.class)
 public class RawSVGText extends RawSVGXYLocatedElement
 {
     @XmlAttribute
