@@ -39,6 +39,8 @@ import org.omnaest.svg.component.AbstractSVGElementConsumer;
 import org.omnaest.svg.component.BoundedAreaImpl;
 import org.omnaest.svg.component.SVGElementAndRawElementConsumer;
 import org.omnaest.svg.component.TranslationAreaImpl;
+import org.omnaest.svg.elements.SVGRectangle;
+import org.omnaest.svg.elements.SVGText;
 import org.omnaest.svg.elements.base.SVGElement;
 import org.omnaest.svg.model.RawSVGAnkerElement;
 import org.omnaest.svg.model.RawSVGDefinition;
@@ -352,6 +354,19 @@ public class SVGDrawer extends AbstractSVGElementConsumer<SVGDrawer>
                 FileUtils.writeStringToFile(file, this.getAsSVG(), "utf-8");
             }
             return this;
+        }
+
+        public SVGRenderResult writeToFileSilently(File file)
+        {
+            try
+            {
+                return this.writeToFile(file);
+            }
+            catch (IOException e)
+            {
+                // do nothing
+                return this;
+            }
         }
 
         /**
@@ -681,6 +696,89 @@ public class SVGDrawer extends AbstractSVGElementConsumer<SVGDrawer>
     {
         return this.rawSVGRoot.getParsedViewBox()
                               .getHeight();
+    }
+
+    public static enum SVGColor
+    {
+        RED, GREEN, BLUE, YELLOW, GREY, LIGHTGREEN;
+
+        public String asSVGColorKey()
+        {
+            return this.name()
+                       .toLowerCase();
+        }
+    }
+
+    public static interface DrawerMatrixCell
+    {
+        public DrawerMatrixCell fillWith(String color);
+
+        public DrawerMatrixCell fillWith(SVGColor svgColor);
+
+        public DrawerMatrixCell fillWith(SVGColor green, double opacity);
+
+        public DrawerMatrixCell fillWith(String color, double opacity);
+
+        public DrawerMatrixCell setText(String text);
+    }
+
+    public static interface DrawerMatrix
+    {
+        public DrawerMatrixCell getCell(int x, int y);
+    }
+
+    public DrawerMatrix newMatrix(int horizontalSlices, int verticalSlices)
+    {
+        double cellWidth = this.getWidth() / horizontalSlices;
+        double cellHeight = this.getHeight() / verticalSlices;
+        return new DrawerMatrix()
+        {
+            @Override
+            public DrawerMatrixCell getCell(int x, int y)
+            {
+                int cellX = (int) Math.round(x * cellWidth);
+                int cellY = (int) Math.round(y * cellHeight);
+
+                return new DrawerMatrixCell()
+                {
+                    @Override
+                    public DrawerMatrixCell fillWith(String color)
+                    {
+                        double opacity = 1.0;
+                        return this.fillWith(color, opacity);
+                    }
+
+                    @Override
+                    public DrawerMatrixCell fillWith(SVGColor svgColor)
+                    {
+                        return this.fillWith(svgColor.asSVGColorKey());
+                    }
+
+                    @Override
+                    public DrawerMatrixCell fillWith(String color, double opacity)
+                    {
+                        SVGDrawer.this.add(new SVGRectangle(cellX, cellY, (int) Math.round(cellWidth), (int) Math.round(cellHeight)).setStrokeColor(color)
+                                                                                                                                    .setFillColor(color)
+                                                                                                                                    .setFillOpacity(opacity)
+                                                                                                                                    .setStrokeOpacity(opacity));
+                        return this;
+                    }
+
+                    @Override
+                    public DrawerMatrixCell fillWith(SVGColor svgColor, double opacity)
+                    {
+                        return this.fillWith(svgColor.asSVGColorKey(), opacity);
+                    }
+
+                    @Override
+                    public DrawerMatrixCell setText(String text)
+                    {
+                        SVGDrawer.this.add(new SVGText(cellX, cellY, text).setFontSize((int) cellHeight));
+                        return this;
+                    }
+                };
+            }
+        };
     }
 
 }

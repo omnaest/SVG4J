@@ -25,6 +25,7 @@ import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.io.FileUtils;
+import org.omnaest.svg.SVGDrawer.ResolutionProvider;
 import org.omnaest.svg.model.RawSVGRoot;
 import org.omnaest.utils.StringUtils;
 import org.omnaest.utils.XMLHelper;
@@ -48,6 +49,11 @@ public class SVGUtils
     public static SVGDrawer getDrawer(int width, int height)
     {
         return new SVGDrawer(width, height);
+    }
+
+    public static SVGDrawer getDrawer(ResolutionProvider displayResolution)
+    {
+        return getDrawer(displayResolution.getWidth(), displayResolution.getHeight());
     }
 
     public static SVGDrawer getDrawer(int originX, int originY, int width, int height)
