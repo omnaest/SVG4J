@@ -1,10 +1,11 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.omnaest.svg</groupId>
 	<artifactId>SVG4J</artifactId>
 	<parent>
-		<groupId>org.omnaest.commons</groupId>
+		<groupId>org.omnaest.utils</groupId>
 		<artifactId>CommonsParent</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
@@ -28,6 +29,16 @@
 	<properties>
 		<java.version>1.8</java.version>
 	</properties>
+
+	<repositories>
+		<repository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
 
 	<dependencies>
 
@@ -58,5 +69,5 @@
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
-	
+
 </project>
