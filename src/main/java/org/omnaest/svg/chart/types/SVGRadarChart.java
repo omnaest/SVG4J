@@ -21,7 +21,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.IntStream;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.omnaest.svg.SVGDrawer.SVGColor;
@@ -141,7 +140,7 @@ public class SVGRadarChart extends AbstractChart2
                                                                                                                          .iterator();
                 boundedArea.asHorizontalSlices(40)
                            .stream()
-                           .skip(1)
+                           .skip(4)
                            .filter(slice -> labelAndColorAndIndexIterator.hasNext())
                            .forEach(slice ->
                            {
@@ -227,17 +226,10 @@ public class SVGRadarChart extends AbstractChart2
     {
         //
         int size = this.horizontalAxisValues.size();
-        int rasterY = this.verticalAxisValues.size() - 1;
         for (int ii = 0; ii < size; ii++)
         {
-            double normValueY = IntStream.range(0, this.verticalAxisValues.size())
-                                         .mapToDouble(indexY -> this.extractNormValueFromAxisPoint(indexY, this.verticalAxisValues.get(rasterY)))
-                                         .sorted()
-                                         .skip(this.verticalAxisValues.size() - 1)
-                                         .findFirst()
-                                         .orElse(1.0);
-
             //
+            double normValueY = 1.0;
             Vector position = this.calculatePositionFromNormValue(ii, normValueY); //this.calculatePosition(ii, rasterY);
             Vector directionVector = this.calculateDirectionVector(ii, 4 * this.pixelFactor);
             Vector outerPoint = position.add(directionVector);

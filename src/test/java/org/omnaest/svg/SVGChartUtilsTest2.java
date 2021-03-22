@@ -63,17 +63,17 @@ public class SVGChartUtilsTest2
         for (CoordinateChart chart : charts)
         {
 
-            List<Double> verticalLabels = Arrays.asList(0.0, 0.2, 0.4, 0.6, 0.8, 2.0);
+            List<Double> verticalLabels = Arrays.asList(0.6, 0.8, 2.0, 0.0, 0.2, 0.4);
             List<String> horizontalLabels = IntStream.range(0, 37)
                                                      .mapToObj(i -> StringUtils.repeat('a', 10) + i + StringUtils.repeat('z', 10))
                                                      .collect(Collectors.toList());
 
-            List<DataSeries> data2 = Arrays.asList(DataSeries.of(this.generateDataPoints(horizontalLabels, verticalLabels))
-                                                             .withLabel("Series1"),
-                                                   DataSeries.of(this.generateDataPoints(horizontalLabels, verticalLabels))
-                                                             .withLabel("Series2"));
+            List<DataSeries> data = Arrays.asList(DataSeries.of(this.generateDataPoints(horizontalLabels, verticalLabels))
+                                                            .withLabel("Series1"),
+                                                  DataSeries.of(this.generateDataPoints(horizontalLabels, verticalLabels))
+                                                            .withLabel("Series2"));
 
-            chart.addDataSeries(data2);
+            chart.addDataSeries(data);
 
             String svg = chart.withScreenDimensions(DisplayResolution._800x600)
                               .render();
