@@ -39,6 +39,7 @@ import java.util.stream.Stream;
 import org.omnaest.svg.SVGDrawer.ResolutionProvider;
 import org.omnaest.svg.chart.common.AxisOptions;
 import org.omnaest.svg.chart.common.AxisPoint;
+import org.omnaest.svg.chart.common.DataSeries;
 import org.omnaest.svg.chart.common.IdAndLabel;
 import org.omnaest.svg.chart.common.Point;
 
@@ -57,6 +58,12 @@ public interface CoordinateChart extends Chart
 
     CoordinateChart addData(Stream<? extends Stream<? extends Point<?, ?>>> data);
 
+    CoordinateChart addDataSeries(List<DataSeries> dataSeries);
+
+    CoordinateChart addDataSeries(DataSeries... dataSeries);
+
+    CoordinateChart addSingleData(Stream<? extends Point<?, ?>> data);
+
     CoordinateChart setHorizontalAxisOptions(AxisOptions options);
 
     CoordinateChart setVerticalAxisOptions(AxisOptions options);
@@ -64,4 +71,7 @@ public interface CoordinateChart extends Chart
     CoordinateChart withScreenDimensions(ResolutionProvider displayResolution);
 
     CoordinateChart withRelativePadding(double relativePaddingSize);
+
+    CoordinateChart withStartingColorIndex(int colorIndex);
+
 }

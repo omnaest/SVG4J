@@ -50,6 +50,7 @@ import org.omnaest.svg.SVGDrawer.SVGRenderResult;
 import org.omnaest.svg.SVGUtils;
 import org.omnaest.svg.chart.CoordinateChart;
 import org.omnaest.svg.chart.common.AxisOptions.SortDirection;
+import org.omnaest.utils.IteratorUtils;
 import org.omnaest.utils.element.cached.CachedElement;
 
 public abstract class AbstractChart implements CoordinateChart
@@ -71,8 +72,9 @@ public abstract class AbstractChart implements CoordinateChart
                                                                                             .withScalingHeight(this.height)
                                                                                             .withScalingWidth(this.width));
 
-    protected List<String> colors = Arrays.asList("red", "blue", "green", "yellow", "orange", "brown", "purple", "darkred", "darkgreen", "darkyellow",
-                                                  "darkorange");
+    protected List<String> colors             = Arrays.asList("red", "blue", "green", "yellow", "orange", "brown", "purple", "magenta", "darkred", "darkgreen",
+                                                              "darkorange");
+    private int            startingColorIndex = 0;
 
     protected static class Vector
     {
@@ -111,6 +113,11 @@ public abstract class AbstractChart implements CoordinateChart
         public Vector add(Vector vector)
         {
             return new Vector(this.x + vector.getX(), this.y + vector.getY());
+        }
+
+        public Vector subtract(Vector vector)
+        {
+            return new Vector(this.x - vector.getX(), this.y - vector.getY());
         }
 
     }
@@ -209,51 +216,16 @@ public abstract class AbstractChart implements CoordinateChart
     protected abstract void renderHorizontalAxis();
 
     @Override
+    public CoordinateChart addSingleData(Stream<? extends Point<?, ?>> data)
+    {
+        return this.addData(Stream.of(data));
+    }
+
+    @Override
     public CoordinateChart addData(Stream<? extends Stream<? extends Point<?, ?>>> data)
     {
-        //
-        List<List<? extends Point<?, ?>>> dataPoints = this.collectData(data);
-
-        //
-        this.ensureVerticalAxisOptions(dataPoints);
-
-        //
-        this.ensureHorziontalAxis(dataPoints);
-        this.ensureVerticalAxis(dataPoints);
-
-        //
-        int verticalAxisPointCount = this.verticalAxisValues.size();
-        Map<String, Integer> horizontalAxis = this.horizontalAxisValues.stream()
-                                                                       .collect(Collectors.toMap(idAndLabel -> idAndLabel.getId(),
-                                                                                                 idAndLabel -> this.horizontalAxisValues.indexOf(idAndLabel)));
-        Map<Object, Double> verticalAxis = this.verticalAxisValues.stream()
-                                                                  .collect(Collectors.toMap(axisPoint -> axisPoint.getId(), axisPoint ->
-                                                                  {
-                                                                      if (axisPoint instanceof IdAndLabel)
-                                                                      {
-                                                                          return this.verticalAxisValues.indexOf(axisPoint) / (1.0 * verticalAxisPointCount);
-                                                                      }
-                                                                      else if (axisPoint instanceof NumberAndLabel)
-                                                                      {
-                                                                          return ((NumberAndLabel) axisPoint).getId();
-                                                                      }
-                                                                      else
-                                                                      {
-                                                                          throw new RuntimeException("Vertical axis element is of unknown type");
-                                                                      }
-                                                                  }));
-
-        Iterator<String> colors = this.colors.iterator();
-
-        //
-        this.renderVerticalAxis();
-        this.renderHorizontalAxis();
-        this.renderData(dataPoints.stream()
-                                  .map(points -> points.stream()),
-                        horizontalAxis, verticalAxis, colors);
-
-        //
-        return this;
+        return this.addDataSeries(data.map(points -> DataSeries.of(points))
+                                      .collect(Collectors.toList()));
     }
 
     private void ensureVerticalAxisOptions(List<List<? extends Point<?, ?>>> dataPoints)
@@ -336,17 +308,29 @@ public abstract class AbstractChart implements CoordinateChart
                    .collect(Collectors.toList());
     }
 
+    protected void renderDataSeries(List<DataSeries> dataSeries, Map<String, Integer> horizontalAxis, Map<Object, Double> verticalAxis, Iterator<String> colors)
+    {
+        this.renderData(dataSeries.stream()
+                                  .map(DataSeries::stream),
+                        horizontalAxis, verticalAxis, colors);
+    }
+
     protected abstract void renderData(Stream<Stream<? extends Point<?, ?>>> data, Map<String, Integer> horizontalAxis, Map<Object, Double> verticalAxis,
                                        Iterator<String> colors2);
 
     protected double extractNormValueFromAxisPoint(int index, AxisPoint<?> axisPoint)
     {
+        return this.extractNormValueFromAxisPoint(index, axisPoint instanceof NumberAndLabel ? ((NumberAndLabel) axisPoint).getId() : null);
+    }
+
+    protected double extractNormValueFromAxisPoint(int index, Double y)
+    {
         int size = this.verticalAxisValues.size();
         double maxValue = this.calculateVerticalAxisMaxValue();
         double value = 0.0;
-        if (axisPoint instanceof NumberAndLabel)
+        if (y != null)
         {
-            value = (((NumberAndLabel) axisPoint).getId()) / maxValue;
+            value = y / maxValue;
         }
         else
         {
@@ -376,6 +360,65 @@ public abstract class AbstractChart implements CoordinateChart
     public CoordinateChart setVerticalAxisOptions(AxisOptions options)
     {
         this.verticalAxisOptions = options;
+        return this;
+    }
+
+    @Override
+    public CoordinateChart addDataSeries(List<DataSeries> dataSeries)
+    {
+        //
+        List<List<? extends Point<?, ?>>> dataPoints = this.collectData(dataSeries.stream()
+                                                                                  .map(DataSeries::stream));
+
+        //
+        this.ensureVerticalAxisOptions(dataPoints);
+
+        //
+        this.ensureHorziontalAxis(dataPoints);
+        this.ensureVerticalAxis(dataPoints);
+
+        //
+        int verticalAxisPointCount = this.verticalAxisValues.size();
+        Map<String, Integer> horizontalAxis = this.horizontalAxisValues.stream()
+                                                                       .collect(Collectors.toMap(idAndLabel -> idAndLabel.getId(),
+                                                                                                 idAndLabel -> this.horizontalAxisValues.indexOf(idAndLabel)));
+        Map<Object, Double> verticalAxis = this.verticalAxisValues.stream()
+                                                                  .collect(Collectors.toMap(axisPoint -> axisPoint.getId(), axisPoint ->
+                                                                  {
+                                                                      if (axisPoint instanceof IdAndLabel)
+                                                                      {
+                                                                          return this.verticalAxisValues.indexOf(axisPoint) / (1.0 * verticalAxisPointCount);
+                                                                      }
+                                                                      else if (axisPoint instanceof NumberAndLabel)
+                                                                      {
+                                                                          return ((NumberAndLabel) axisPoint).getId();
+                                                                      }
+                                                                      else
+                                                                      {
+                                                                          throw new RuntimeException("Vertical axis element is of unknown type");
+                                                                      }
+                                                                  }));
+
+        //
+        this.renderVerticalAxis();
+        this.renderHorizontalAxis();
+        this.renderDataSeries(dataSeries, horizontalAxis, verticalAxis, IteratorUtils.roundRobinIterator(this.colors)
+                                                                                     .forward(this.startingColorIndex));
+
+        //
+        return this;
+    }
+
+    @Override
+    public CoordinateChart addDataSeries(DataSeries... dataSeries)
+    {
+        return this.addDataSeries(Arrays.asList(dataSeries));
+    }
+
+    @Override
+    public CoordinateChart withStartingColorIndex(int startingColorIndex)
+    {
+        this.startingColorIndex = startingColorIndex;
         return this;
     }
 

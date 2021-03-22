@@ -42,6 +42,7 @@ import org.omnaest.svg.chart.types.SVGBarChart;
 import org.omnaest.svg.chart.types.SVGBoxMapChart;
 import org.omnaest.svg.chart.types.SVGClockChart;
 import org.omnaest.svg.chart.types.SVGLineChart;
+import org.omnaest.svg.chart.types.SVGRadarChart;
 import org.omnaest.svg.chart.types.SVGRangeChart;
 import org.omnaest.svg.chart.types.SVGRedGreenDeviationRangeChart;
 import org.omnaest.svg.chart.types.SVGRedGreenDeviationTableChart;
@@ -68,6 +69,11 @@ public class SVGChartUtils
     public static CoordinateChart newClockChart(int width, int height)
     {
         return new SVGClockChart(width, height);
+    }
+
+    public static CoordinateChart newRadarChart(int width, int height)
+    {
+        return new SVGRadarChart(width, height);
     }
 
     public static RangeChart newRangeChart(int width, int height)

@@ -35,6 +35,7 @@ package org.omnaest.svg.chart.types;
 
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import org.apache.commons.lang.ObjectUtils;
@@ -106,7 +107,9 @@ public class SVGClockChart extends AbstractChart
                     String horizontalAxisId = ObjectUtils.toString(point.getX());
                     Object verticalAxisId = point.getY();
                     Integer rasterXPosition = horizontalAxis.get(horizontalAxisId);
-                    Double rasterYNormValue = verticalAxis.get(verticalAxisId) / maxValue;
+                    Double rasterYNormValue = Optional.ofNullable(verticalAxis.get(verticalAxisId))
+                                                      .orElse(0.0)
+                            / maxValue;
                     if (rasterXPosition != null && rasterYNormValue != null)
                     {
                         return this.calculatePosition(rasterXPosition, rasterYNormValue);
@@ -192,7 +195,7 @@ public class SVGClockChart extends AbstractChart
     {
         //
         int size = this.horizontalAxisValues.size();
-        int modulo = size / 10;
+        int modulo = Math.max(1, size / 10);
         int rasterY = this.verticalAxisValues.size() - 1;
         for (int ii = 0; ii < size; ii++)
         {

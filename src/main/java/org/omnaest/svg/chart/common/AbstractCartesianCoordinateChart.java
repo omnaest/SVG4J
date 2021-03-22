@@ -129,7 +129,7 @@ public abstract class AbstractCartesianCoordinateChart extends AbstractChart
             //text
             IdAndLabel idAndLabel = this.horizontalAxisValues.get(ii);
             String label = idAndLabel.getLabel();
-            int fontSize = SVGText.DEFAULT_FONTSIZE * 10 * this.pixelFactor / Math.max(2, size) / (label.length() / 2);
+            int fontSize = SVGText.DEFAULT_FONTSIZE * 10 * this.pixelFactor / Math.max(2, size) / Math.max(1, label.length() / 2);
             this.getBoundedArea()
                 .add(new SVGText(x - fontSize / 3, this.height, label).setColor("black")
                                                                       .setFontSize(fontSize)

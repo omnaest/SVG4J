@@ -614,9 +614,39 @@ public class SVGDrawer extends AbstractSVGElementConsumer<SVGDrawer>
 
     public static interface ResolutionProvider
     {
+
         public int getWidth();
 
         public int getHeight();
+
+        public static ResolutionProvider of(int width, int height)
+        {
+            return new CustomResolutionProvider(height, width);
+        }
+    }
+
+    public static class CustomResolutionProvider implements ResolutionProvider
+    {
+        private final int height;
+        private final int width;
+
+        public CustomResolutionProvider(int height, int width)
+        {
+            this.height = height;
+            this.width = width;
+        }
+
+        @Override
+        public int getWidth()
+        {
+            return this.width;
+        }
+
+        @Override
+        public int getHeight()
+        {
+            return this.height;
+        }
     }
 
     public SVGDrawer withScreenDimensions(ResolutionProvider displayResolution)
@@ -715,7 +745,7 @@ public class SVGDrawer extends AbstractSVGElementConsumer<SVGDrawer>
 
     public static enum SVGColor
     {
-        RED, GREEN, BLUE, YELLOW, GREY, LIGHTGREEN;
+        RED, GREEN, BLUE, YELLOW, GREY, LIGHTGREEN, MAGENTA, DARKBLUE, DARKGREEN, DARKRED, DARKGREY, WHITE;
 
         public String asSVGColorKey()
         {

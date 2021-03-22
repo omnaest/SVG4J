@@ -43,6 +43,7 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import org.apache.commons.io.FileUtils;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.omnaest.svg.chart.CoordinateChart;
 import org.omnaest.svg.chart.common.AxisOptions;
@@ -52,48 +53,49 @@ import org.omnaest.svg.chart.common.IdAndLabel;
 public class SVGChartUtilsTest
 {
 
-	@Test
-	public void testNewLineChart() throws Exception
-	{
-		List<CoordinateChart> charts = Arrays.asList(	SVGChartUtils.newLineChart(5000, 1000), SVGChartUtils.newBarChart(5000, 1000),
-														SVGChartUtils.newClockChart(1000, 1000));
+    @Test
+    @Ignore
+    public void testNewLineChart() throws Exception
+    {
+        List<CoordinateChart> charts = Arrays.asList(SVGChartUtils.newLineChart(5000, 1000), SVGChartUtils.newBarChart(5000, 1000),
+                                                     SVGChartUtils.newClockChart(1000, 1000));
 
-		for (CoordinateChart chart : charts)
-		{
+        for (CoordinateChart chart : charts)
+        {
 
-			List<String> verticalLabels = Arrays.asList("0%", "20%", "40%", "60%", "80%", "100%");
-			List<String> horizontalLabels = IntStream	.range(0, 37)
-														.mapToObj(i -> "Label " + i)
-														.collect(Collectors.toList());
+            List<String> verticalLabels = Arrays.asList("0%", "20%", "40%", "60%", "80%", "100%");
+            List<String> horizontalLabels = IntStream.range(0, 37)
+                                                     .mapToObj(i -> "Label " + i)
+                                                     .collect(Collectors.toList());
 
-			Stream<Stream<DataPoint>> data = Arrays	.asList(this.generateDataPoints(horizontalLabels, verticalLabels),
-															this.generateDataPoints(horizontalLabels, verticalLabels))
-													.stream();
-			chart	.addVerticalAxis(verticalLabels	.stream()
-													.map(label -> new IdAndLabel(label, label))
-													.collect(Collectors.toList()))
-					.addHorizontalAxis(horizontalLabels	.stream()
-														.map(label -> new IdAndLabel(label, label))
-														.collect(Collectors.toList()))
-					.setHorizontalAxisOptions(new AxisOptions().setRotation(-45))
-					.addData(data);
+            Stream<Stream<DataPoint>> data = Arrays.asList(this.generateDataPoints(horizontalLabels, verticalLabels),
+                                                           this.generateDataPoints(horizontalLabels, verticalLabels))
+                                                   .stream();
+            chart.addVerticalAxis(verticalLabels.stream()
+                                                .map(label -> new IdAndLabel(label, label))
+                                                .collect(Collectors.toList()))
+                 .addHorizontalAxis(horizontalLabels.stream()
+                                                    .map(label -> new IdAndLabel(label, label))
+                                                    .collect(Collectors.toList()))
+                 .setHorizontalAxisOptions(new AxisOptions().setRotation(-45))
+                 .addData(data);
 
-			String svg = chart.render();
-			FileUtils.writeStringToFile(new File("C:/Temp/" + chart	.getClass()
-																	.getSimpleName()
-					+ ".svg"), svg, "utf-8");
-		}
-	}
+            String svg = chart.render();
+            FileUtils.writeStringToFile(new File("C:/Temp/charts/" + chart.getClass()
+                                                                          .getSimpleName()
+                    + ".svg"), svg, "utf-8");
+        }
+    }
 
-	private Stream<DataPoint> generateDataPoints(List<String> xLabels, List<String> yLabels)
-	{
-		List<String> shuffledYLabels = new ArrayList<>(yLabels);
-		return xLabels	.stream()
-						.map(x ->
-						{
-							Collections.shuffle(shuffledYLabels);
-							return new DataPoint(x, shuffledYLabels.get(0));
-						});
-	}
+    private Stream<DataPoint> generateDataPoints(List<String> xLabels, List<String> yLabels)
+    {
+        List<String> shuffledYLabels = new ArrayList<>(yLabels);
+        return xLabels.stream()
+                      .map(x ->
+                      {
+                          Collections.shuffle(shuffledYLabels);
+                          return new DataPoint(x, shuffledYLabels.get(0));
+                      });
+    }
 
 }
