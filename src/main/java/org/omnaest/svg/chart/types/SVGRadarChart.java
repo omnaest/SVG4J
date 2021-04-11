@@ -68,9 +68,9 @@ public class SVGRadarChart extends AbstractChart2
         int padding = this.calculateInnerCirclePadding();
 
         int minDimension = Math.min(this.height, this.width);
-        int chartAreaHeight = (int) Math.round(minDimension - 3.5 * padding);
+        int chartAreaHeight = (int) Math.round(minDimension - 5.0 * padding);
 
-        int y = (int) Math.round(padding + normValueY * (chartAreaHeight - padding) / 2);
+        int y = (int) Math.round(padding + normValueY * chartAreaHeight / 2);
         return this.calculateCenterPoint()
                    .add(this.calculateDirectionVector(rasterX, y));
     }
