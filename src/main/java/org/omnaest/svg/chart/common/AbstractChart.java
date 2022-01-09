@@ -402,7 +402,7 @@ public abstract class AbstractChart implements CoordinateChart
         //
         this.renderVerticalAxis();
         this.renderHorizontalAxis();
-        this.renderDataSeries(dataSeries, horizontalAxis, verticalAxis, IteratorUtils.roundRobinIterator(this.colors)
+        this.renderDataSeries(dataSeries, horizontalAxis, verticalAxis, IteratorUtils.roundRobinListIterator(this.colors)
                                                                                      .forward(this.startingColorIndex));
 
         //
