@@ -6,10 +6,19 @@ import java.util.stream.Stream;
 
 import org.omnaest.utils.stream.Streamable;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Singular;
+
+@Builder
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 public class DataSeries implements Streamable<Point<?, ?>>
 {
+    @Singular("addPoint")
     private List<Point<?, ?>> points;
-    private String            label;
+
+    private String label;
 
     protected DataSeries(List<Point<?, ?>> points)
     {

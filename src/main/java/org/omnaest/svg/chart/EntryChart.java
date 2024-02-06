@@ -35,6 +35,10 @@ package org.omnaest.svg.chart;
 
 import java.util.stream.Stream;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+
 /**
  * {@link Chart} with {@link Entry}s
  * 
@@ -42,34 +46,13 @@ import java.util.stream.Stream;
  */
 public interface EntryChart extends Chart
 {
+    @Builder
+    @AllArgsConstructor
+    @Data
     public static class Entry
     {
-        private String text;
-        private double value;
-
-        public Entry(String text, double value)
-        {
-            super();
-            this.text = text;
-            this.value = value;
-        }
-
-        public String getText()
-        {
-            return this.text;
-        }
-
-        public double getValue()
-        {
-            return this.value;
-        }
-
-        @Override
-        public String toString()
-        {
-            return "Entry [text=" + this.text + ", value=" + this.value + "]";
-        }
-
+        private final String text;
+        private final double value;
     }
 
     public EntryChart addData(Stream<Entry> entries);

@@ -35,6 +35,7 @@ package org.omnaest.svg.chart.types;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.OptionalInt;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -56,6 +57,9 @@ public class SVGBoxMapChart implements EntryChart
     private ThresholdOpacity thresholdOpacity = new ThresholdOpacity();
 
     private Supplier<Integer> chartPadding = () -> 0;
+
+    private OptionalInt numberOfRows    = OptionalInt.empty();
+    private OptionalInt numberOfColumns = OptionalInt.empty();
 
     public SVGBoxMapChart(int width, int height)
     {
@@ -87,6 +91,13 @@ public class SVGBoxMapChart implements EntryChart
         return this;
     }
 
+    public SVGBoxMapChart withBoxDimensions(int numberOfColumns, int numberOfRows)
+    {
+        this.numberOfRows = OptionalInt.of(numberOfRows);
+        this.numberOfColumns = OptionalInt.of(numberOfColumns);
+        return this;
+    }
+
     @Override
     public EntryChart addData(Stream<Entry> entries)
     {
@@ -95,17 +106,19 @@ public class SVGBoxMapChart implements EntryChart
         int size = dataEntries.size();
 
         int dimension = (int) Math.ceil(Math.sqrt(size));
+        int numberOfColumns = this.numberOfColumns.orElse(dimension);
+        int numberOfRows = this.numberOfRows.orElse(dimension);
 
         List<BoundedArea> horizontalSlices = this.drawer.newBoundedArea()
                                                         .withPadding(this.chartPadding.get())
-                                                        .asHorizontalSlices(dimension);
+                                                        .asHorizontalSlices(numberOfRows);
 
         Iterator<Entry> iterator = dataEntries.iterator();
-        for (int ii = 0; ii < dimension; ii++)
+        for (int ii = 0; ii < numberOfRows; ii++)
         {
             List<BoundedArea> verticalSlices = horizontalSlices.get(ii)
-                                                               .asVerticalSlices(dimension);
-            for (int jj = 0; jj < dimension; jj++)
+                                                               .asVerticalSlices(numberOfColumns);
+            for (int jj = 0; jj < numberOfColumns; jj++)
             {
                 Entry entry = iterator.hasNext() ? iterator.next() : null;
 

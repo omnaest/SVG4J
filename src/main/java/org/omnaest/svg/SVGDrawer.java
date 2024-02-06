@@ -36,9 +36,11 @@ package org.omnaest.svg;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -54,9 +56,13 @@ import org.omnaest.svg.component.AbstractSVGElementConsumer;
 import org.omnaest.svg.component.BoundedAreaImpl;
 import org.omnaest.svg.component.SVGElementAndRawElementConsumer;
 import org.omnaest.svg.component.TranslationAreaImpl;
+import org.omnaest.svg.elements.SVGCircle;
+import org.omnaest.svg.elements.SVGPolyline;
 import org.omnaest.svg.elements.SVGRectangle;
 import org.omnaest.svg.elements.SVGText;
 import org.omnaest.svg.elements.base.SVGElement;
+import org.omnaest.svg.elements.base.SVGVector;
+import org.omnaest.svg.internal.utils.RGBAUtils;
 import org.omnaest.svg.model.RawSVGAnkerElement;
 import org.omnaest.svg.model.RawSVGDefinition;
 import org.omnaest.svg.model.RawSVGElement;
@@ -65,6 +71,13 @@ import org.omnaest.svg.model.RawSVGRoot;
 import org.omnaest.svg.model.RawSVGStyle;
 import org.omnaest.utils.ListUtils;
 import org.omnaest.utils.XMLHelper;
+import org.omnaest.utils.draw.DrawerUtils;
+import org.omnaest.utils.draw.domain.ColorProvider;
+import org.omnaest.utils.draw.domain.DrawProcessor;
+import org.omnaest.utils.draw.domain.Drawer;
+import org.omnaest.utils.draw.domain.Point;
+import org.omnaest.utils.draw.domain.RGBAColorProvider;
+import org.omnaest.vector.Vector;
 
 /**
  * @see SVGUtils
@@ -422,6 +435,59 @@ public class SVGDrawer extends AbstractSVGElementConsumer<SVGDrawer>
         super();
 
         this.rawSVGRoot = rawSVGRoot;
+    }
+
+    public Drawer asGenericDrawer()
+    {
+        return DrawerUtils.builder()
+                          .addDrawProcessor(new DrawProcessor()
+                          {
+                              @Override
+                              public void polyline(List<Point> points, ColorProvider color, double strokeWidth)
+                              {
+                                  RGBAColorProvider strokeColorRGBA = color.asRGBA();
+                                  SVGDrawer.this.add(new SVGPolyline(Optional.ofNullable(points)
+                                                                             .orElse(Collections.emptyList())
+                                                                             .stream()
+                                                                             .map(point -> SVGVector.valueOf(this.mapPointToVector(point)))
+                                                                             .collect(Collectors.toList())).setStrokeColor(RGBAUtils.toRGBAString(strokeColorRGBA.getRed(),
+                                                                                                                                                  strokeColorRGBA.getGreen(),
+                                                                                                                                                  strokeColorRGBA.getBlue(),
+                                                                                                                                                  strokeColorRGBA.getOpacity())));
+
+                              }
+
+                              private Vector mapPointToVector(Point point)
+                              {
+                                  return Vector.of(point.getX() * SVGDrawer.this.getWidth(), point.getY() * SVGDrawer.this.getHeight());
+                              }
+
+                              @Override
+                              public void circle(Point center, double radius, double strokeWidth, ColorProvider strokeColor, ColorProvider fillColor)
+                              {
+                                  RGBAColorProvider strokeColorRGBA = strokeColor.asRGBA();
+                                  RGBAColorProvider fillColorRGBA = fillColor.asRGBA();
+                                  Vector centerVector = this.mapPointToVector(center);
+
+                                  SVGDrawer.this.add(new SVGCircle((int) Math.round(centerVector.getX()), (int) Math.round(centerVector.getY()),
+                                                                   (int) Math.round(this.mapLinearFactor(radius))).setStrokeWidth((int) Math.round(this.mapLinearFactor(strokeWidth)))
+                                                                                                                  .setFillColor(RGBAUtils.toRGBAString(fillColorRGBA.getRed(),
+                                                                                                                                                       fillColorRGBA.getGreen(),
+                                                                                                                                                       fillColorRGBA.getBlue(),
+                                                                                                                                                       fillColorRGBA.getOpacity()))
+                                                                                                                  .setStrokeColor(RGBAUtils.toRGBAString(strokeColorRGBA.getRed(),
+                                                                                                                                                         strokeColorRGBA.getGreen(),
+                                                                                                                                                         strokeColorRGBA.getBlue(),
+                                                                                                                                                         strokeColorRGBA.getOpacity())));
+                              }
+
+                              private double mapLinearFactor(double length)
+                              {
+                                  return length * Math.max(SVGDrawer.this.getWidth(), SVGDrawer.this.getHeight());
+                              }
+
+                          })
+                          .build();
     }
 
     public boolean isEmbedReloadTimer()

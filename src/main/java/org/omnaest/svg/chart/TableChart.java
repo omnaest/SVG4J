@@ -18,8 +18,12 @@ package org.omnaest.svg.chart;
 import java.util.Collection;
 import java.util.stream.Stream;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+
 public interface TableChart extends Chart
 {
+    @Builder
     public static class Coordinate
     {
         private String column;
@@ -44,6 +48,8 @@ public interface TableChart extends Chart
 
     }
 
+    @Builder
+    @AllArgsConstructor
     public static class CoordinateEntry
     {
         private Coordinate coordinate;
@@ -81,6 +87,7 @@ public interface TableChart extends Chart
 
     }
 
+    @Builder
     public static class Column
     {
         private String id;
@@ -118,6 +125,7 @@ public interface TableChart extends Chart
 
     }
 
+    @Builder
     public static class Row
     {
         private String id;
