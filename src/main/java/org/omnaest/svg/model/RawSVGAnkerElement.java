@@ -35,59 +35,59 @@ package org.omnaest.svg.model;
 
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElementRef;
-import javax.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlAttribute;
+import jakarta.xml.bind.annotation.XmlElementRef;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "a")
 @XmlAccessorType(XmlAccessType.NONE)
 public class RawSVGAnkerElement extends RawSVGElement
 {
-	@XmlAttribute(namespace = "http://www.w3.org/1999/xlink")
-	private String href;
+    @XmlAttribute(namespace = "http://www.w3.org/1999/xlink")
+    private String href;
 
-	@XmlElementRef
-	private List<RawSVGElement> elements;
+    @XmlElementRef
+    private List<RawSVGElement> elements;
 
-	public RawSVGAnkerElement()
-	{
-		super();
-	}
+    public RawSVGAnkerElement()
+    {
+        super();
+    }
 
-	public List<RawSVGElement> getElements()
-	{
-		return this.elements;
-	}
+    public List<RawSVGElement> getElements()
+    {
+        return this.elements;
+    }
 
-	public RawSVGAnkerElement setElements(List<RawSVGElement> elements)
-	{
-		this.elements = elements;
-		return this;
-	}
+    public RawSVGAnkerElement setElements(List<RawSVGElement> elements)
+    {
+        this.elements = elements;
+        return this;
+    }
 
-	public String getHref()
-	{
-		return this.href;
-	}
+    public String getHref()
+    {
+        return this.href;
+    }
 
-	public RawSVGAnkerElement setHref(String href)
-	{
-		this.href = href;
-		return this;
-	}
+    public RawSVGAnkerElement setHref(String href)
+    {
+        this.href = href;
+        return this;
+    }
 
-	@Override
-	public String toString()
-	{
-		return "RawSVGAnkerElement [href=" + this.href + ", elements=" + this.elements + "]";
-	}
+    @Override
+    public String toString()
+    {
+        return "RawSVGAnkerElement [href=" + this.href + ", elements=" + this.elements + "]";
+    }
 
-	@Override
-	public RawSVGTransformer transformer()
-	{
-		return new IgnoringRawSVGTransformer(this);
-	}
+    @Override
+    public RawSVGTransformer transformer()
+    {
+        return new IgnoringRawSVGTransformer(this);
+    }
 
 }

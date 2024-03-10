@@ -33,81 +33,81 @@
 */
 package org.omnaest.svg.model;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlAttribute;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "polyline")
 @XmlAccessorType(XmlAccessType.NONE)
 public class RawSVGPolyline extends RawSVGElement
 {
-	@XmlAttribute
-	private String points;
+    @XmlAttribute
+    private String points;
 
-	@XmlAttribute
-	private String stroke;
+    @XmlAttribute
+    private String stroke;
 
-	@XmlAttribute
-	private String fill;
+    @XmlAttribute
+    private String fill;
 
-	@XmlAttribute
-	private String opacity;
+    @XmlAttribute
+    private String opacity;
 
-	public String getPoints()
-	{
-		return this.points;
-	}
+    public String getPoints()
+    {
+        return this.points;
+    }
 
-	public RawSVGPolyline setPoints(String points)
-	{
-		this.points = points;
-		return this;
-	}
+    public RawSVGPolyline setPoints(String points)
+    {
+        this.points = points;
+        return this;
+    }
 
-	public String getStroke()
-	{
-		return this.stroke;
-	}
+    public String getStroke()
+    {
+        return this.stroke;
+    }
 
-	public RawSVGPolyline setStroke(String stroke)
-	{
-		this.stroke = stroke;
-		return this;
-	}
+    public RawSVGPolyline setStroke(String stroke)
+    {
+        this.stroke = stroke;
+        return this;
+    }
 
-	public String getFill()
-	{
-		return this.fill;
-	}
+    public String getFill()
+    {
+        return this.fill;
+    }
 
-	public RawSVGPolyline setFill(String fill)
-	{
-		this.fill = fill;
-		return this;
-	}
+    public RawSVGPolyline setFill(String fill)
+    {
+        this.fill = fill;
+        return this;
+    }
 
-	public String getOpacity()
-	{
-		return this.opacity;
-	}
+    public String getOpacity()
+    {
+        return this.opacity;
+    }
 
-	public RawSVGPolyline setOpacity(String opacity)
-	{
-		this.opacity = opacity;
-		return this;
-	}
+    public RawSVGPolyline setOpacity(String opacity)
+    {
+        this.opacity = opacity;
+        return this;
+    }
 
-	@Override
-	public String toString()
-	{
-		return "RawSVGPolyline [points=" + this.points + ", stroke=" + this.stroke + ", fill=" + this.fill + ", opacity=" + this.opacity + "]";
-	}
+    @Override
+    public String toString()
+    {
+        return "RawSVGPolyline [points=" + this.points + ", stroke=" + this.stroke + ", fill=" + this.fill + ", opacity=" + this.opacity + "]";
+    }
 
-	@Override
-	protected RawSVGTransformer transformer()
-	{
-		throw new UnsupportedOperationException();
-	}
+    @Override
+    protected RawSVGTransformer transformer()
+    {
+        throw new UnsupportedOperationException();
+    }
 
 }

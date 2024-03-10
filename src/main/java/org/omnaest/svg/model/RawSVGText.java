@@ -37,18 +37,18 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlSeeAlso;
-
 import org.omnaest.svg.model.DefaultRawSVGTransformer.SupplierBiConsumer;
 import org.omnaest.svg.model.DefaultRawSVGTransformer.SupplierConsumer;
 import org.omnaest.utils.MatcherUtils;
 import org.omnaest.utils.NumberUtils;
 import org.omnaest.utils.ObjectUtils;
 import org.omnaest.utils.PatternUtils;
+
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlAttribute;
+import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlSeeAlso;
 
 @XmlRootElement(name = "text")
 @XmlAccessorType(XmlAccessType.NONE)

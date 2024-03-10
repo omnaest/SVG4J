@@ -15,59 +15,59 @@
  ******************************************************************************/
 package org.omnaest.svg.model;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlAttribute;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "stop")
 @XmlAccessorType(XmlAccessType.NONE)
 public class RawSVGStopElement
 {
-	@XmlAttribute
-	private String id;
+    @XmlAttribute
+    private String id;
 
-	@XmlAttribute
-	private String offset;
+    @XmlAttribute
+    private String offset;
 
-	@XmlAttribute
-	private String style;
+    @XmlAttribute
+    private String style;
 
-	public String getId()
-	{
-		return id;
-	}
+    public String getId()
+    {
+        return this.id;
+    }
 
-	public void setId(String id)
-	{
-		this.id = id;
-	}
+    public void setId(String id)
+    {
+        this.id = id;
+    }
 
-	public String getOffset()
-	{
-		return offset;
-	}
+    public String getOffset()
+    {
+        return this.offset;
+    }
 
-	public void setOffset(String offset)
-	{
-		this.offset = offset;
-	}
+    public void setOffset(String offset)
+    {
+        this.offset = offset;
+    }
 
-	public String getStyle()
-	{
-		return style;
-	}
+    public String getStyle()
+    {
+        return this.style;
+    }
 
-	public RawSVGStopElement setStyle(String style)
-	{
-		this.style = style;
-		return this;
-	}
+    public RawSVGStopElement setStyle(String style)
+    {
+        this.style = style;
+        return this;
+    }
 
-	@Override
-	public String toString()
-	{
-		return "RawSVGStopElement [id=" + id + ", offset=" + offset + ", style=" + style + "]";
-	}
+    @Override
+    public String toString()
+    {
+        return "RawSVGStopElement [id=" + this.id + ", offset=" + this.offset + ", style=" + this.style + "]";
+    }
 
 }

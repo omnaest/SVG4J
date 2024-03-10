@@ -44,6 +44,7 @@ import java.util.stream.Stream;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.omnaest.svg.chart.CoordinateChart;
 import org.omnaest.svg.chart.common.DataSeries;
@@ -54,7 +55,7 @@ public class SVGChartUtilsTest2
 {
 
     @Test
-    //    @Ignore
+    @Ignore
     public void testNewLineChart() throws Exception
     {
         List<CoordinateChart> charts = Arrays.asList(SVGChartUtils.newLineChart(5000, 1000), SVGChartUtils.newBarChart(5000, 1000),

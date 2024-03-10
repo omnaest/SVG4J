@@ -15,41 +15,41 @@
  ******************************************************************************/
 package org.omnaest.svg.model;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlValue;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlAttribute;
+import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlValue;
 
 @XmlRootElement(name = "script")
 @XmlAccessorType(XmlAccessType.NONE)
 public class RawSVGScript
 {
-	@XmlAttribute
-	private String type = "text/javascript";
+    @XmlAttribute
+    private String type = "text/javascript";
 
-	@XmlValue
-	private String content;
+    @XmlValue
+    private String content;
 
-	public String getContent()
-	{
-		return content;
-	}
+    public String getContent()
+    {
+        return this.content;
+    }
 
-	public RawSVGScript setContent(String content)
-	{
-		this.content = content;
-		return this;
-	}
+    public RawSVGScript setContent(String content)
+    {
+        this.content = content;
+        return this;
+    }
 
-	public String getType()
-	{
-		return type;
-	}
+    public String getType()
+    {
+        return this.type;
+    }
 
-	public void setType(String type)
-	{
-		this.type = type;
-	}
+    public void setType(String type)
+    {
+        this.type = type;
+    }
 
 }

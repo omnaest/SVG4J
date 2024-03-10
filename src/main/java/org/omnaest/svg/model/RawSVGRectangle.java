@@ -33,90 +33,90 @@
 */
 package org.omnaest.svg.model;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlAttribute;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "rect")
 @XmlAccessorType(XmlAccessType.NONE)
 public class RawSVGRectangle extends RawSVGXYLocatedWithWidthAndHeightElement
 {
 
-	@XmlAttribute
-	private String style;
+    @XmlAttribute
+    private String style;
 
-	@XmlAttribute
-	private String rx;
+    @XmlAttribute
+    private String rx;
 
-	@XmlAttribute
-	private String ry;
+    @XmlAttribute
+    private String ry;
 
-	public String getRx()
-	{
-		return this.rx;
-	}
+    public String getRx()
+    {
+        return this.rx;
+    }
 
-	public void setRx(String rx)
-	{
-		this.rx = rx;
-	}
+    public void setRx(String rx)
+    {
+        this.rx = rx;
+    }
 
-	public String getRy()
-	{
-		return this.ry;
-	}
+    public String getRy()
+    {
+        return this.ry;
+    }
 
-	public void setRy(String ry)
-	{
-		this.ry = ry;
-	}
+    public void setRy(String ry)
+    {
+        this.ry = ry;
+    }
 
-	@Override
-	public RawSVGRectangle setX(String x)
-	{
-		super.setX(x);
-		return this;
-	}
+    @Override
+    public RawSVGRectangle setX(String x)
+    {
+        super.setX(x);
+        return this;
+    }
 
-	@Override
-	public RawSVGRectangle setY(String y)
-	{
-		super.setY(y);
-		return this;
-	}
+    @Override
+    public RawSVGRectangle setY(String y)
+    {
+        super.setY(y);
+        return this;
+    }
 
-	@Override
-	public RawSVGRectangle setWidth(String width)
-	{
-		super.setWidth(width);
-		return this;
-	}
+    @Override
+    public RawSVGRectangle setWidth(String width)
+    {
+        super.setWidth(width);
+        return this;
+    }
 
-	@Override
-	public RawSVGRectangle setHeight(String height)
-	{
-		super.setHeight(height);
-		return this;
-	}
+    @Override
+    public RawSVGRectangle setHeight(String height)
+    {
+        super.setHeight(height);
+        return this;
+    }
 
-	@Override
-	public String getStyle()
-	{
-		return this.style;
-	}
+    @Override
+    public String getStyle()
+    {
+        return this.style;
+    }
 
-	@Override
-	public RawSVGRectangle setStyle(String style)
-	{
-		this.style = style;
-		return this;
-	}
+    @Override
+    public RawSVGRectangle setStyle(String style)
+    {
+        this.style = style;
+        return this;
+    }
 
-	@Override
-	public String toString()
-	{
-		return "RawSVGRectangle [x=" + this.x + ", y=" + this.y + ", width=" + this.getWidth() + ", height=" + this.getHeight() + ", style=" + this.style + "]";
-	}
+    @Override
+    public String toString()
+    {
+        return "RawSVGRectangle [x=" + this.x + ", y=" + this.y + ", width=" + this.getWidth() + ", height=" + this.getHeight() + ", style=" + this.style + "]";
+    }
 
 }
