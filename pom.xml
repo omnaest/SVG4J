@@ -26,10 +26,6 @@
 		</developer>
 	</developers>
 
-	<properties>
-		<java.version>1.8</java.version>
-	</properties>
-
 	<repositories>
 		<repository>
 			<id>ossrh</id>
@@ -41,7 +37,6 @@
 	</repositories>
 
 	<dependencies>
-
 		<dependency>
 			<groupId>org.omnaest.utils</groupId>
 			<artifactId>CommonsLangAndIO</artifactId>
