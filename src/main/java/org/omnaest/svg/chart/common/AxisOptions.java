@@ -33,41 +33,55 @@
 */
 package org.omnaest.svg.chart.common;
 
+import java.text.NumberFormat;
+
 public class AxisOptions
 {
-	private int				rotation		= 0;
-	private SortDirection	sortDirection	= null;
+    private int           rotation      = 0;
+    private SortDirection sortDirection = null;
+    private NumberFormat  numberFormat;
 
-	public enum SortDirection
-	{
-		ASCENDING, DESCENDING
-	}
+    public enum SortDirection
+    {
+        ASCENDING, DESCENDING
+    }
 
-	public AxisOptions()
-	{
-		super();
-	}
+    public AxisOptions()
+    {
+        super();
+    }
 
-	public int getRotation()
-	{
-		return this.rotation;
-	}
+    public int getRotation()
+    {
+        return this.rotation;
+    }
 
-	public AxisOptions setRotation(int rotation)
-	{
-		this.rotation = rotation;
-		return this;
-	}
+    public AxisOptions setRotation(int rotation)
+    {
+        this.rotation = rotation;
+        return this;
+    }
 
-	public SortDirection getSortDirection()
-	{
-		return this.sortDirection;
-	}
+    public SortDirection getSortDirection()
+    {
+        return this.sortDirection;
+    }
 
-	public AxisOptions setSortDirection(SortDirection sortDirection)
-	{
-		this.sortDirection = sortDirection;
-		return this;
-	}
+    public AxisOptions setSortDirection(SortDirection sortDirection)
+    {
+        this.sortDirection = sortDirection;
+        return this;
+    }
+
+    public NumberFormat getNumberFormat()
+    {
+        return this.numberFormat;
+    }
+
+    public AxisOptions setNumberFormat(NumberFormat numberFormat)
+    {
+        this.numberFormat = numberFormat;
+        return this;
+    }
 
 }

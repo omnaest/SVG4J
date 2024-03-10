@@ -33,6 +33,7 @@
 */
 package org.omnaest.svg.chart.common;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -288,7 +289,18 @@ public abstract class AbstractChart implements CoordinateChart
                                                }
                                                else if (point instanceof NumberPoint)
                                                {
-                                                   return new NumberAndLabel(((NumberPoint) point).getY());
+                                                   NumberPoint numberPoint = (NumberPoint) point;
+                                                   double y = numberPoint.getY();
+
+                                                   NumberFormat numberFormat = this.verticalAxisOptions.getNumberFormat();
+                                                   if (numberFormat != null)
+                                                   {
+                                                       return new NumberAndLabel(y, numberFormat.format(y));
+                                                   }
+                                                   else
+                                                   {
+                                                       return new NumberAndLabel(y);
+                                                   }
                                                }
                                                else
                                                {

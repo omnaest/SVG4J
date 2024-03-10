@@ -36,6 +36,7 @@ package org.omnaest.svg.chart.types;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Function;
 import java.util.stream.Stream;
 
 import org.omnaest.svg.chart.common.AbstractCartesianCoordinateChart;
@@ -57,28 +58,32 @@ public class SVGLineChart extends AbstractCartesianCoordinateChart
         {
             String color = colors.next();
             this.getBoundedArea()
-                .addAll(new LineRenderer(this.pixelFactor).renderLines(color, points.map(point ->
-                {
-                    String horizontalAxisId = Objects.toString(point.getX());
-                    Object verticalAxisId = point.getY();
-                    Integer rasterXPosition = horizontalAxis.get(horizontalAxisId);
-                    Double rasterYPosition = verticalAxis.get(verticalAxisId);
-                    if (rasterXPosition != null && rasterYPosition != null)
-                    {
-                        int x = this.calculateHorizontalPosition(rasterXPosition);
-                        int y = this.calculateVerticalPosition(rasterYPosition);
-
-                        return new Vector(x, y);
-                    }
-                    else
-                    {
-                        return null;
-                    }
-                })
+                .addAll(new LineRenderer(this.pixelFactor).renderLines(color, points.map(this.createPointToVectorMapper(horizontalAxis, verticalAxis))
                                                                                     .filter(vector -> vector != null)
                                                                                     .sorted((v1, v2) -> Integer.compare(v1.getX(), v2.getX()))));
         });
+    }
 
+    private Function<Point<?, ?>, Vector> createPointToVectorMapper(Map<String, Integer> horizontalAxis, Map<Object, Double> verticalAxis)
+    {
+        return point ->
+        {
+            String horizontalAxisId = Objects.toString(point.getX());
+            Object verticalAxisId = point.getY();
+            Integer rasterXPosition = horizontalAxis.get(horizontalAxisId);
+            Double rasterYPosition = verticalAxis.get(verticalAxisId);
+            if (rasterXPosition != null && rasterYPosition != null)
+            {
+                int x = this.calculateHorizontalPosition(rasterXPosition);
+                int y = this.calculateVerticalPosition(rasterYPosition);
+
+                return new Vector(x, y);
+            }
+            else
+            {
+                return null;
+            }
+        };
     }
 
 }
