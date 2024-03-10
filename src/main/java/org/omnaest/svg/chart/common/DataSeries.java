@@ -59,4 +59,13 @@ public class DataSeries implements Streamable<Point<?, ?>>
         return this.points.stream();
     }
 
+    public static class DataSeriesBuilder
+    {
+        public DataSeriesBuilder addNumberPoint(String x, double y)
+        {
+            this.addPoint(new NumberPoint(x, y));
+            return this;
+        }
+    }
+
 }
