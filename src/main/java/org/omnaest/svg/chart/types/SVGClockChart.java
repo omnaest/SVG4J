@@ -89,8 +89,7 @@ public class SVGClockChart extends AbstractChart
     }
 
     @Override
-    protected void renderData(Stream<Stream<? extends Point<?, ?>>> data, Map<String, Integer> horizontalAxis, Map<Object, Double> verticalAxis,
-                              Iterator<String> colors)
+    protected void renderData(Stream<Stream<? extends Point<?, ?>>> data, Map<String, Integer> horizontalAxis, Map<Object, Double> verticalAxis, Iterator<String> colors)
     {
         double maxValue = verticalAxis.values()
                                       .stream()
@@ -109,7 +108,7 @@ public class SVGClockChart extends AbstractChart
                     Integer rasterXPosition = horizontalAxis.get(horizontalAxisId);
                     Double rasterYNormValue = Optional.ofNullable(verticalAxis.get(verticalAxisId))
                                                       .orElse(0.0)
-                            / maxValue;
+                                              / maxValue;
                     if (rasterXPosition != null && rasterYNormValue != null)
                     {
                         return this.calculatePosition(rasterXPosition, rasterYNormValue);

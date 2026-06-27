@@ -44,19 +44,19 @@ import org.omnaest.svg.other.DisplayResolution;
 public class SVGTextTest
 {
 
-	@Test
-	@Ignore
-	public void testSVGText() throws Exception
-	{
-		SVGDrawer drawer = SVGUtils	.getDrawer(1000, 600)
-									.withScreenDimensions(DisplayResolution._1280x800);
+    @Test
+    @Ignore
+    public void testSVGText() throws Exception
+    {
+        SVGDrawer drawer = SVGUtils.getDrawer(1000, 600)
+                                   .withScreenDimensions(DisplayResolution._1280x800);
 
-		drawer	.add(new SVGRectangle(10, 10, 599, 399))
-				.add(new SVGText(10, 410, "Test")	.setFontSize(400)
-													.setLength(600));
+        drawer.add(new SVGRectangle(10, 10, 599, 399))
+              .add(new SVGText(10, 410, "Test").setFontSize(400)
+                                               .setLength(600));
 
-		drawer	.renderAsResult()
-				.writeToFile(new File("C:/Temp/svgTextText.svg"));
-	}
+        drawer.renderAsResult()
+              .writeToFile(new File("C:/Temp/svgTextText.svg"));
+    }
 
 }

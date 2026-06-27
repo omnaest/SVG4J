@@ -1,6 +1,9 @@
 package org.omnaest.svg.chart.common;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -18,7 +21,7 @@ public class DataSeries implements Streamable<Point<?, ?>>
     @Singular("addPoint")
     private List<Point<?, ?>> points;
 
-    private String label;
+    private String            label;
 
     protected DataSeries(List<Point<?, ?>> points)
     {
@@ -63,9 +66,27 @@ public class DataSeries implements Streamable<Point<?, ?>>
     {
         public DataSeriesBuilder addNumberPoint(String x, double y)
         {
-            this.addPoint(new NumberPoint(x, y));
+            NumberPoint numberPoint = new NumberPoint(x, y);
+            return this.addNumberPoint(numberPoint);
+        }
+
+        public DataSeriesBuilder addNumberPoint(NumberPoint numberPoint)
+        {
+            if (numberPoint != null)
+            {
+                this.addPoint(numberPoint);
+            }
             return this;
         }
+
+        public DataSeriesBuilder addNumberPoints(Collection<NumberPoint> numberPoints)
+        {
+            Optional.ofNullable(numberPoints)
+                    .orElse(Collections.emptyList())
+                    .forEach(this::addNumberPoint);
+            return this;
+        }
+
     }
 
 }

@@ -49,21 +49,21 @@ public class SVGRangeChart implements RangeChart
 {
     private SVGDrawer drawer;
 
-    private double min;
-    private double max;
+    private double    min;
+    private double    max;
 
-    private DrawBox labelDrawBox;
-    private DrawBox bodyDrawBox;
-    private DrawBox scaleDrawBox;
+    private DrawBox   labelDrawBox;
+    private DrawBox   bodyDrawBox;
+    private DrawBox   scaleDrawBox;
 
     public static class DrawBox
     {
         private BoundedArea drawer;
 
-        private int left;
-        private int top;
-        private int right;
-        private int bottom;
+        private int         left;
+        private int         top;
+        private int         right;
+        private int         bottom;
 
         public DrawBox(BoundedArea drawer, int left, int top, int right, int bottom)
         {
@@ -273,6 +273,23 @@ public class SVGRangeChart implements RangeChart
         int r = (int) (this.bodyDrawBox.getHeight() * 0.3);
         this.bodyDrawBox.addCircle(x, y, r)
                         .setFillColor(color.name());
+        return this;
+    }
+
+    @Override
+    public RangeChart addMarkerWithArrow(Color color, double baseValue, double arrowPointValue)
+    {
+        double relativeXPosition = this.calculateHorizontalRelativePosition(baseValue);
+        double relativeXPositionForArrowTip = this.calculateHorizontalRelativePosition(arrowPointValue);
+
+        int x = (int) (this.bodyDrawBox.getWidth() * relativeXPosition);
+        int arrowTipX = (int) (this.bodyDrawBox.getWidth() * relativeXPositionForArrowTip);
+        int y = (int) (this.bodyDrawBox.getHeight() * 0.5);
+        int r = (int) (this.bodyDrawBox.getHeight() * 0.3);
+        this.bodyDrawBox.addLine(x, y - r, x, y + r)
+                        .setStrokeColor(color.name());
+        this.bodyDrawBox.addLine(x, y, arrowTipX, y)
+                        .setStrokeColor(color.name());
         return this;
     }
 

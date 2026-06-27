@@ -38,29 +38,29 @@ import org.omnaest.svg.model.RawSVGElement;
 
 public class TranslatingSVGElementWrapper implements SVGElement
 {
-	private SVGElement	element;
-	private double		x;
-	private double		y;
+    private SVGElement element;
+    private double     x;
+    private double     y;
 
-	public TranslatingSVGElementWrapper(SVGElement element, double x, double y)
-	{
-		super();
-		this.element = element;
-		this.x = x;
-		this.y = y;
-	}
+    public TranslatingSVGElementWrapper(SVGElement element, double x, double y)
+    {
+        super();
+        this.element = element;
+        this.x = x;
+        this.y = y;
+    }
 
-	@Override
-	public RawSVGElement render()
-	{
-		return this.element	.render()
-							.translate(this.x, this.y);
-	}
+    @Override
+    public RawSVGElement render()
+    {
+        return this.element.render()
+                           .translate(this.x, this.y);
+    }
 
-	@Override
-	public String toString()
-	{
-		return "TranslatingSVGElementWrapper [element=" + this.element + ", x=" + this.x + ", y=" + this.y + "]";
-	}
+    @Override
+    public String toString()
+    {
+        return "TranslatingSVGElementWrapper [element=" + this.element + ", x=" + this.x + ", y=" + this.y + "]";
+    }
 
 }

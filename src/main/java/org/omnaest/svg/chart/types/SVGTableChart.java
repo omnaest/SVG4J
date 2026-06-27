@@ -37,27 +37,27 @@ import org.omnaest.utils.StreamUtils;
 
 public class SVGTableChart implements TableChart
 {
-    private Map<String, Column>   columnIdToColumn  = new LinkedHashMap<>();
-    private Map<String, Row>      rowIdToRow        = new LinkedHashMap<>();
+    private Map<String, Column>   columnIdToColumn        = new LinkedHashMap<>();
+    private Map<String, Row>      rowIdToRow              = new LinkedHashMap<>();
     private List<CoordinateEntry> entries;
-    private int                   width             = 10000;
-    private int                   height            = 10000;
-    private ResolutionProvider    displayResolution = DisplayResolution._1280x800;
+    private int                   width                   = 10000;
+    private int                   height                  = 10000;
+    private ResolutionProvider    displayResolution       = DisplayResolution._1280x800;
 
-    private ThresholdOpacity thresholdOpacity = new ThresholdOpacity();
+    private ThresholdOpacity      thresholdOpacity        = new ThresholdOpacity();
 
-    private String columnBorderColor       = "white";
-    private int    columnBorderSize        = 50;
-    private String columnBackgroundColor   = "lightgreen";
-    private double columnBackgroundOpacity = 0.5;
-    private String columnTextColor         = "black";
-    private String rowBorderColor          = "white";
-    private int    rowBorderSize           = 50;
-    private String rowBackgroundColor      = "lightgreen";
-    private double rowBackgroundOpacity    = 0.5;
-    private String rowTextColor            = "black";
+    private String                columnBorderColor       = "white";
+    private int                   columnBorderSize        = 50;
+    private String                columnBackgroundColor   = "lightgreen";
+    private double                columnBackgroundOpacity = 0.5;
+    private String                columnTextColor         = "black";
+    private String                rowBorderColor          = "white";
+    private int                   rowBorderSize           = 50;
+    private String                rowBackgroundColor      = "lightgreen";
+    private double                rowBackgroundOpacity    = 0.5;
+    private String                rowTextColor            = "black";
 
-    private double relativePaddingSize = 0.2;
+    private double                relativePaddingSize     = 0.2;
 
     @Override
     public TableChart withRelativePadding(double relativePaddingSize)

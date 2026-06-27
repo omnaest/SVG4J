@@ -46,41 +46,41 @@ import org.omnaest.svg.model.RawSVGAnkerElement;
  */
 public class SVGAnker implements SVGElement
 {
-	private String href;
+    private String           href;
 
-	private List<SVGElement> elements = new ArrayList<>();
+    private List<SVGElement> elements = new ArrayList<>();
 
-	public SVGAnker(String href)
-	{
-		super();
-		this.href = href;
-	}
+    public SVGAnker(String href)
+    {
+        super();
+        this.href = href;
+    }
 
-	public SVGAnker addElement(SVGElement element)
-	{
-		if (element != null)
-		{
-			this.elements.add(element);
-		}
-		return this;
-	}
+    public SVGAnker addElement(SVGElement element)
+    {
+        if (element != null)
+        {
+            this.elements.add(element);
+        }
+        return this;
+    }
 
-	public SVGAnker setElements(List<SVGElement> elements)
-	{
-		if (elements != null)
-		{
-			this.elements.addAll(elements);
-		}
-		return this;
-	}
+    public SVGAnker setElements(List<SVGElement> elements)
+    {
+        if (elements != null)
+        {
+            this.elements.addAll(elements);
+        }
+        return this;
+    }
 
-	@Override
-	public RawSVGAnkerElement render()
-	{
-		return new RawSVGAnkerElement()	.setHref(this.href)
-										.setElements(this.elements	.stream()
-																	.map(element -> element.render())
-																	.collect(Collectors.toList()));
-	}
+    @Override
+    public RawSVGAnkerElement render()
+    {
+        return new RawSVGAnkerElement().setHref(this.href)
+                                       .setElements(this.elements.stream()
+                                                                 .map(element -> element.render())
+                                                                 .collect(Collectors.toList()));
+    }
 
 }

@@ -48,53 +48,53 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 import jakarta.xml.bind.annotation.XmlSeeAlso;
 import jakarta.xml.bind.annotation.XmlTransient;
 
-@XmlSeeAlso({ RawSVGImageElement.class,
-              RawSVGGroupElement.class,
-              RawSVGLine.class,
-              RawSVGCircle.class,
-              RawSVGPath.class,
-              RawSVGPolygon.class,
-              RawSVGPolyline.class,
-              RawSVGRectangle.class,
-              RawSVGText.class,
-              RawSVGDefinition.class,
-              RawSVGAnkerElement.class,
-              RawSVGStyle.class,
-              RawSVGEllipse.class,
-              RawSVGTSpan.class })
+@XmlSeeAlso({RawSVGImageElement.class,
+        RawSVGGroupElement.class,
+        RawSVGLine.class,
+        RawSVGCircle.class,
+        RawSVGPath.class,
+        RawSVGPolygon.class,
+        RawSVGPolyline.class,
+        RawSVGRectangle.class,
+        RawSVGText.class,
+        RawSVGDefinition.class,
+        RawSVGAnkerElement.class,
+        RawSVGStyle.class,
+        RawSVGEllipse.class,
+        RawSVGTSpan.class})
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlRootElement(name = "svg")
 public class RawSVGRoot
 {
     @XmlAttribute
-    private String id;
+    private String              id;
 
     @XmlAttribute
-    private String width;
+    private String              width;
 
     @XmlAttribute
-    private String height;
+    private String              height;
 
     @XmlAttribute
-    private String version;
+    private String              version;
 
     @XmlElementRef
-    private List<RawSVGScript> scripts;
+    private List<RawSVGScript>  scripts;
 
     @XmlElementRef
     private List<RawSVGElement> elements;
 
     @XmlElement
-    private RawStyle style;
+    private RawStyle            style;
 
     @XmlAttribute
-    private String baseProfile;
+    private String              baseProfile;
 
     @XmlAttribute
-    private String viewBox;
+    private String              viewBox;
 
     @XmlAttribute(name = "class")
-    private String cssClass;
+    private String              cssClass;
 
     public RawStyle getStyle()
     {
@@ -172,7 +172,7 @@ public class RawSVGRoot
     public String toString()
     {
         return "RawSVGRoot [id=" + this.id + ", width=" + this.width + ", height=" + this.height + ", version=" + this.version + ", elements=" + this.elements
-                + ", baseProfile=" + this.baseProfile + ", viewBox=" + this.viewBox + "]";
+               + ", baseProfile=" + this.baseProfile + ", viewBox=" + this.viewBox + "]";
     }
 
     public void setBaseProfile(String baseProfile)

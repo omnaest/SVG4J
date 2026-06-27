@@ -37,7 +37,7 @@ public interface RangeChart extends Chart
 {
     public enum Color
     {
-        RED, BLUE, GREEN, BLACK, YELLOW
+        RED, BLUE, DARKBLUE, MEDIUMBLUE, GREEN, DARKGREEN, BLACK, DARKGRAY, YELLOW
     }
 
     public enum ScalePosition
@@ -56,5 +56,7 @@ public interface RangeChart extends Chart
     public RangeChart addPoint(Color color, double value);
 
     public RangeChart addScalePoint(double value, ScalePosition position);
+
+    public RangeChart addMarkerWithArrow(Color color, double baseValue, double arrowPointValue);
 
 }

@@ -51,28 +51,28 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 public class RawSVGRadialGradient extends RawSVGDefinitionElement
 {
     @XmlAttribute(namespace = "http://www.w3.org/1999/xlink")
-    private String href;
+    private String                  href;
 
     @XmlAttribute
-    private String cx;
+    private String                  cx;
 
     @XmlAttribute
-    private String cy;
+    private String                  cy;
 
     @XmlAttribute
-    private String fx;
+    private String                  fx;
 
     @XmlAttribute
-    private String fy;
+    private String                  fy;
 
     @XmlAttribute
-    private String r;
+    private String                  r;
 
     @XmlAttribute
-    private String gradientTransform;
+    private String                  gradientTransform;
 
     @XmlAttribute
-    private String gradientUnits;
+    private String                  gradientUnits;
 
     @XmlElementRef
     private List<RawSVGStopElement> stops;
@@ -170,8 +170,7 @@ public class RawSVGRadialGradient extends RawSVGDefinitionElement
     @Override
     public RawSVGTransformer transformer()
     {
-        return new DefaultRawSVGTransformer(this, Arrays.asList(new SupplierConsumer()
-        {
+        return new DefaultRawSVGTransformer(this, Arrays.asList(new SupplierConsumer() {
             @Override
             public void accept(Double value)
             {
@@ -184,8 +183,7 @@ public class RawSVGRadialGradient extends RawSVGDefinitionElement
             {
                 return NumberUtils.toDouble(RawSVGRadialGradient.this.getCx());
             }
-        }, new SupplierConsumer()
-        {
+        }, new SupplierConsumer() {
             @Override
             public void accept(Double value)
             {
@@ -198,8 +196,7 @@ public class RawSVGRadialGradient extends RawSVGDefinitionElement
             {
                 return NumberUtils.toDouble(RawSVGRadialGradient.this.getFx());
             }
-        }), Arrays.asList(new SupplierConsumer()
-        {
+        }), Arrays.asList(new SupplierConsumer() {
             @Override
             public void accept(Double value)
             {
@@ -212,8 +209,7 @@ public class RawSVGRadialGradient extends RawSVGDefinitionElement
             {
                 return NumberUtils.toDouble(RawSVGRadialGradient.this.getCy());
             }
-        }, new SupplierConsumer()
-        {
+        }, new SupplierConsumer() {
             @Override
             public void accept(Double value)
             {
@@ -233,7 +229,7 @@ public class RawSVGRadialGradient extends RawSVGDefinitionElement
     public String toString()
     {
         return "RawSVGRadialGradient [href=" + this.href + ", cx=" + this.cx + ", cy=" + this.cy + ", fx=" + this.fx + ", fy=" + this.fy + ", r=" + this.r
-                + ", gradientTransform=" + this.gradientTransform + ", gradientUnits=" + this.gradientUnits + ", stops=" + this.stops + "]";
+               + ", gradientTransform=" + this.gradientTransform + ", gradientUnits=" + this.gradientUnits + ", stops=" + this.stops + "]";
     }
 
 }

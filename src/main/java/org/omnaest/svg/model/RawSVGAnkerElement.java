@@ -46,7 +46,7 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 public class RawSVGAnkerElement extends RawSVGElement
 {
     @XmlAttribute(namespace = "http://www.w3.org/1999/xlink")
-    private String href;
+    private String              href;
 
     @XmlElementRef
     private List<RawSVGElement> elements;

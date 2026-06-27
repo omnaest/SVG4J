@@ -50,6 +50,7 @@ import org.omnaest.svg.elements.SVGRectangle;
 import org.omnaest.svg.elements.SVGText;
 import org.omnaest.svg.model.RawSVGText;
 import org.omnaest.svg.other.DisplayResolution;
+import org.omnaest.utils.draw.domain.Distance;
 
 public class SVGUtilsTest
 {
@@ -360,4 +361,17 @@ public class SVGUtilsTest
               .writeToFile(new File("C:/Temp/inkscapeTest_parsed.svg"));
     }
 
+    @Test
+    public void testGenericDrawer() throws IOException
+    {
+        SVGDrawer drawer = SVGUtils.getDrawer(1000, 500)
+                                   .withScreenDimensions(DisplayResolution._1280x800);
+
+        drawer.asGenericDrawer()
+              .cursor(cursor -> cursor.move(Distance.of(10, 10))
+                                      .drawCircle(10));
+
+        drawer.renderAsResult()
+              .writeToFile(new File("C:/Temp/generic_drawer_test.svg"));
+    }
 }

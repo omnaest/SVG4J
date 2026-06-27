@@ -26,16 +26,16 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 public class RawSVGMarker extends RawSVGDefinitionElement
 {
     @XmlAttribute
-    private String refX;
+    private String    refX;
 
     @XmlAttribute
-    private String orient;
+    private String    orient;
 
     @XmlAttribute
-    private String markerUnits;
+    private String    markerUnits;
 
     @XmlAttribute
-    private String overflow;
+    private String    overflow;
 
     @XmlElementRef
     private RawSVGUse use;
@@ -94,7 +94,7 @@ public class RawSVGMarker extends RawSVGDefinitionElement
     public String toString()
     {
         return "RawSVGMarker [refX=" + this.refX + ", orient=" + this.orient + ", markerUnits=" + this.markerUnits + ", overflow=" + this.overflow + ", use="
-                + this.use + "]";
+               + this.use + "]";
     }
 
     @Override

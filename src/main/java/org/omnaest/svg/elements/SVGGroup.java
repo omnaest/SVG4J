@@ -47,45 +47,45 @@ import org.omnaest.svg.model.RawSVGGroupElement;
  */
 public class SVGGroup implements SVGElement
 {
-	private double				opacity		= 1.0;
-	private List<SVGElement>	elements	= new ArrayList<>();
+    private double           opacity  = 1.0;
+    private List<SVGElement> elements = new ArrayList<>();
 
-	public SVGGroup()
-	{
-		super();
-	}
+    public SVGGroup()
+    {
+        super();
+    }
 
-	public SVGGroup addElement(SVGElement element)
-	{
-		if (element != null)
-		{
-			this.elements.add(element);
-		}
-		return this;
-	}
+    public SVGGroup addElement(SVGElement element)
+    {
+        if (element != null)
+        {
+            this.elements.add(element);
+        }
+        return this;
+    }
 
-	public SVGGroup setElements(List<SVGElement> elements)
-	{
-		if (elements != null)
-		{
-			this.elements.addAll(elements);
-		}
-		return this;
-	}
+    public SVGGroup setElements(List<SVGElement> elements)
+    {
+        if (elements != null)
+        {
+            this.elements.addAll(elements);
+        }
+        return this;
+    }
 
-	@Override
-	public RawSVGElement render()
-	{
-		return new RawSVGGroupElement()	.setElements(this.elements	.stream()
-																	.map(element -> element.render())
-																	.collect(Collectors.toList()))
-										.setOpacity("" + this.opacity);
-	}
+    @Override
+    public RawSVGElement render()
+    {
+        return new RawSVGGroupElement().setElements(this.elements.stream()
+                                                                 .map(element -> element.render())
+                                                                 .collect(Collectors.toList()))
+                                       .setOpacity("" + this.opacity);
+    }
 
-	public SVGGroup setOpacity(double opacity)
-	{
-		this.opacity = opacity;
-		return this;
-	}
+    public SVGGroup setOpacity(double opacity)
+    {
+        this.opacity = opacity;
+        return this;
+    }
 
 }

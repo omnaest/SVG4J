@@ -93,8 +93,7 @@ public class RawSVGEllipse extends RawSVGElement
     protected RawSVGTransformer transformer()
     {
 
-        return new DefaultRawSVGTransformer(this).addLocationXSupplierConsumer(new SupplierConsumer()
-        {
+        return new DefaultRawSVGTransformer(this).addLocationXSupplierConsumer(new SupplierConsumer() {
             @Override
             public void accept(Double value)
             {
@@ -108,8 +107,7 @@ public class RawSVGEllipse extends RawSVGElement
                 return NumberUtils.toDouble(RawSVGEllipse.this.cx);
             }
         })
-                                                 .addLocationYSupplierConsumer(new SupplierConsumer()
-                                                 {
+                                                 .addLocationYSupplierConsumer(new SupplierConsumer() {
                                                      @Override
                                                      public void accept(Double value)
                                                      {
@@ -123,8 +121,7 @@ public class RawSVGEllipse extends RawSVGElement
                                                          return NumberUtils.toDouble(RawSVGEllipse.this.cy);
                                                      }
                                                  })
-                                                 .addHeightSupplierConsumer(new SupplierConsumer()
-                                                 {
+                                                 .addHeightSupplierConsumer(new SupplierConsumer() {
                                                      @Override
                                                      public void accept(Double value)
                                                      {
@@ -138,8 +135,7 @@ public class RawSVGEllipse extends RawSVGElement
                                                          return NumberUtils.toDouble(RawSVGEllipse.this.ry);
                                                      }
                                                  })
-                                                 .addWidthSupplierConsumer(new SupplierConsumer()
-                                                 {
+                                                 .addWidthSupplierConsumer(new SupplierConsumer() {
                                                      @Override
                                                      public void accept(Double value)
                                                      {

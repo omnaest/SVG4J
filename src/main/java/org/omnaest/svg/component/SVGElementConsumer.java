@@ -45,10 +45,10 @@ import org.omnaest.svg.elements.base.SVGElement;
  */
 public interface SVGElementConsumer<R>
 {
-	public R add(SVGElement element);
+    public R add(SVGElement element);
 
-	public R addAll(Iterable<SVGElement> elements);
+    public R addAll(Iterable<SVGElement> elements);
 
-	public R addAll(Stream<SVGElement> elements);
+    public R addAll(Stream<SVGElement> elements);
 
 }

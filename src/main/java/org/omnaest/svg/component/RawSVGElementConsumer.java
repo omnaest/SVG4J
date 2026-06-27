@@ -46,9 +46,9 @@ import org.omnaest.svg.model.RawSVGElement;
  */
 public interface RawSVGElementConsumer<R>
 {
-	public R addRawElement(RawSVGElement rawElement);
+    public R addRawElement(RawSVGElement rawElement);
 
-	public R addRawElements(Collection<RawSVGElement> rawElements);
+    public R addRawElements(Collection<RawSVGElement> rawElements);
 
-	public R addRawElements(SVGDrawer svgDrawer);
+    public R addRawElements(SVGDrawer svgDrawer);
 }

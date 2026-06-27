@@ -51,8 +51,7 @@ public class SVGLineChart extends AbstractCartesianCoordinateChart
     }
 
     @Override
-    protected void renderData(Stream<Stream<? extends Point<?, ?>>> data, Map<String, Integer> horizontalAxis, Map<Object, Double> verticalAxis,
-                              Iterator<String> colors)
+    protected void renderData(Stream<Stream<? extends Point<?, ?>>> data, Map<String, Integer> horizontalAxis, Map<Object, Double> verticalAxis, Iterator<String> colors)
     {
         data.forEach(points ->
         {

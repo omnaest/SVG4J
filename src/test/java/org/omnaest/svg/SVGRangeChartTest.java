@@ -43,20 +43,20 @@ import org.omnaest.svg.chart.RedGreenDeviationRangeChart;
 public class SVGRangeChartTest
 {
 
-	@Test
-	public void testNewRangeChart() throws Exception
-	{
+    @Test
+    public void testNewRangeChart() throws Exception
+    {
 
-		RedGreenDeviationRangeChart rangeChart = SVGChartUtils	.newRedGreenDeviationRangeChart(5000, 300)
-																.setHorizontalScale(5.0, 90.0)
-																.setLabel("homovanillate");
+        RedGreenDeviationRangeChart rangeChart = SVGChartUtils.newRedGreenDeviationRangeChart(5000, 300)
+                                                              .setHorizontalScale(5.0, 90.0)
+                                                              .setLabel("homovanillate");
 
-		//
-		rangeChart.addGreenRange(25.0, 15.0);
-		rangeChart.addPoint(33.0);
+        //
+        rangeChart.addGreenRange(25.0, 15.0);
+        rangeChart.addPoint(33.0);
 
-		String svg = rangeChart.render();
-		FileUtils.write(new File("C:/Temp/rangeChart.svg"), svg, StandardCharsets.UTF_8);
-	}
+        String svg = rangeChart.render();
+        FileUtils.write(new File("C:/Temp/rangeChart.svg"), svg, StandardCharsets.UTF_8);
+    }
 
 }

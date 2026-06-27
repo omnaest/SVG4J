@@ -42,82 +42,82 @@ import org.omnaest.svg.model.RawSVGElement;
 @SuppressWarnings("unchecked")
 public class GenericTranslationAreaImpl<R extends GenericTranslationArea<R>> extends AbstractSVGElementConsumer<R> implements GenericTranslationArea<R>
 {
-	private ParentAccessor	parent;
-	private double			translationX	= 0.0;
-	private double			translationY	= 0.0;
+    private ParentAccessor parent;
+    private double         translationX = 0.0;
+    private double         translationY = 0.0;
 
-	public GenericTranslationAreaImpl(ParentAccessor parent)
-	{
-		super();
-		this.parent = parent;
-	}
+    public GenericTranslationAreaImpl(ParentAccessor parent)
+    {
+        super();
+        this.parent = parent;
+    }
 
-	@Override
-	public ParentAccessor getParent()
-	{
-		return this.parent;
-	}
+    @Override
+    public ParentAccessor getParent()
+    {
+        return this.parent;
+    }
 
-	@Override
-	public double getRawTranslationX()
-	{
-		return this.translationX;
-	}
+    @Override
+    public double getRawTranslationX()
+    {
+        return this.translationX;
+    }
 
-	@Override
-	public double getRawTranslationY()
-	{
-		return this.translationY;
-	}
+    @Override
+    public double getRawTranslationY()
+    {
+        return this.translationY;
+    }
 
-	@Override
-	public R withTranslationX(double x)
-	{
-		this.translationX = x;
-		return (R) this;
-	}
+    @Override
+    public R withTranslationX(double x)
+    {
+        this.translationX = x;
+        return (R) this;
+    }
 
-	@Override
-	public R withTranslationY(double y)
-	{
-		this.translationY = y;
-		return (R) this;
-	}
+    @Override
+    public R withTranslationY(double y)
+    {
+        this.translationY = y;
+        return (R) this;
+    }
 
-	@Override
-	public R withRelativeTranslationX(double x)
-	{
-		double parentWidth = this.parent.getWidth();
-		return this.withTranslationX(parentWidth * x);
-	}
+    @Override
+    public R withRelativeTranslationX(double x)
+    {
+        double parentWidth = this.parent.getWidth();
+        return this.withTranslationX(parentWidth * x);
+    }
 
-	@Override
-	public R withRelativeTranslationY(double y)
-	{
-		double parentHeight = this.parent.getHeight();
-		return this.withTranslationY(parentHeight * y);
-	}
+    @Override
+    public R withRelativeTranslationY(double y)
+    {
+        double parentHeight = this.parent.getHeight();
+        return this.withTranslationY(parentHeight * y);
+    }
 
-	@Override
-	public R add(SVGElement element)
-	{
-		this.parent	.getConsumer()
-					.add(new TranslatingSVGElementWrapper(element, this.translationX, this.translationY));
-		return (R) this;
-	}
+    @Override
+    public R add(SVGElement element)
+    {
+        this.parent.getConsumer()
+                   .add(new TranslatingSVGElementWrapper(element, this.translationX, this.translationY));
+        return (R) this;
+    }
 
-	@Override
-	public R addRawElement(RawSVGElement rawElement)
-	{
-		this.parent	.getConsumer()
-					.addRawElement(rawElement.translate(this.translationX, this.translationY));
-		return (R) this;
-	}
+    @Override
+    public R addRawElement(RawSVGElement rawElement)
+    {
+        this.parent.getConsumer()
+                   .addRawElement(rawElement.translate(this.translationX, this.translationY));
+        return (R) this;
+    }
 
-	@Override
-	public String toString()
-	{
-		return "GenericTranslationAreaImpl [parent=" + this.parent + ", translationX=" + this.translationX + ", translationY=" + this.translationY + "]";
-	}
+    @Override
+    public String toString()
+    {
+        return "GenericTranslationAreaImpl [parent=" + this.parent + ", translationX=" + this.translationX + ", translationY=" + this.translationY + "]";
+    }
 
 }

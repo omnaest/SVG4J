@@ -40,7 +40,7 @@ package org.omnaest.svg.chart.common;
  */
 public interface Point<X, Y>
 {
-	public X getX();
+    public X getX();
 
-	public Y getY();
+    public Y getY();
 }

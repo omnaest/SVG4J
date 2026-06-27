@@ -51,15 +51,15 @@ import org.omnaest.svg.elements.composite.SVGTextBox;
 
 public class SVGBoxMapChart implements EntryChart
 {
-    private SVGDrawer drawer;
+    private SVGDrawer         drawer;
 
-    private String           textColor        = "black";
-    private ThresholdOpacity thresholdOpacity = new ThresholdOpacity();
+    private String            textColor        = "black";
+    private ThresholdOpacity  thresholdOpacity = new ThresholdOpacity();
 
-    private Supplier<Integer> chartPadding = () -> 0;
+    private Supplier<Integer> chartPadding     = () -> 0;
 
-    private OptionalInt numberOfRows    = OptionalInt.empty();
-    private OptionalInt numberOfColumns = OptionalInt.empty();
+    private OptionalInt       numberOfRows     = OptionalInt.empty();
+    private OptionalInt       numberOfColumns  = OptionalInt.empty();
 
     public SVGBoxMapChart(int width, int height)
     {

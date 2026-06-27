@@ -116,8 +116,7 @@ public class RawSVGPolygon extends RawSVGElement
     @Override
     protected RawSVGTransformer transformer()
     {
-        return new RawSVGTransformer()
-        {
+        return new RawSVGTransformer() {
             public Stream<int[]> parsePoints()
             {
                 String[] tokens = StringUtils.splitPreserveAllTokens(StringUtils.trim(RawSVGPolygon.this.points), " ");

@@ -216,7 +216,7 @@ public class RawSVGText extends RawSVGXYLocatedElement
     public String toString()
     {
         return "RawSVGText [x=" + this.x + ", y=" + this.y + ", fill=" + this.fill + ", style=" + this.style + ", transform=" + this.transform + ", content="
-                + this.getContent() + "]";
+               + this.getContent() + "]";
     }
 
     public RawSVGText setOpacity(double opacity)
@@ -233,8 +233,7 @@ public class RawSVGText extends RawSVGXYLocatedElement
     @Override
     public RawSVGTransformer transformer()
     {
-        return new DefaultRawSVGTransformer(this).addLocationXSupplierConsumer(new SupplierConsumer()
-        {
+        return new DefaultRawSVGTransformer(this).addLocationXSupplierConsumer(new SupplierConsumer() {
             @Override
             public void accept(Double value)
             {
@@ -248,8 +247,7 @@ public class RawSVGText extends RawSVGXYLocatedElement
                 return NumberUtils.toDouble(RawSVGText.this.x);
             }
         })
-                                                 .addLocationYSupplierConsumer(new SupplierConsumer()
-                                                 {
+                                                 .addLocationYSupplierConsumer(new SupplierConsumer() {
                                                      @Override
                                                      public void accept(Double value)
                                                      {
@@ -263,8 +261,7 @@ public class RawSVGText extends RawSVGXYLocatedElement
                                                          return NumberUtils.toDouble(RawSVGText.this.y);
                                                      }
                                                  })
-                                                 .addLocationXSupplierConsumer(new SupplierConsumer()
-                                                 {
+                                                 .addLocationXSupplierConsumer(new SupplierConsumer() {
                                                      private String patternStr = "rotate\\([0-9\\.\\- ]+\\,([0-9\\.\\- ]+)\\,([0-9\\.\\- ]+)\\)";
 
                                                      @Override
@@ -290,8 +287,7 @@ public class RawSVGText extends RawSVGXYLocatedElement
                                                          return NumberUtils.toDouble(groups.get(1));
                                                      }
                                                  })
-                                                 .addLocationYSupplierConsumer(new SupplierConsumer()
-                                                 {
+                                                 .addLocationYSupplierConsumer(new SupplierConsumer() {
                                                      private String patternStr = "rotate\\([0-9\\.\\- ]+\\,([0-9\\.\\- ]+)\\,([0-9\\.\\- ]+)\\)";
 
                                                      @Override
@@ -316,8 +312,7 @@ public class RawSVGText extends RawSVGXYLocatedElement
                                                          return NumberUtils.toDouble(groups.get(2));
                                                      }
                                                  })
-                                                 .addRadiusSupplierConsumer(new SupplierBiConsumer()
-                                                 {
+                                                 .addRadiusSupplierConsumer(new SupplierBiConsumer() {
                                                      private String fontSizePatternStr = "font\\-size[ ]*\\:[ ]*([\\-]?[0-9]*\\.?[0-9]*)[ ]*(px)?";
                                                      private String rotationPatternStr = "rotate\\(([0-9\\.\\- ]+)\\,([0-9\\.\\- ]+)\\,([0-9\\.\\- ]+)\\)";
 
@@ -333,10 +328,10 @@ public class RawSVGText extends RawSVGXYLocatedElement
                                                          //
                                                          double fontSize = Math.max(0, isHorizontal ? yScaledFontSize : xScaledFontSize);
                                                          RawSVGText.this.style = RawSVGText.this.style.replaceAll(this.fontSizePatternStr, "font-size:"
-                                                                 + NumberUtils.formatter()
-                                                                              .withMaximumFractionDigits(6)
-                                                                              .format(fontSize)
-                                                                 + "px");
+                                                                                                                                           + NumberUtils.formatter()
+                                                                                                                                                        .withMaximumFractionDigits(6)
+                                                                                                                                                        .format(fontSize)
+                                                                                                                                           + "px");
                                                      }
 
                                                      @Override
@@ -357,8 +352,7 @@ public class RawSVGText extends RawSVGXYLocatedElement
                                                          return retval;
                                                      }
                                                  })
-                                                 .addWidthSupplierConsumer(new SupplierConsumer()
-                                                 {
+                                                 .addWidthSupplierConsumer(new SupplierConsumer() {
                                                      @Override
                                                      public void accept(Double value)
                                                      {
@@ -376,8 +370,7 @@ public class RawSVGText extends RawSVGXYLocatedElement
                                                                                          () -> NumberUtils.toDouble(RawSVGText.this.textLength));
                                                      }
                                                  })
-                                                 .addWidthSupplierConsumer(new SupplierConsumer()
-                                                 {
+                                                 .addWidthSupplierConsumer(new SupplierConsumer() {
                                                      @Override
                                                      public void accept(Double value)
                                                      {
@@ -394,8 +387,7 @@ public class RawSVGText extends RawSVGXYLocatedElement
                                                          return ObjectUtils.getIfNotNull(RawSVGText.this.dx, () -> NumberUtils.toDouble(RawSVGText.this.dx));
                                                      }
                                                  })
-                                                 .addHeightSupplierConsumer(new SupplierConsumer()
-                                                 {
+                                                 .addHeightSupplierConsumer(new SupplierConsumer() {
                                                      @Override
                                                      public void accept(Double value)
                                                      {

@@ -109,7 +109,7 @@ public class RawSVGTSpan implements RawSVGElementWithContent
     public String toString()
     {
         return "RawSVGTSpan [content=" + this.content + ", x=" + this.x + ", y=" + this.y + ", dx=" + this.dx + ", dy=" + this.dy + ", cssClass="
-                + this.cssClass + "]";
+               + this.cssClass + "]";
     }
 
 }

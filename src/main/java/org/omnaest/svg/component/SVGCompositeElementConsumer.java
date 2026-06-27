@@ -43,6 +43,6 @@ import org.omnaest.svg.elements.base.SVGCompositeElement;
  */
 public interface SVGCompositeElementConsumer<R>
 {
-	public R add(SVGCompositeElement element);
+    public R add(SVGCompositeElement element);
 
 }

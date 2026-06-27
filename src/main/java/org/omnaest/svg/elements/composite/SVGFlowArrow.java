@@ -47,113 +47,113 @@ import org.omnaest.vector.Vector;
 
 public class SVGFlowArrow implements SVGCompositeElement
 {
-	private double	x1;
-	private double	y1;
-	private double	x2;
-	private double	y2;
+    private double           x1;
+    private double           y1;
+    private double           x2;
+    private double           y2;
 
-	private Supplier<Double>	length			= () -> new Vector(this.x2, this.y2).subtract(new Vector(this.x1, this.y1))
-																					.absolute();
-	private Supplier<Double>	arrowWidth		= () -> this.length.get() * 0.1;
-	private double				arrowFlatness	= 0.1;
-	private Supplier<Double>	strokeWidth		= () -> this.arrowWidth.get() * 0.1;
+    private Supplier<Double> length        = () -> new Vector(this.x2, this.y2).subtract(new Vector(this.x1, this.y1))
+                                                                               .absolute();
+    private Supplier<Double> arrowWidth    = () -> this.length.get() * 0.1;
+    private double           arrowFlatness = 0.1;
+    private Supplier<Double> strokeWidth   = () -> this.arrowWidth.get() * 0.1;
 
-	private String	fillColor	= "white";
-	private String	strokeColor	= "black";
-	private double	fillOpacity	= 0.5;
+    private String           fillColor     = "white";
+    private String           strokeColor   = "black";
+    private double           fillOpacity   = 0.5;
 
-	private String text;
+    private String           text;
 
-	public SVGFlowArrow(double x1, double y1, double x2, double y2)
-	{
-		super();
-		this.x1 = x1;
-		this.y1 = y1;
-		this.x2 = x2;
-		this.y2 = y2;
-	}
+    public SVGFlowArrow(double x1, double y1, double x2, double y2)
+    {
+        super();
+        this.x1 = x1;
+        this.y1 = y1;
+        this.x2 = x2;
+        this.y2 = y2;
+    }
 
-	public SVGFlowArrow setArrowFlatness(double arrowFlatness)
-	{
-		this.arrowFlatness = arrowFlatness;
-		return this;
-	}
+    public SVGFlowArrow setArrowFlatness(double arrowFlatness)
+    {
+        this.arrowFlatness = arrowFlatness;
+        return this;
+    }
 
-	public SVGFlowArrow setFillOpacity(double fillOpacity)
-	{
-		this.fillOpacity = fillOpacity;
-		return this;
-	}
+    public SVGFlowArrow setFillOpacity(double fillOpacity)
+    {
+        this.fillOpacity = fillOpacity;
+        return this;
+    }
 
-	public SVGFlowArrow setArrowWidth(double width)
-	{
-		this.arrowWidth = () -> width;
-		return this;
-	}
+    public SVGFlowArrow setArrowWidth(double width)
+    {
+        this.arrowWidth = () -> width;
+        return this;
+    }
 
-	public SVGFlowArrow setRelativeArrowWidth(double relativeWidth)
-	{
-		this.arrowWidth = () -> this.length.get() * relativeWidth;
-		return this;
-	}
+    public SVGFlowArrow setRelativeArrowWidth(double relativeWidth)
+    {
+        this.arrowWidth = () -> this.length.get() * relativeWidth;
+        return this;
+    }
 
-	public SVGFlowArrow setStrokeWidth(double strokeWidth)
-	{
-		this.strokeWidth = () -> strokeWidth;
-		return this;
-	}
+    public SVGFlowArrow setStrokeWidth(double strokeWidth)
+    {
+        this.strokeWidth = () -> strokeWidth;
+        return this;
+    }
 
-	public SVGFlowArrow setFillColor(String fillColor)
-	{
-		this.fillColor = fillColor;
-		return this;
-	}
+    public SVGFlowArrow setFillColor(String fillColor)
+    {
+        this.fillColor = fillColor;
+        return this;
+    }
 
-	public SVGFlowArrow setStrokeColor(String strokeColor)
-	{
-		this.strokeColor = strokeColor;
-		return this;
-	}
+    public SVGFlowArrow setStrokeColor(String strokeColor)
+    {
+        this.strokeColor = strokeColor;
+        return this;
+    }
 
-	@Override
-	public Stream<SVGElement> getElements()
-	{
-		Vector sourcePosition = new Vector(this.x1, this.y1);
-		Vector targetPosition = new Vector(this.x2, this.y2);
-		Vector delta = targetPosition.subtract(sourcePosition);
+    @Override
+    public Stream<SVGElement> getElements()
+    {
+        Vector sourcePosition = new Vector(this.x1, this.y1);
+        Vector targetPosition = new Vector(this.x2, this.y2);
+        Vector delta = targetPosition.subtract(sourcePosition);
 
-		Double width = this.arrowWidth.get();
+        Double width = this.arrowWidth.get();
 
-		Vector upperLeft = sourcePosition.add(delta	.normVector()
-													.rotateZ(90)
-													.multiply(width / 2));
-		Vector lowerLeft = sourcePosition.add(delta	.normVector()
-													.rotateZ(-90)
-													.multiply(width / 2));
-		double arrowStart = 1.0 - this.arrowFlatness;
-		Vector upperRight = upperLeft.add(delta.multiply(arrowStart));
-		Vector lowerRight = lowerLeft.add(delta.multiply(arrowStart));
+        Vector upperLeft = sourcePosition.add(delta.normVector()
+                                                   .rotateZ(90)
+                                                   .multiply(width / 2));
+        Vector lowerLeft = sourcePosition.add(delta.normVector()
+                                                   .rotateZ(-90)
+                                                   .multiply(width / 2));
+        double arrowStart = 1.0 - this.arrowFlatness;
+        Vector upperRight = upperLeft.add(delta.multiply(arrowStart));
+        Vector lowerRight = lowerLeft.add(delta.multiply(arrowStart));
 
-		Vector middleRight = sourcePosition.add(delta);
+        Vector middleRight = sourcePosition.add(delta);
 
-		List<SVGVector> locations = Arrays.asList(	SVGVector.valueOf(upperLeft), SVGVector.valueOf(upperRight), SVGVector.valueOf(middleRight),
-													SVGVector.valueOf(lowerRight), SVGVector.valueOf(lowerLeft));
-		SVGPolygon svgPolygon = new SVGPolygon(locations)	.setStrokeColor(this.strokeColor)
-															.setFillColor(this.fillColor)
-															.setFillOpacity(this.fillOpacity)
-															.setStrokeWidth(this.strokeWidth.get()
-																							.intValue());
+        List<SVGVector> locations = Arrays.asList(SVGVector.valueOf(upperLeft), SVGVector.valueOf(upperRight), SVGVector.valueOf(middleRight),
+                                                  SVGVector.valueOf(lowerRight), SVGVector.valueOf(lowerLeft));
+        SVGPolygon svgPolygon = new SVGPolygon(locations).setStrokeColor(this.strokeColor)
+                                                         .setFillColor(this.fillColor)
+                                                         .setFillOpacity(this.fillOpacity)
+                                                         .setStrokeWidth(this.strokeWidth.get()
+                                                                                         .intValue());
 
-		Vector textPosition = upperLeft;
-		SVGText svgText = new SVGText((int) textPosition.getX(), (int) textPosition.getY(), this.text)	.setFontSize((int) (width.intValue() * arrowStart))
-																										.setRotation((int) delta.determineAngleToXAxis());
-		return Stream.of(svgPolygon, svgText);
-	}
+        Vector textPosition = upperLeft;
+        SVGText svgText = new SVGText((int) textPosition.getX(), (int) textPosition.getY(), this.text).setFontSize((int) (width.intValue() * arrowStart))
+                                                                                                      .setRotation((int) delta.determineAngleToXAxis());
+        return Stream.of(svgPolygon, svgText);
+    }
 
-	public SVGFlowArrow setText(String text)
-	{
-		this.text = text;
-		return this;
-	}
+    public SVGFlowArrow setText(String text)
+    {
+        this.text = text;
+        return this;
+    }
 
 }

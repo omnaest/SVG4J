@@ -107,8 +107,7 @@ public class RawSVGX1X2Y1Y2LocatedElement extends RawSVGElement
     @Override
     public RawSVGTransformer transformer()
     {
-        return new DefaultRawSVGTransformer(this, Arrays.asList(new SupplierConsumer()
-        {
+        return new DefaultRawSVGTransformer(this, Arrays.asList(new SupplierConsumer() {
             @Override
             public void accept(Double value)
             {
@@ -121,8 +120,7 @@ public class RawSVGX1X2Y1Y2LocatedElement extends RawSVGElement
             {
                 return NumberUtils.toDouble(RawSVGX1X2Y1Y2LocatedElement.this.getX1());
             }
-        }, new SupplierConsumer()
-        {
+        }, new SupplierConsumer() {
             @Override
             public void accept(Double value)
             {
@@ -135,8 +133,7 @@ public class RawSVGX1X2Y1Y2LocatedElement extends RawSVGElement
             {
                 return NumberUtils.toDouble(RawSVGX1X2Y1Y2LocatedElement.this.getX2());
             }
-        }), Arrays.asList(new SupplierConsumer()
-        {
+        }), Arrays.asList(new SupplierConsumer() {
             @Override
             public void accept(Double value)
             {
@@ -149,8 +146,7 @@ public class RawSVGX1X2Y1Y2LocatedElement extends RawSVGElement
             {
                 return NumberUtils.toDouble(RawSVGX1X2Y1Y2LocatedElement.this.getY1());
             }
-        }, new SupplierConsumer()
-        {
+        }, new SupplierConsumer() {
             @Override
             public void accept(Double value)
             {

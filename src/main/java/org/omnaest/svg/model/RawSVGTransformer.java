@@ -35,7 +35,7 @@ package org.omnaest.svg.model;
 
 public interface RawSVGTransformer
 {
-	public RawSVGElement translate(double x, double y);
+    public RawSVGElement translate(double x, double y);
 
-	public RawSVGElement scale(double scaleX, double scaleY);
+    public RawSVGElement scale(double scaleX, double scaleY);
 }

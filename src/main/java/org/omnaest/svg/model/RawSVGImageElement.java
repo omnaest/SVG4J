@@ -120,7 +120,7 @@ public class RawSVGImageElement extends RawSVGXYLocatedWithWidthAndHeightElement
     public String toString()
     {
         return "RawSVGImageElement [id=" + this.getId() + ", width=" + this.getWidth() + ", height=" + this.getHeight() + ", x=" + this.x + ", y=" + this.y
-                + ", style=" + this.style + ", transform=" + this.transform + ", href=" + this.href + "]";
+               + ", style=" + this.style + ", transform=" + this.transform + ", href=" + this.href + "]";
     }
 
 }

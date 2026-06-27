@@ -35,32 +35,32 @@ package org.omnaest.svg.chart.common;
 
 public class DataPoint implements Point<String, String>
 {
-	private String	x;
-	private String	y;
+    private String x;
+    private String y;
 
-	public DataPoint(String x, String y)
-	{
-		super();
-		this.x = x;
-		this.y = y;
-	}
+    public DataPoint(String x, String y)
+    {
+        super();
+        this.x = x;
+        this.y = y;
+    }
 
-	@Override
-	public String getX()
-	{
-		return this.x;
-	}
+    @Override
+    public String getX()
+    {
+        return this.x;
+    }
 
-	@Override
-	public String getY()
-	{
-		return this.y;
-	}
+    @Override
+    public String getY()
+    {
+        return this.y;
+    }
 
-	@Override
-	public String toString()
-	{
-		return "DataPoint [x=" + this.x + ", y=" + this.y + "]";
-	}
+    @Override
+    public String toString()
+    {
+        return "DataPoint [x=" + this.x + ", y=" + this.y + "]";
+    }
 
 }

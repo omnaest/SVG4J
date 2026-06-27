@@ -35,71 +35,71 @@ package org.omnaest.svg.chart.common;
 
 public class IdAndLabel implements AxisPoint<String>
 {
-	private String	id;
-	private String	label;
+    private String id;
+    private String label;
 
-	public IdAndLabel(String id, String label)
-	{
-		super();
-		this.id = id;
-		this.label = label;
-	}
+    public IdAndLabel(String id, String label)
+    {
+        super();
+        this.id = id;
+        this.label = label;
+    }
 
-	/**
-	 * New {@link IdAndLabel} with the given label as id
-	 *
-	 * @param label
-	 */
-	public IdAndLabel(String label)
-	{
-		this(label, label);
-	}
+    /**
+     * New {@link IdAndLabel} with the given label as id
+     *
+     * @param label
+     */
+    public IdAndLabel(String label)
+    {
+        this(label, label);
+    }
 
-	@Override
-	public String getId()
-	{
-		return this.id;
-	}
+    @Override
+    public String getId()
+    {
+        return this.id;
+    }
 
-	@Override
-	public String getLabel()
-	{
-		return this.label;
-	}
+    @Override
+    public String getLabel()
+    {
+        return this.label;
+    }
 
-	@Override
-	public String toString()
-	{
-		return "IdAndLabel [id=" + this.id + ", label=" + this.label + "]";
-	}
+    @Override
+    public String toString()
+    {
+        return "IdAndLabel [id=" + this.id + ", label=" + this.label + "]";
+    }
 
-	@Override
-	public int hashCode()
-	{
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((this.id == null) ? 0 : this.id.hashCode());
-		return result;
-	}
+    @Override
+    public int hashCode()
+    {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((this.id == null) ? 0 : this.id.hashCode());
+        return result;
+    }
 
-	@Override
-	public boolean equals(Object obj)
-	{
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (this.getClass() != obj.getClass())
-			return false;
-		IdAndLabel other = (IdAndLabel) obj;
-		if (this.id == null)
-		{
-			if (other.id != null)
-				return false;
-		}
-		else if (!this.id.equals(other.id))
-			return false;
-		return true;
-	}
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (this.getClass() != obj.getClass())
+            return false;
+        IdAndLabel other = (IdAndLabel) obj;
+        if (this.id == null)
+        {
+            if (other.id != null)
+                return false;
+        }
+        else if (!this.id.equals(other.id))
+            return false;
+        return true;
+    }
 
 }

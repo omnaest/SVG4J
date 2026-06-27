@@ -36,8 +36,7 @@ public abstract class AbstractChart2 extends AbstractChart
     }
 
     @Override
-    protected void renderData(Stream<Stream<? extends Point<?, ?>>> data, Map<String, Integer> horizontalAxis, Map<Object, Double> verticalAxis,
-                              Iterator<String> colors)
+    protected void renderData(Stream<Stream<? extends Point<?, ?>>> data, Map<String, Integer> horizontalAxis, Map<Object, Double> verticalAxis, Iterator<String> colors)
     {
         this.renderData(data.map(points -> DataSeries.of(points.collect(Collectors.toList())))
                             .collect(Collectors.toList()),
@@ -45,6 +44,5 @@ public abstract class AbstractChart2 extends AbstractChart
 
     }
 
-    protected abstract void renderData(List<DataSeries> dataSeries, Map<String, Integer> horizontalAxis, Map<Object, Double> verticalAxis,
-                                       Iterator<String> colors);
+    protected abstract void renderData(List<DataSeries> dataSeries, Map<String, Integer> horizontalAxis, Map<Object, Double> verticalAxis, Iterator<String> colors);
 }

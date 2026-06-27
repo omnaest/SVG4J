@@ -38,8 +38,8 @@ import org.omnaest.svg.SVGDrawer.TranslationArea;
 
 public class TranslationAreaImpl extends GenericTranslationAreaImpl<TranslationArea> implements TranslationArea
 {
-	public TranslationAreaImpl(ParentAccessor parent)
-	{
-		super(parent);
-	}
+    public TranslationAreaImpl(ParentAccessor parent)
+    {
+        super(parent);
+    }
 }

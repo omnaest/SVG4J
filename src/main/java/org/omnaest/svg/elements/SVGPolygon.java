@@ -43,76 +43,76 @@ import org.omnaest.svg.model.RawSVGPolygon;
 
 public class SVGPolygon implements SVGElement
 {
-	private List<SVGVector>	locations		= new ArrayList<>();
-	private String			strokeColor		= "red";
-	private String			fillColor		= "red";
-	private int				strokeWidth		= 3;
-	private double			fillOpacity		= 1.0;
-	private double			strokeOpacity	= 1.0;
+    private List<SVGVector> locations     = new ArrayList<>();
+    private String          strokeColor   = "red";
+    private String          fillColor     = "red";
+    private int             strokeWidth   = 3;
+    private double          fillOpacity   = 1.0;
+    private double          strokeOpacity = 1.0;
 
-	public SVGPolygon(List<SVGVector> locations)
-	{
-		super();
-		this.locations.addAll(locations);
-	}
+    public SVGPolygon(List<SVGVector> locations)
+    {
+        super();
+        this.locations.addAll(locations);
+    }
 
-	public String getStrokeColor()
-	{
-		return this.strokeColor;
-	}
+    public String getStrokeColor()
+    {
+        return this.strokeColor;
+    }
 
-	public SVGPolygon setStrokeColor(String strokeColor)
-	{
-		this.strokeColor = strokeColor;
-		return this;
-	}
+    public SVGPolygon setStrokeColor(String strokeColor)
+    {
+        this.strokeColor = strokeColor;
+        return this;
+    }
 
-	public SVGPolygon setFillColor(String fillColor)
-	{
-		this.fillColor = fillColor;
-		return this;
-	}
+    public SVGPolygon setFillColor(String fillColor)
+    {
+        this.fillColor = fillColor;
+        return this;
+    }
 
-	public SVGPolygon setStrokeWidth(int strokeWidth)
-	{
-		this.strokeWidth = strokeWidth;
-		return this;
-	}
+    public SVGPolygon setStrokeWidth(int strokeWidth)
+    {
+        this.strokeWidth = strokeWidth;
+        return this;
+    }
 
-	public SVGPolygon setFillOpacity(double fillOpacity)
-	{
-		this.fillOpacity = fillOpacity;
-		return this;
-	}
+    public SVGPolygon setFillOpacity(double fillOpacity)
+    {
+        this.fillOpacity = fillOpacity;
+        return this;
+    }
 
-	public SVGPolygon setStrokeOpacity(double strokeOpacity)
-	{
-		this.strokeOpacity = strokeOpacity;
-		return this;
-	}
+    public SVGPolygon setStrokeOpacity(double strokeOpacity)
+    {
+        this.strokeOpacity = strokeOpacity;
+        return this;
+    }
 
-	@Override
-	public RawSVGElement render()
-	{
-		StringBuilder sb = new StringBuilder();
-		for (SVGVector vector : this.locations)
-		{
-			int x = (int) vector.getX();
-			int y = (int) vector.getY();
-			sb.append(" " + x + " " + y);
-		}
+    @Override
+    public RawSVGElement render()
+    {
+        StringBuilder sb = new StringBuilder();
+        for (SVGVector vector : this.locations)
+        {
+            int x = (int) vector.getX();
+            int y = (int) vector.getY();
+            sb.append(" " + x + " " + y);
+        }
 
-		StringBuilder style = new StringBuilder();
-		style.append("fill:" + this.fillColor + ";");
-		style.append("stroke:" + this.strokeColor + ";");
-		style.append("stroke-width:" + this.strokeWidth + ";");
-		style.append("stroke-opacity:" + this.strokeOpacity + ";");
-		style.append("fill-opacity:" + this.fillOpacity + ";");
+        StringBuilder style = new StringBuilder();
+        style.append("fill:" + this.fillColor + ";");
+        style.append("stroke:" + this.strokeColor + ";");
+        style.append("stroke-width:" + this.strokeWidth + ";");
+        style.append("stroke-opacity:" + this.strokeOpacity + ";");
+        style.append("fill-opacity:" + this.fillOpacity + ";");
 
-		return new RawSVGPolygon()	.setPoints(sb	.toString()
-													.trim())
-									.setStroke(this.strokeColor)
-									.setStyle(style.toString());
-	}
+        return new RawSVGPolygon().setPoints(sb.toString()
+                                               .trim())
+                                  .setStroke(this.strokeColor)
+                                  .setStyle(style.toString());
+    }
 
 }

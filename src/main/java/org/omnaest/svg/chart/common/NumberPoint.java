@@ -35,32 +35,32 @@ package org.omnaest.svg.chart.common;
 
 public class NumberPoint implements Point<String, Double>
 {
-	private Double	y;
-	private String	x;
+    private Double y;
+    private String x;
 
-	public NumberPoint(String x, Double y)
-	{
-		super();
-		this.y = y;
-		this.x = x;
-	}
+    public NumberPoint(String x, Double y)
+    {
+        super();
+        this.y = y;
+        this.x = x;
+    }
 
-	@Override
-	public Double getY()
-	{
-		return this.y;
-	}
+    @Override
+    public Double getY()
+    {
+        return this.y;
+    }
 
-	@Override
-	public String getX()
-	{
-		return this.x;
-	}
+    @Override
+    public String getX()
+    {
+        return this.x;
+    }
 
-	@Override
-	public String toString()
-	{
-		return "NumberPoint [y=" + this.y + ", x=" + this.x + "]";
-	}
+    @Override
+    public String toString()
+    {
+        return "NumberPoint [y=" + this.y + ", x=" + this.x + "]";
+    }
 
 }

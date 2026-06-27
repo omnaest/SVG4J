@@ -37,30 +37,30 @@ import org.omnaest.vector.Vector;
 
 public class VectorToSVGVectorAdapter implements SVGVector
 {
-	private Vector vector;
+    private Vector vector;
 
-	public VectorToSVGVectorAdapter(Vector vector)
-	{
-		super();
-		this.vector = vector;
-	}
+    public VectorToSVGVectorAdapter(Vector vector)
+    {
+        super();
+        this.vector = vector;
+    }
 
-	@Override
-	public double getY()
-	{
-		return this.vector.getY();
-	}
+    @Override
+    public double getY()
+    {
+        return this.vector.getY();
+    }
 
-	@Override
-	public double getX()
-	{
-		return this.vector.getX();
-	}
+    @Override
+    public double getX()
+    {
+        return this.vector.getX();
+    }
 
-	@Override
-	public String toString()
-	{
-		return "VectorToSVGVectorAdapter [vector=" + this.vector + "]";
-	}
+    @Override
+    public String toString()
+    {
+        return "VectorToSVGVectorAdapter [vector=" + this.vector + "]";
+    }
 
 }

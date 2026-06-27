@@ -35,24 +35,24 @@ package org.omnaest.svg.model;
 
 public class IgnoringRawSVGTransformer implements RawSVGTransformer
 {
-	private RawSVGElement rawSVGElement;
+    private RawSVGElement rawSVGElement;
 
-	public IgnoringRawSVGTransformer(RawSVGElement rawSVGElement)
-	{
-		super();
-		this.rawSVGElement = rawSVGElement;
-	}
+    public IgnoringRawSVGTransformer(RawSVGElement rawSVGElement)
+    {
+        super();
+        this.rawSVGElement = rawSVGElement;
+    }
 
-	@Override
-	public RawSVGElement translate(double x, double y)
-	{
-		return this.rawSVGElement;
-	}
+    @Override
+    public RawSVGElement translate(double x, double y)
+    {
+        return this.rawSVGElement;
+    }
 
-	@Override
-	public RawSVGElement scale(double x, double y)
-	{
-		return this.rawSVGElement;
-	}
+    @Override
+    public RawSVGElement scale(double x, double y)
+    {
+        return this.rawSVGElement;
+    }
 
 }

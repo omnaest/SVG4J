@@ -56,26 +56,26 @@ import org.omnaest.utils.element.cached.CachedElement;
 
 public abstract class AbstractChart implements CoordinateChart
 {
-    private SVGDrawer drawer;
+    private SVGDrawer                      drawer;
 
-    protected int    width;
-    protected int    height;
-    protected int    pixelFactor         = 1;
-    protected double relativePaddingSize = 0.0;
+    protected int                          width;
+    protected int                          height;
+    protected int                          pixelFactor           = 1;
+    protected double                       relativePaddingSize   = 0.0;
 
     protected List<IdAndLabel>             horizontalAxisValues;
     protected AxisOptions                  horizontalAxisOptions = new AxisOptions().setRotation(-45);
     protected List<? extends AxisPoint<?>> verticalAxisValues;
     protected AxisOptions                  verticalAxisOptions;
 
-    private CachedElement<BoundedArea> boundedAreaCache = CachedElement.of(() -> this.drawer.newBoundedArea()
-                                                                                            .withRelativeSizedPadding(this.relativePaddingSize)
-                                                                                            .withScalingHeight(this.height)
-                                                                                            .withScalingWidth(this.width));
+    private CachedElement<BoundedArea>     boundedAreaCache      = CachedElement.of(() -> this.drawer.newBoundedArea()
+                                                                                                     .withRelativeSizedPadding(this.relativePaddingSize)
+                                                                                                     .withScalingHeight(this.height)
+                                                                                                     .withScalingWidth(this.width));
 
-    protected List<String> colors             = Arrays.asList("red", "blue", "green", "yellow", "orange", "brown", "purple", "magenta", "darkred", "darkgreen",
-                                                              "darkorange");
-    private int            startingColorIndex = 0;
+    protected List<String>                 colors                = Arrays.asList("red", "blue", "green", "yellow", "orange", "brown", "purple", "magenta", "darkred", "darkgreen",
+                                                                                 "darkorange");
+    private int                            startingColorIndex    = 0;
 
     protected static class Vector
     {
@@ -327,8 +327,7 @@ public abstract class AbstractChart implements CoordinateChart
                         horizontalAxis, verticalAxis, colors);
     }
 
-    protected abstract void renderData(Stream<Stream<? extends Point<?, ?>>> data, Map<String, Integer> horizontalAxis, Map<Object, Double> verticalAxis,
-                                       Iterator<String> colors2);
+    protected abstract void renderData(Stream<Stream<? extends Point<?, ?>>> data, Map<String, Integer> horizontalAxis, Map<Object, Double> verticalAxis, Iterator<String> colors2);
 
     protected double extractNormValueFromAxisPoint(int index, AxisPoint<?> axisPoint)
     {

@@ -83,7 +83,8 @@ public class SVGChartUtilsTest
             String svg = chart.render();
             FileUtils.writeStringToFile(new File("C:/Temp/charts/" + chart.getClass()
                                                                           .getSimpleName()
-                    + ".svg"), svg, "utf-8");
+                                                 + ".svg"),
+                                        svg, "utf-8");
         }
     }
 

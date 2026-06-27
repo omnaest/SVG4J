@@ -440,8 +440,7 @@ public class SVGDrawer extends AbstractSVGElementConsumer<SVGDrawer>
     public Drawer asGenericDrawer()
     {
         return DrawerUtils.builder()
-                          .addDrawProcessor(new DrawProcessor()
-                          {
+                          .addDrawProcessor(new DrawProcessor() {
                               @Override
                               public void polyline(List<Point> points, ColorProvider color, double strokeWidth)
                               {
@@ -620,8 +619,7 @@ public class SVGDrawer extends AbstractSVGElementConsumer<SVGDrawer>
     {
         rawElementModifier.accept(this.rawSVGRoot.getElements()
                                                  .stream()
-                                                 .flatMap(new Function<RawSVGElement, Stream<RawSVGElement>>()
-                                                 {
+                                                 .flatMap(new Function<RawSVGElement, Stream<RawSVGElement>>() {
                                                      @Override
                                                      public Stream<RawSVGElement> apply(RawSVGElement element)
                                                      {
@@ -743,8 +741,7 @@ public class SVGDrawer extends AbstractSVGElementConsumer<SVGDrawer>
 
     private ParentAccessor asParentAccessor()
     {
-        return new ParentAccessor()
-        {
+        return new ParentAccessor() {
             @Override
             public double getWidth()
             {
@@ -842,16 +839,14 @@ public class SVGDrawer extends AbstractSVGElementConsumer<SVGDrawer>
     {
         double cellWidth = this.getWidth() / horizontalSlices;
         double cellHeight = this.getHeight() / verticalSlices;
-        return new DrawerMatrix()
-        {
+        return new DrawerMatrix() {
             @Override
             public DrawerMatrixCell getCell(int x, int y)
             {
                 int cellX = (int) Math.round(x * cellWidth);
                 int cellY = (int) Math.round(y * cellHeight);
 
-                return new DrawerMatrixCell()
-                {
+                return new DrawerMatrixCell() {
                     @Override
                     public DrawerMatrixCell fillWith(String color)
                     {

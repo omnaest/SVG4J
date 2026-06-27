@@ -33,6 +33,8 @@
 */
 package org.omnaest.svg.chart;
 
+import org.omnaest.svg.chart.RangeChart.Color;
+
 public interface RedGreenDeviationRangeChart extends Chart
 {
 
@@ -44,8 +46,12 @@ public interface RedGreenDeviationRangeChart extends Chart
 
     RedGreenDeviationRangeChart addPoint(double value);
 
+    RedGreenDeviationRangeChart addPoint(double value, Color color);
+
     RedGreenDeviationRangeChart addYellowRangeBox(double min, double max);
 
     RedGreenDeviationRangeChart doNotRenderScalePoints();
+
+    RedGreenDeviationRangeChart addMarkerWithArrow(double baseValue, double arrowPointValue, Color color);
 
 }

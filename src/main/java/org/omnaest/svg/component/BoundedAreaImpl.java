@@ -465,8 +465,8 @@ public class BoundedAreaImpl extends GenericTranslationAreaImpl<BoundedArea> imp
     public String toString()
     {
         return "BoundedAreaImpl [getRawHeight()=" + this.getRawHeight() + ", getRawWidth()=" + this.getRawWidth() + ", getHeight()=" + this.getHeight()
-                + ", getWidth()=" + this.getWidth() + ", getRawTranslationX()=" + this.getRawTranslationX() + ", getRawTranslationY()="
-                + this.getRawTranslationY() + "]";
+               + ", getWidth()=" + this.getWidth() + ", getRawTranslationX()=" + this.getRawTranslationX() + ", getRawTranslationY()="
+               + this.getRawTranslationY() + "]";
     }
 
 }

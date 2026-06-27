@@ -54,16 +54,16 @@ import jakarta.xml.bind.annotation.XmlTransient;
 public abstract class RawSVGElement implements RawSVGTransformer
 {
     @XmlAttribute
-    private String id;
+    private String         id;
 
     @XmlAttribute(name = "class")
-    protected String cssClass;
+    protected String       cssClass;
 
     @XmlAttribute
-    protected String style;
+    protected String       style;
 
     @XmlAttribute
-    protected String transform;
+    protected String       transform;
 
     //    @XmlValue
     //    protected String content;

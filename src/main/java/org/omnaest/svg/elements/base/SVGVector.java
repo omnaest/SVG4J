@@ -37,12 +37,12 @@ import org.omnaest.vector.Vector;
 
 public interface SVGVector
 {
-	double getX();
+    double getX();
 
-	double getY();
+    double getY();
 
-	public static SVGVector valueOf(Vector vector)
-	{
-		return new VectorToSVGVectorAdapter(vector);
-	}
+    public static SVGVector valueOf(Vector vector)
+    {
+        return new VectorToSVGVectorAdapter(vector);
+    }
 }

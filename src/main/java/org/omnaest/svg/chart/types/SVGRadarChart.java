@@ -109,7 +109,7 @@ public class SVGRadarChart extends AbstractChart2
                                                                                         Integer rasterXPosition = horizontalAxis.get(horizontalAxisId);
                                                                                         Double rasterYNormValue = Optional.ofNullable(verticalAxis.get(verticalAxisId))
                                                                                                                           .orElse(0.0)
-                                                                                                / maxValue;
+                                                                                                                  / maxValue;
                                                                                         if (rasterXPosition != null && rasterYNormValue != null)
                                                                                         {
                                                                                             return this.calculatePositionFromNormValue(rasterXPosition,

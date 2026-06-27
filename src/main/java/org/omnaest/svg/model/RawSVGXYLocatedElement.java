@@ -74,8 +74,7 @@ public abstract class RawSVGXYLocatedElement extends RawSVGElement
     @Override
     public RawSVGTransformer transformer()
     {
-        return new DefaultRawSVGTransformer(this, new SupplierConsumer()
-        {
+        return new DefaultRawSVGTransformer(this, new SupplierConsumer() {
             @Override
             public void accept(Double value)
             {
@@ -88,8 +87,7 @@ public abstract class RawSVGXYLocatedElement extends RawSVGElement
             {
                 return NumberUtils.toDouble(RawSVGXYLocatedElement.this.getX());
             }
-        }, new SupplierConsumer()
-        {
+        }, new SupplierConsumer() {
             @Override
             public void accept(Double value)
             {

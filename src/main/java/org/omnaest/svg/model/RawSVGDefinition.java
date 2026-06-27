@@ -44,7 +44,7 @@ import jakarta.xml.bind.annotation.XmlSeeAlso;
 
 @XmlRootElement(name = "defs")
 @XmlAccessorType(XmlAccessType.NONE)
-@XmlSeeAlso({ RawSVGLinearGradient.class, RawSVGRadialGradient.class, RawSVGStyle.class, RawSVGMarker.class, RawSVGGroupElement.class })
+@XmlSeeAlso({RawSVGLinearGradient.class, RawSVGRadialGradient.class, RawSVGStyle.class, RawSVGMarker.class, RawSVGGroupElement.class})
 public class RawSVGDefinition extends RawSVGElement
 {
     @XmlElementRef

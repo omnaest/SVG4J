@@ -164,14 +164,13 @@ public class RawSVGCircle extends RawSVGElement
     public String toString()
     {
         return "RawSVGCircle [cx=" + this.cx + ", cy=" + this.cy + ", r=" + this.r + ", stroke=" + this.stroke + ", fill=" + this.fill + ", fillOpacity="
-                + this.fillOpacity + ", strokeOpacity=" + this.strokeOpacity + ", style=" + this.style + "]";
+               + this.fillOpacity + ", strokeOpacity=" + this.strokeOpacity + ", style=" + this.style + "]";
     }
 
     @Override
     public RawSVGTransformer transformer()
     {
-        return new DefaultRawSVGTransformer(this, new SupplierConsumer()
-        {
+        return new DefaultRawSVGTransformer(this, new SupplierConsumer() {
             @Override
             public void accept(Double value)
             {
@@ -184,8 +183,7 @@ public class RawSVGCircle extends RawSVGElement
             {
                 return NumberUtils.toDouble(RawSVGCircle.this.getCx());
             }
-        }, new SupplierConsumer()
-        {
+        }, new SupplierConsumer() {
             @Override
             public void accept(Double value)
             {
@@ -198,8 +196,7 @@ public class RawSVGCircle extends RawSVGElement
             {
                 return NumberUtils.toDouble(RawSVGCircle.this.getCy());
             }
-        }, new SupplierBiConsumer()
-        {
+        }, new SupplierBiConsumer() {
             @Override
             public void accept(Double valueX, Double valueY)
             {

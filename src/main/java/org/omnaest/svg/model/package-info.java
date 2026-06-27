@@ -17,8 +17,8 @@
 /**
  * @author omnaest
  */
-@XmlSchema(elementFormDefault = XmlNsForm.QUALIFIED, namespace = "http://www.w3.org/2000/svg", xmlns = { @XmlNs(prefix = "", namespaceURI = "http://www.w3.org/2000/svg"),
-                                                                                                         @XmlNs(prefix = "xlink", namespaceURI = "http://www.w3.org/1999/xlink") })
+@XmlSchema(elementFormDefault = XmlNsForm.QUALIFIED, namespace = "http://www.w3.org/2000/svg", xmlns = {@XmlNs(prefix = "", namespaceURI = "http://www.w3.org/2000/svg"),
+        @XmlNs(prefix = "xlink", namespaceURI = "http://www.w3.org/1999/xlink")})
 package org.omnaest.svg.model;
 
 import jakarta.xml.bind.annotation.XmlNs;

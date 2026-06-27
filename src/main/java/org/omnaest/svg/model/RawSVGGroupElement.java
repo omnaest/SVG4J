@@ -48,19 +48,19 @@ public class RawSVGGroupElement extends RawSVGDefinitionElement implements RawSV
 {
 
     @XmlAttribute
-    private String transform;
+    private String              transform;
 
     @XmlAttribute
-    private String opacity;
+    private String              opacity;
 
     @XmlElementRef
     private List<RawSVGElement> elements;
 
     @XmlElement(name = "desc")
-    private String description;
+    private String              description;
 
     @XmlElement
-    private String title;
+    private String              title;
 
     public String getTitle()
     {

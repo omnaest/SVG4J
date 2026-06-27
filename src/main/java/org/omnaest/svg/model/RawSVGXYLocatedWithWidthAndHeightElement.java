@@ -102,8 +102,7 @@ public class RawSVGXYLocatedWithWidthAndHeightElement extends RawSVGXYLocatedEle
     @Override
     public RawSVGTransformer transformer()
     {
-        return new DefaultRawSVGTransformer(this, new SupplierConsumer()
-        {
+        return new DefaultRawSVGTransformer(this, new SupplierConsumer() {
             @Override
             public void accept(Double value)
             {
@@ -116,8 +115,7 @@ public class RawSVGXYLocatedWithWidthAndHeightElement extends RawSVGXYLocatedEle
             {
                 return NumberUtils.toDouble(RawSVGXYLocatedWithWidthAndHeightElement.this.getX());
             }
-        }, new SupplierConsumer()
-        {
+        }, new SupplierConsumer() {
             @Override
             public void accept(Double value)
             {
@@ -130,8 +128,7 @@ public class RawSVGXYLocatedWithWidthAndHeightElement extends RawSVGXYLocatedEle
             {
                 return NumberUtils.toDouble(RawSVGXYLocatedWithWidthAndHeightElement.this.getY());
             }
-        }, new SupplierConsumer()
-        {
+        }, new SupplierConsumer() {
             @Override
             public void accept(Double value)
             {
@@ -144,8 +141,7 @@ public class RawSVGXYLocatedWithWidthAndHeightElement extends RawSVGXYLocatedEle
             {
                 return NumberUtils.toDouble(RawSVGXYLocatedWithWidthAndHeightElement.this.getWidth());
             }
-        }, new SupplierConsumer()
-        {
+        }, new SupplierConsumer() {
             @Override
             public void accept(Double value)
             {

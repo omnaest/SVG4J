@@ -142,11 +142,30 @@ public class SVGRedGreenDeviationRangeChart implements RedGreenDeviationRangeCha
     @Override
     public RedGreenDeviationRangeChart addPoint(double value)
     {
-        this.rangeChart.addPoint(Color.YELLOW, value);
+        return this.addPoint(value, Color.YELLOW);
+    }
+
+    @Override
+    public RedGreenDeviationRangeChart addPoint(double value, Color color)
+    {
+        this.rangeChart.addPoint(color, value);
 
         if (this.renderScalePoints)
         {
             this.rangeChart.addScalePoint(value, ScalePosition.LOW);
+        }
+        return this;
+    }
+
+    @Override
+    public RedGreenDeviationRangeChart addMarkerWithArrow(double baseValue, double arrowPointValue, Color color)
+    {
+        this.rangeChart.addMarkerWithArrow(color, baseValue, arrowPointValue);
+
+        if (this.renderScalePoints)
+        {
+            this.rangeChart.addScalePoint(baseValue, ScalePosition.LOW);
+            this.rangeChart.addScalePoint(arrowPointValue, ScalePosition.LOW);
         }
         return this;
     }

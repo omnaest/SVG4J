@@ -42,24 +42,24 @@ import org.omnaest.svg.other.DisplayResolution;
 public class SVGFlowArrowTest
 {
 
-	@Test
-	public void testGetElements() throws Exception
-	{
-		double x1 = 10;
-		double y1 = 10;
-		double x2 = 200;
-		double y2 = 100;
-		double x3 = 300;
-		double y3 = 50;
-		SVGUtils.getDrawer(1000, 300)
-				.withScreenDimensions(DisplayResolution._1280x800)
-				.add(new SVGFlowArrow(x1, y1, x2, y2)	.setRelativeArrowWidth(0.4)
-														.setText("Flow 1"))
-				.add(new SVGFlowArrow(x2, y2, x3, y3)	.setRelativeArrowWidth(0.4)
-														.setText("Flow 2"))
-				.renderAsResult()
-				.writeToFile(new File("C:/Temp/arrowChartTest.svg"));
+    @Test
+    public void testGetElements() throws Exception
+    {
+        double x1 = 10;
+        double y1 = 10;
+        double x2 = 200;
+        double y2 = 100;
+        double x3 = 300;
+        double y3 = 50;
+        SVGUtils.getDrawer(1000, 300)
+                .withScreenDimensions(DisplayResolution._1280x800)
+                .add(new SVGFlowArrow(x1, y1, x2, y2).setRelativeArrowWidth(0.4)
+                                                     .setText("Flow 1"))
+                .add(new SVGFlowArrow(x2, y2, x3, y3).setRelativeArrowWidth(0.4)
+                                                     .setText("Flow 2"))
+                .renderAsResult()
+                .writeToFile(new File("C:/Temp/arrowChartTest.svg"));
 
-	}
+    }
 
 }

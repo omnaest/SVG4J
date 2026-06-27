@@ -37,57 +37,57 @@ import java.util.Objects;
 
 public class NumberAndLabel implements AxisPoint<Double>
 {
-	private double	value;
-	private String	label;
+    private double value;
+    private String label;
 
-	public NumberAndLabel(double value, String label)
-	{
-		super();
-		this.value = value;
-		this.label = label;
-	}
+    public NumberAndLabel(double value, String label)
+    {
+        super();
+        this.value = value;
+        this.label = label;
+    }
 
-	public NumberAndLabel(double label)
-	{
-		this(label, Objects.toString(label));
-	}
+    public NumberAndLabel(double label)
+    {
+        this(label, Objects.toString(label));
+    }
 
-	@Override
-	public Double getId()
-	{
-		return this.value;
-	}
+    @Override
+    public Double getId()
+    {
+        return this.value;
+    }
 
-	@Override
-	public String getLabel()
-	{
-		return this.label;
-	}
+    @Override
+    public String getLabel()
+    {
+        return this.label;
+    }
 
-	@Override
-	public int hashCode()
-	{
-		final int prime = 31;
-		int result = 1;
-		long temp;
-		temp = Double.doubleToLongBits(this.value);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		return result;
-	}
+    @Override
+    public int hashCode()
+    {
+        final int prime = 31;
+        int result = 1;
+        long temp;
+        temp = Double.doubleToLongBits(this.value);
+        result = prime * result + (int) (temp ^ (temp >>> 32));
+        return result;
+    }
 
-	@Override
-	public boolean equals(Object obj)
-	{
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (this.getClass() != obj.getClass())
-			return false;
-		NumberAndLabel other = (NumberAndLabel) obj;
-		if (Double.doubleToLongBits(this.value) != Double.doubleToLongBits(other.value))
-			return false;
-		return true;
-	}
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (this.getClass() != obj.getClass())
+            return false;
+        NumberAndLabel other = (NumberAndLabel) obj;
+        if (Double.doubleToLongBits(this.value) != Double.doubleToLongBits(other.value))
+            return false;
+        return true;
+    }
 
 }

@@ -42,7 +42,7 @@ import org.omnaest.vector.Vector;
 
 public class SVGText implements SVGElement
 {
-    public static final int DEFAULT_FONTSIZE = 10;
+    public static final int   DEFAULT_FONTSIZE  = 10;
 
     private int               x;
     private int               y;
@@ -54,8 +54,8 @@ public class SVGText implements SVGElement
     private TextAnchor        textAnchor        = TextAnchor.INHERIT;
     private VerticalAlignment verticalAlignment = VerticalAlignment.CENTER;
 
-    private LengthAdjust lengthAdjust = null;
-    private Double       length;
+    private LengthAdjust      lengthAdjust      = null;
+    private Double            length;
 
     public static enum TextAnchor
     {

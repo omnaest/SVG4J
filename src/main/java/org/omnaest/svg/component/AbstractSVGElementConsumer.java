@@ -45,53 +45,53 @@ import org.omnaest.svg.model.RawSVGElement;
 public abstract class AbstractSVGElementConsumer<R extends SVGElementAndRawElementConsumer<R>> implements SVGElementAndRawElementConsumer<R>
 {
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public R addRawElements(SVGDrawer svgDrawer)
-	{
-		this.addRawElements(svgDrawer	.renderAsResult()
-										.getRawSVGRoot()
-										.getElements());
-		return (R) this;
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    public R addRawElements(SVGDrawer svgDrawer)
+    {
+        this.addRawElements(svgDrawer.renderAsResult()
+                                     .getRawSVGRoot()
+                                     .getElements());
+        return (R) this;
+    }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public R addRawElements(Collection<RawSVGElement> rawElements)
-	{
-		if (rawElements != null)
-		{
-			rawElements.forEach(this::addRawElement);
-		}
-		return (R) this;
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    public R addRawElements(Collection<RawSVGElement> rawElements)
+    {
+        if (rawElements != null)
+        {
+            rawElements.forEach(this::addRawElement);
+        }
+        return (R) this;
+    }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public R addAll(Iterable<SVGElement> elements)
-	{
-		if (elements != null)
-		{
-			elements.forEach(this::add);
-		}
-		return (R) this;
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    public R addAll(Iterable<SVGElement> elements)
+    {
+        if (elements != null)
+        {
+            elements.forEach(this::add);
+        }
+        return (R) this;
+    }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public R add(SVGCompositeElement element)
-	{
-		if (element != null)
-		{
-			this.addAll(element.getElements());
-		}
-		return (R) this;
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    public R add(SVGCompositeElement element)
+    {
+        if (element != null)
+        {
+            this.addAll(element.getElements());
+        }
+        return (R) this;
+    }
 
-	@Override
-	public R addAll(Stream<SVGElement> elements)
-	{
-		return this.addAll(elements.collect(Collectors.toList()));
-	}
+    @Override
+    public R addAll(Stream<SVGElement> elements)
+    {
+        return this.addAll(elements.collect(Collectors.toList()));
+    }
 
 }

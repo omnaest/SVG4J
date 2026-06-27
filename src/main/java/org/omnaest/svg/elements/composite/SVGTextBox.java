@@ -50,7 +50,7 @@ public class SVGTextBox implements SVGCompositeElement
     private double y2;
     private int    rotation;
     private String text;
-    private String textColor = "black";
+    private String textColor         = "black";
 
     private int    borderSize        = 0;
     private String backgroundColor   = "white";
@@ -94,11 +94,11 @@ public class SVGTextBox implements SVGCompositeElement
             Vector rotatedTextFlow = regularTextFlow.rotateZ(this.rotation);
             Vector diagonalTextFlowFromBottom = rotatedTextFlow.normVector()
                                                                .multiply(rotatedTextFlow.absolute() * regularTextFlow.absolute()
-                                                                       / rotatedTextFlow.multiplyScalar(regularTextFlow.normVector()));
+                                                                         / rotatedTextFlow.multiplyScalar(regularTextFlow.normVector()));
 
             Vector diagonalTextFlowFromLeft = rotatedTextFlow.normVector()
                                                              .multiply(rotatedTextFlow.absolute() * orthogonalTextFlow.absolute()
-                                                                     / rotatedTextFlow.multiplyScalar(orthogonalTextFlow.normVector()));
+                                                                       / rotatedTextFlow.multiplyScalar(orthogonalTextFlow.normVector()));
 
             if (Double.isNaN(diagonalTextFlowFromLeft.absolute()))
             {

@@ -40,7 +40,7 @@ package org.omnaest.svg.chart.common;
  */
 public interface AxisPoint<ID>
 {
-	public ID getId();
+    public ID getId();
 
-	public String getLabel();
+    public String getLabel();
 }

@@ -61,7 +61,7 @@ public class SVGBoxMapChartTest
             entries.add(new Entry("text " + ii + "(" + NumberUtils.formatter()
                                                                   .asPercentage()
                                                                   .format(random)
-                    + ")", random));
+                                  + ")", random));
         }
         chart.addData(entries.stream()
                              .sorted(ComparatorUtils.builder()

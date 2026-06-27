@@ -37,5 +37,5 @@ import java.util.stream.Stream;
 
 public interface SVGCompositeElement
 {
-	public Stream<SVGElement> getElements();
+    public Stream<SVGElement> getElements();
 }

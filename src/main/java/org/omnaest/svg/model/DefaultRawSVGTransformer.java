@@ -66,25 +66,21 @@ public class DefaultRawSVGTransformer implements RawSVGTransformer
     }
 
     @Deprecated
-    public DefaultRawSVGTransformer(RawSVGElement rawSVGElement, SupplierConsumer supplierConsumersLocationX, SupplierConsumer supplierConsumersLocationY,
-                                    SupplierConsumer supplierConsumersWidth, SupplierConsumer supplierConsumersHeight)
+    public DefaultRawSVGTransformer(RawSVGElement rawSVGElement, SupplierConsumer supplierConsumersLocationX, SupplierConsumer supplierConsumersLocationY, SupplierConsumer supplierConsumersWidth, SupplierConsumer supplierConsumersHeight)
     {
         this(rawSVGElement, Arrays.asList(supplierConsumersLocationX), Arrays.asList(supplierConsumersLocationY), new ArrayList<>(),
-                Arrays.asList(supplierConsumersWidth), Arrays.asList(supplierConsumersHeight));
+             Arrays.asList(supplierConsumersWidth), Arrays.asList(supplierConsumersHeight));
     }
 
     @Deprecated
-    public DefaultRawSVGTransformer(RawSVGElement rawSVGElement, SupplierConsumer supplierConsumersX, SupplierConsumer supplierConsumersY,
-                                    SupplierBiConsumer supplierConsumersXY)
+    public DefaultRawSVGTransformer(RawSVGElement rawSVGElement, SupplierConsumer supplierConsumersX, SupplierConsumer supplierConsumersY, SupplierBiConsumer supplierConsumersXY)
     {
         this(rawSVGElement, Arrays.asList(supplierConsumersX), Arrays.asList(supplierConsumersY), Arrays.asList(supplierConsumersXY), new ArrayList<>(),
-                new ArrayList<>());
+             new ArrayList<>());
     }
 
     @Deprecated
-    public DefaultRawSVGTransformer(RawSVGElement rawSVGElement, Collection<SupplierConsumer> supplierConsumersLocationX,
-                                    Collection<SupplierConsumer> supplierConsumersLocationY, Collection<SupplierBiConsumer> supplierConsumersRadius,
-                                    Collection<SupplierConsumer> supplierConsumersWidth, Collection<SupplierConsumer> supplierConsumersHeight)
+    public DefaultRawSVGTransformer(RawSVGElement rawSVGElement, Collection<SupplierConsumer> supplierConsumersLocationX, Collection<SupplierConsumer> supplierConsumersLocationY, Collection<SupplierBiConsumer> supplierConsumersRadius, Collection<SupplierConsumer> supplierConsumersWidth, Collection<SupplierConsumer> supplierConsumersHeight)
     {
         super();
         this.rawSVGElement = rawSVGElement;
@@ -154,7 +150,7 @@ public class DefaultRawSVGTransformer implements RawSVGTransformer
     public String toString()
     {
         return "DefaultRawSVGTransformer [supplierConsumersX=" + this.supplierConsumersLocationX + ", supplierConsumersY=" + this.supplierConsumersLocationY
-                + ", rawSVGElement=" + this.rawSVGElement + "]";
+               + ", rawSVGElement=" + this.rawSVGElement + "]";
     }
 
 }

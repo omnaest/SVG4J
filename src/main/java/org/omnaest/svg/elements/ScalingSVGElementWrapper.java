@@ -38,29 +38,29 @@ import org.omnaest.svg.model.RawSVGElement;
 
 public class ScalingSVGElementWrapper implements SVGElement
 {
-	private SVGElement	element;
-	private double		scaleX;
-	private double		scaleY;
+    private SVGElement element;
+    private double     scaleX;
+    private double     scaleY;
 
-	public ScalingSVGElementWrapper(SVGElement element, double scaleX, double scaleY)
-	{
-		super();
-		this.element = element;
-		this.scaleX = scaleX;
-		this.scaleY = scaleY;
-	}
+    public ScalingSVGElementWrapper(SVGElement element, double scaleX, double scaleY)
+    {
+        super();
+        this.element = element;
+        this.scaleX = scaleX;
+        this.scaleY = scaleY;
+    }
 
-	@Override
-	public RawSVGElement render()
-	{
-		return this.element	.render()
-							.scale(this.scaleX, this.scaleY);
-	}
+    @Override
+    public RawSVGElement render()
+    {
+        return this.element.render()
+                           .scale(this.scaleX, this.scaleY);
+    }
 
-	@Override
-	public String toString()
-	{
-		return "ScalingSVGElementWrapper [element=" + this.element + ", scaleX=" + this.scaleX + ", scaleY=" + this.scaleY + "]";
-	}
+    @Override
+    public String toString()
+    {
+        return "ScalingSVGElementWrapper [element=" + this.element + ", scaleX=" + this.scaleX + ", scaleY=" + this.scaleY + "]";
+    }
 
 }
