@@ -1,0 +1,12 @@
+# Default: normalise text in the repository, check out with LF.
+* text=auto eol=lf
+
+# Binary assets - never touched.
+#
+# The TrueType font under src/test/resources is load-bearing: org.omnaest.svg.text
+# measures with it to produce deterministic, byte-identical text advances across JVM
+# invocations. Git normally detects binary content on its own, but declaring it here
+# means a checkout can never rewrite the font's bytes under core.autocrlf.
+*.ttf binary
+*.png binary
+*.jpg binary
